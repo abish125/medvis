@@ -1,0 +1,753 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Medical Data Visualization</title>
+  
+  <script type='text/javascript' src='//code.jquery.com/jquery-1.9.1.js'></script>
+  
+  <script src="http://d3js.org/d3.v2.min.js?2.10.0"></script>
+  <script>
+  
+  </script>
+    
+    
+  
+  <style type='text/css'>
+    path {
+  stroke-width: 1.5px;
+}
+
+.small {
+  fill: steelblue;
+}
+
+.big {
+  stroke: #666;
+  fill: #ddd;
+}
+
+.small:hover {
+  stroke: steelblue;
+  fill: lightsteelblue;
+}
+
+.test{
+    padding:30px
+}
+
+.motives{
+    background: #eeeeee;    
+}
+
+.tooltip {
+    width: 300px;
+    height: 600px;
+    overflow: scroll;
+}
+  </style>
+
+
+</head>
+<body>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+      <script type=text/javascript src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script>
+    window.setTimeout(function(){
+        window.location.href = "{% url 'organs2' job %}";
+    }, 60000);
+  </script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/d3.superformula.v0.min.js"></script>
+
+    <div id="control">
+      <label>Show flows for </label><label id="month" name="month">07</label>, <label id="year" name="year">2013</label>:
+      <form>
+      <input id="slider" type="range" name="slider" min="0" max="1" value="0" step="1"/>
+      </form>
+    </div>
+	
+    <div id="holder">
+		<div id="person"></div>
+	</div>
+
+<script type='text/javascript'>//<![CDATA[ 
+
+var input_text1;
+var input_text2;
+var problems;
+var problems2;
+var tooltip;
+var svg;
+var slider;
+
+
+//organs
+var heart;
+
+/*
+* This is the function that actually highlights a text string by
+* adding HTML tags before and after all occurrences of the search
+* term. You can pass your own tags if you'd like, or if the
+* highlightStartTag or highlightEndTag parameters are omitted or
+* are empty strings then the default <font> tags will be used.
+*/
+function doHighlight(DivText, searchTerm, highlightStartTag, highlightEndTag) {
+    // the highlightStartTag and highlightEndTag parameters are optional
+    if ((!highlightStartTag) || (!highlightEndTag)) {
+        highlightStartTag = "<font style='color:blue; background-color:yellow;'>";
+        highlightEndTag = "</font>";
+    }
+
+    // find all occurences of the search term in the given text,
+    // and add some "highlight" tags to them (we're not using a
+    // regular expression search, because we want to filter out
+    // matches that occur within HTML tags and script blocks, so
+    // we have to do a little extra validation)
+    var newText = "";
+    var i = -1;
+    var lcSearchTerm = searchTerm.toLowerCase();
+    var lcDivText = DivText.toLowerCase();
+
+    while (DivText.length > 0) {
+        i = lcDivText.indexOf(lcSearchTerm, i + 1);
+        if (i < 0) {
+            newText += DivText;
+            DivText = "";
+        } else {
+            // skip anything inside an HTML tag
+            if (DivText.lastIndexOf(">", i) >= DivText.lastIndexOf("<", i)) {
+                // skip anything inside a <script> block
+                if (lcDivText.lastIndexOf("/script>", i) >= lcDivText.lastIndexOf("<script", i)) {
+                    newText += DivText.substring(0, i) + highlightStartTag + DivText.substr(i, searchTerm.length) + highlightEndTag;
+                    DivText = DivText.substr(i + searchTerm.length);
+                    lcDivText = DivText.toLowerCase();
+                    i = -1;
+                }
+            }
+        }
+    }
+
+    return newText;
+}
+
+
+/*
+* This is sort of a wrapper function to the doHighlight function.
+* It takes the searchText that you pass, optionally splits it into
+* separate words, and transforms the text on the current web page.
+* Only the "searchText" parameter is required; all other parameters
+* are optional and can be omitted.
+*/
+function highlightSearchTerms(searchText,divId,treatAsPhrase, warnOnFailure, highlightStartTag, highlightEndTag) {
+    // if the treatAsPhrase parameter is true, then we should search for
+    // the entire phrase that was entered; otherwise, we will split the
+    // search string so that each word is searched for and highlighted
+    // individually
+    if (treatAsPhrase) {
+        searchArray = [searchText];
+    } else {
+        searchArray = searchText.split(" ");
+    }
+    var div=document.getElementById(divId);
+    if (!div || typeof (div.innerHTML) == "undefined") {
+        if (warnOnFailure) {
+            alert("Sorry, for some reason the text of this page is unavailable. Searching will not work.");
+        }
+        return false;
+    }
+
+    var DivText = div.innerHTML;
+    for (var i = 0; i < searchArray.length; i++) {
+        DivText = doHighlight(DivText, searchArray[i], highlightStartTag, highlightEndTag);
+    }
+
+    div.innerHTML = DivText;
+    return true;
+}
+
+
+/*
+* This displays a dialog box that allows a user to enter their own
+* search terms to highlight on the page, and then passes the search
+* text or phrase to the highlightSearchTerms function. All parameters
+* are optional.
+*/
+function searchPrompt(defaultSearchText,divId,isPrompt,treatAsPhrase,textColor, bgColor) {
+    // we can optionally use our own highlight tag values
+    if ((!textColor) || (!bgColor)) {
+        highlightStartTag = "";
+        highlightEndTag = "";
+    } else {
+        highlightStartTag = "<font style='color:" + textColor + "; background-color:" + bgColor + ";'>";
+        highlightEndTag = "</font>";
+    }
+
+    if (treatAsPhrase) {
+        promptText = "Please enter the phrase you'd like to search for:";
+    } else {
+        promptText = "Please enter the words you'd like to search for, separated by spaces:";
+    }
+    if (isPrompt)
+        defaultSearchText = prompt(promptText, defaultSearchText);
+
+    if (!defaultSearchText) {
+        alert("No search terms were entered. Exiting function.");
+        return false;
+    }
+
+    return highlightSearchTerms(defaultSearchText,divId, treatAsPhrase, true, highlightStartTag, highlightEndTag);
+}
+
+
+function renderData()
+{
+    //searchPrompt("67","#tooltip", false, false);
+    tooltip.text(input_text2)
+    d3.select("body")
+        .append("text")
+        .text(problems2[0]);
+}
+
+$(window).load(function(){
+var personBuilder = {
+    init: function(){
+
+        tooltip = d3.select("body")
+            .append("div")
+            .attr("class", "tooltip")
+            .attr("id", "#tooltip")
+            .style("position", "absolute")
+            .style("z-index", "10")
+            .style("visibility", "hidden")
+            //.text(input_text)//"Custom Scrollbar The scrollbar can use the styles and images you choose. Both vertical and horizontal scroll bars are supported by the code. Drag the drag bar or click on the track to scroll using the scrollbar.")
+            .on("mouseleave", function(){return tooltip.style("visibility", "hidden");});
+
+
+        /**
+        d3.text("case1.tsv", function(data) 
+        {
+            input_text = data;
+            tooltip.text(data);
+            d3.text("case1_problems.tsv", function(p)
+            {
+                problems = p.split('\n');
+            });
+        });
+
+        d3.text("case2.tsv", function(data) 
+        {
+            input_text2 = data;
+            d3.text("case2_problems.tsv", function(p)
+            {
+                problems2 = p.split('\n');
+            });
+            searchPrompt("67","#tooltip", false, false);
+        });
+        **/
+        
+        var h = 550;
+        var w = 1100;
+        
+        var padding = 20;
+        
+        var x = d3.scale.ordinal()
+            .domain(d3.superformulaTypes)
+            .rangePoints([0, 360], 1);
+        
+        svg = d3.select("#person").append("svg")
+            .attr("width", w)
+            .attr("height", h+20)
+            .attr("class", "motives")
+            //.on("mouseleave", function(){return tooltip.style("visibility", "hidden");})
+        .append("g")
+            .attr("transform", "translate("+padding+","+padding+")")
+            .on("mouseenter", function(){return tooltip.style("visibility", "visible").style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+            //.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+            
+
+        d3.select("#slider").on('change', function(d) {
+          //var current = years[parseInt(this.value)],
+
+          //year = current.substring(0, 4),
+          //month = current.substring(5);
+          d3.select("#month").text(""+month);
+          d3.select("#year").text(""+year);
+            renderData();
+        });
+        
+        this.peoples = svg.append("g")
+            .attr("class", "peoples")
+        
+        this.labels = svg.append("g")
+            .attr("class", "labels")
+
+        this.pictures = svg.append("g")
+            .attr("class", "pictures")
+         
+        this.pointers = svg.append("g")
+            .attr("class", "pointers")
+
+         
+        
+        var data = [
+             {
+                 "label": "Imagination",
+                 "y": h*.06,
+                 "x": w*.089,
+                 "cx": w*.11,
+                 "cy": h*.29
+             },
+             {
+                 "label": "Love",
+                 "y": h*.9,
+                 "x": w*.31,
+                 "cx": w*.45,
+                 "cy": h*.47
+             },
+             {
+                 "label": "Career",
+                 "y": h*.06,
+                 "x": w*.735,
+                 "cx": w*.86,
+                 "cy": h*.57
+             }
+        ]
+
+        //need to change this
+        var pictureData = [
+             {
+                 "label": "Imagination",
+                 "y": h*.06,
+                 "x": w*.089,
+                 "cx": w*.11,
+                 "cy": h*.29
+             },
+             {
+                 "label": "Love",
+                 "y": h*.9,
+                 "x": w*.31,
+                 "cx": w*.45,
+                 "cy": h*.47
+             },
+             {
+                 "label": "Career",
+                 "y": h*.06,
+                 "x": w*.735,
+                 "cx": w*.86,
+                 "cy": h*.57
+             }
+        ]
+  
+         //maleSkinny
+         //maleStandard
+         //maleMuscular
+         //femaleStandard
+         
+        var biometrics = {
+             "gender": "male",
+             "bodytype": "skinny",
+             "race": "caucasian"
+        }
+        
+        function capitaliseFirstLetter(string)
+        {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+                
+         //tweak avatar on race
+        var biocolor = "grey";
+        switch(biometrics.race)
+        {
+             case "caucasian":
+                 biocolor = "#ffe4e4";
+                 break;
+             case "asian":
+                 biocolor = "#fff5bf";
+                 break;
+             case "black":
+                 biocolor = "#71330e";
+                 break;
+        }       
+        
+         
+        var augmentUser = {
+                 NodeType: biometrics.gender+""+capitaliseFirstLetter(biometrics.bodytype),
+                 color: biocolor,
+                 height:h*.34, 
+                 width: w*.14
+        };//build a skinny man
+   
+        $.each(data, function(index, value) {     
+            var coordinatesForUser = {
+                "hx": (index * w*.32) +w*.1,
+                "hy": h*.5 //position the avatars half way on canvas
+            };
+            
+            jQuery.extend(augmentUser, coordinatesForUser);                
+            jQuery.extend(value, augmentUser);
+        });
+        
+        //this.buildPeople(data);            
+        //this.addLabels(data);
+        this.addPictures(data);
+        heart//.style("visibility","hidden")
+        .on("click", click);
+
+        function click(d) 
+        {
+            heart.transition()
+            .attr("transform", function(d) {
+                return "translate(" + 30 + "," + 30 + ")";
+            })
+          .duration(1000)
+        }
+    },
+
+    /**renderData: function()
+    {
+        searchPrompt("67","#tooltip", false, false);
+    },**/
+
+    buildPeople: function(data){
+        var that = this;
+        
+        var flow_shapes = this.getFlowShapes();
+        
+        var peoples = that.peoples.selectAll("path")
+            .data(data)
+        
+        peoples.enter()
+            .append("svg:path")            
+        
+        peoples
+            .attr("d", function(d) { 
+                return flow_shapes[d.NodeType](d.height, d.width);
+            })
+            .attr("stroke", "black")
+            .attr("fill", function(d){
+                return d.color;
+            })
+            .attr("transform", function(d) {
+                return "translate(" + d.hx + "," + d.hy + ") rotate(180)";
+            });
+        
+    },
+
+
+    addPictures: function(data){
+        var that = this;
+
+        //picture
+        var pictures = that.pictures.selectAll("img")
+            .data("pictureData")
+
+        //i think you can name each of these variables
+
+        pictures.enter()
+            .append("svg:image")
+            .attr("xlink:href", "{{ MEDIA_URL }}/human-skeletal-system-front-view-stocktrek-images.png")
+            .attr("x", "187")
+            .attr("y", "3")
+            .attr("width", "300")
+            .attr("height", "500");
+
+        pictures.enter()
+            .append("svg:image")
+            .attr("xlink:href", "{{ MEDIA_URL }}/vascular.png")
+            .attr("transform", "scale(1.25,1)")
+            .attr("x", "120")
+            .attr("y", "3")
+            .attr("width", "330")
+            .attr("height", "500");
+
+        pictures.enter()
+            .append("svg:image")
+            .attr("xlink:href", "{{ MEDIA_URL }}/Brain-Art.png")
+            .attr("x", "305")
+            .attr("y", "20")
+            .attr("width", "60")
+            .attr("height", "60");
+
+        pictures.enter()
+          .append("svg:image")
+          .attr("xlink:href", "{{ MEDIA_URL }}/kidneys.png")
+          .attr("transform", "scale(1.4)")
+          .attr("x", "218")
+          .attr("y", "108")
+          //.style("visibility", "hidden")
+          .attr("width", "40")
+          .attr("height", "40");
+
+
+        pictures.enter()
+            .append("svg:image")
+            .attr("xlink:href", "{{ MEDIA_URL }}/pancreas.png")
+            .attr("transform", "translate(330,140) rotate(20)")
+            .attr("width", "40")
+            .attr("height", "40");
+
+        pictures.enter()
+            .append("svg:image")
+            .attr("xlink:href", "{{ MEDIA_URL }}/small_dyspepsia.png")
+            .attr("transform", "scale(1.4)")
+            .attr("x", "225")
+            .attr("y", "95")
+            .style("visibility", "hidden")
+            .attr("width", "40")
+            .attr("height", "40");
+
+        pictures.enter()
+            .append("svg:image")
+            .attr("xlink:href", "{{ MEDIA_URL }}/lungs.png")
+            .attr("x", "300")
+            .attr("y", "100")
+            .attr("width", "70")
+            .attr("height", "70");
+
+        pictures.enter()
+            .append("svg:image")
+            .attr("xlink:href", "{{ MEDIA_URL }}/spleen.png")
+            .attr("x", "335")
+            .attr("y", "150")
+            .attr("width", "35")
+            .attr("height", "35");
+
+        pictures.enter()
+            .append("svg:image")
+            .attr("xlink:href", "{{ MEDIA_URL }}/small_bowel.png")
+            .attr("x", "295")
+            .attr("y", "170")
+            .attr("width", "85")
+            .attr("height", "85");
+
+        pictures.enter()
+            .append("svg:image")
+            .attr("xlink:href", "{{ MEDIA_URL }}/large_bowel.png")
+            .attr("transform", "scale(1.4)")
+            .attr("x", "210")
+            .attr("y", "130")
+            //.style("visibility", "hidden")
+            .attr("width", "55")
+            .attr("height", "55");
+
+        pictures.enter()
+            .append("svg:image")
+            .attr("xlink:href", "{{ MEDIA_URL }}/Liver.png")
+            .attr("x", "290")
+            .attr("y", "140")
+            .attr("width", "90")
+            .style("visibility", "hidden")
+            .attr("height", "90");
+            
+
+        heart = pictures.enter()
+            .append("svg:image")
+            .attr("xlink:href", "{{ MEDIA_URL }}/black_heart.png")
+            .attr("x", "325")
+            .attr("y", "115")
+            .attr("width", "40")
+            .attr("height", "40");
+
+        
+    },
+
+    addLabels: function(data){
+        var that = this;
+        
+        //__labels  
+        var labels = that.labels.selectAll("text")
+             .data(data);
+        
+        labels.enter()
+            .append("text")
+            .attr("text-anchor", "middle");
+        
+        labels
+            .attr("x", function(d) {
+                return d.x;
+            })
+            .attr("y", function(d) {
+                return d.y;
+            })
+            .text(function(d) {
+                return d.label; 
+            })
+            .each(function(d) {
+                var bbox = this.getBBox();
+                d.sx = d.x - bbox.width/2 - 2;
+                d.ox = d.x + bbox.width/2 + 2;
+                d.sy = d.oy = d.y + 5;
+            })
+            .transition()
+            .duration(300);
+        
+        labels
+            .transition()
+            .duration(300);  
+        
+        labels.exit().remove();
+        //__labels            
+        
+        
+        
+        //__pointers
+        that.pointers.append("defs").append("marker")
+            .attr("id", "circ")
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("refX", 3)
+            .attr("refY", 3)
+            .append("circle")
+            .attr("cx", 3)
+            .attr("cy", 3)
+            .attr("r", 3);
+        
+        var pointers = that.pointers.selectAll("path.pointer")
+            .data(data);
+        
+        pointers.enter()
+            .append("path")
+            .attr("class", "pointer")
+            .style("fill", "none")
+            .style("stroke", "black")
+            .attr("marker-end", "url(#circ)");
+        
+        pointers
+            .attr("d", function(d) {
+                if(d.cx > d.ox) {
+                    return "M" + d.sx + "," + d.sy + "L" + d.ox + "," + d.oy + " " + d.cx + "," + d.cy;
+                } else {
+                    return "M" + d.ox + "," + d.oy + "L" + d.sx + "," + d.sy + " " + d.cx + "," + d.cy;
+                }
+            })
+            .transition()
+            .duration(300);
+        
+        pointers
+            .transition()
+            .duration(300);
+        
+        pointers.exit().remove();
+        //__pointers    
+                    
+    },
+    getFlowShapes: function(){
+        var flow_shapes = {
+            femaleSkinny: function(h, w) {
+        
+                 var points = [
+                    [w*.32, h*.33], [w, -h*.22], [w*.98, -h*.33], [w*.33, h*.13], // left arm
+                  [w*.23, h*.13], [w*.21, -h*.22], // left waist
+                  [w*.54, -h*.54], [w*.35, -h*.54], [w*.25, -h*.54], [w*.45, -h*.94], [w*.24, -h], [w*.11, -h*.55], //left leg
+                    [0, -h*.55], //groin
+                  [-w*.11, -h*.55], [-w*.24, -h], [-w*.45, -h*.94], [-w*.25, -h*.54], [-w*.35, -h*.54], [-w*.54, -h*.54] ,//right leg
+                   [-w*.21, -h*.22], [-w*.23, h*.13], // right waist
+                    [-w*.33, h*.13], [-w*.98, -h*.33], [-w, -h*.22], [-w*.32, h*.33], // right arm
+                   [-w*.09, h*.56], [-w*.11, h*.78], [w*.11, h*.78], [w*.09, h*.56], // head
+                ]
+                points.push(points[0]); //complete shape - closes off the shape by joining the last and first points
+                    
+                return d3.svg.line()(points);
+            },
+            femaleStandard: function(h, w) {
+        
+                 var points = [
+                    [w*.32, h*.33], [w, -h*.22], [w*.98, -h*.33], [w*.33, h*.13], // left arm
+                  [w*.23, h*.13], [w*.21, -h*.22], // left waist
+                  [w*.54, -h*.54], [w*.35, -h*.54], [w*.25, -h*.54], [w*.45, -h*.94], [w*.24, -h], [w*.11, -h*.55], //left leg
+                    [0, -h*.55], //groin
+                  [-w*.11, -h*.55], [-w*.24, -h], [-w*.45, -h*.94], [-w*.25, -h*.54], [-w*.35, -h*.54], [-w*.54, -h*.54] ,//right leg
+                   [-w*.21, -h*.22], [-w*.23, h*.13], // right waist
+                    [-w*.33, h*.13], [-w*.98, -h*.33], [-w, -h*.22], [-w*.32, h*.33], // right arm
+                   [-w*.09, h*.56], [-w*.11, h*.78], [w*.11, h*.78], [w*.09, h*.56], // head
+                ]
+                points.push(points[0]); //complete shape - closes off the shape by joining the last and first points
+                    
+                return d3.svg.line()(points);
+            },
+            femaleMuscular: function(h, w) {
+        
+                 var points = [
+                    [w*.32, h*.33], [w, -h*.22], [w*.98, -h*.33], [w*.33, h*.13], // left arm
+                  [w*.23, h*.13], [w*.21, -h*.22], // left waist
+                  [w*.54, -h*.54], [w*.35, -h*.54], [w*.25, -h*.54], [w*.45, -h*.94], [w*.24, -h], [w*.11, -h*.55], //left leg
+                    [0, -h*.55], //groin
+                  [-w*.11, -h*.55], [-w*.24, -h], [-w*.45, -h*.94], [-w*.25, -h*.54], [-w*.35, -h*.54], [-w*.54, -h*.54] ,//right leg
+                   [-w*.21, -h*.22], [-w*.23, h*.13], // right waist
+                    [-w*.33, h*.13], [-w*.98, -h*.33], [-w, -h*.22], [-w*.32, h*.33], // right arm
+                   [-w*.09, h*.56], [-w*.11, h*.78], [w*.11, h*.78], [w*.09, h*.56], // head
+                ]
+                points.push(points[0]); //complete shape - closes off the shape by joining the last and first points
+                    
+                return d3.svg.line()(points);
+            },
+            maleSkinny: function(h, w) {
+        
+                 var points = [
+                    [w*.32, h*.37], [w, -h*.29], [w*.98, -h*.38], [w*.38, h*.19], // left arm
+                  [w*.23, h*.13], [w*.21, -h*.22], // left waist
+                  [w*.45, -h*.94], [w*.28, -h], [w*.11, -h*.35], //left leg
+                    [0, -h*.25], //groin
+                  [-w*.11, -h*.35], [-w*.28, -h], [-w*.45, -h*.94], //right leg
+                   [-w*.21, -h*.22], [-w*.23, h*.13], // right waist
+                    [-w*.38, h*.19], [-w*.98, -h*.38], [-w, -h*.29], [-w*.32, h*.37], // right arm
+                   [-w*.09, h*.56], [-w*.11, h*.78], [w*.11, h*.78], [w*.09, h*.56], // head
+                ]
+                points.push(points[0]); //complete shape - closes off the shape by joining the last and first points
+                    
+                return d3.svg.line()(points);
+            },
+            maleStandard: function(h, w) {
+        
+                 var points = [
+                    [w*.32, h*.37], [w, -h*.29], [w*.98, -h*.34], [w*.45, h*.1], // left arm
+                  [w*.26, h*.13], [w*.25, -h*.22], // left waist
+                  [w*.52, -h*.97], [w*.28, -h], [w*.11, -h*.35], //left leg
+                    [0, -h*.25], //groin
+                  [-w*.11, -h*.35], [-w*.28, -h], [-w*.52, -h*.97], //right leg
+                   [-w*.25, -h*.22], [-w*.26, h*.13], // right waist
+                    [-w*.45, h*.1], [-w*.98, -h*.34], [-w, -h*.29], [-w*.32, h*.37], // right arm
+                   [-w*.09, h*.56], [-w*.11, h*.81], [w*.11, h*.81], [w*.09, h*.56], // head
+                ]
+                points.push(points[0]); //complete shape - closes off the shape by joining the last and first points
+                    
+                return d3.svg.line()(points);
+            },
+            maleMuscular: function(h, w) {
+            
+                 var points = [
+                    [w*.32, h*.41], [w, -h*.27], [w*.95, -h*.37], [w*.45, h*.1], // left arm
+                  [w*.32, h*.13], [w*.25, -h*.22], // left waist
+                  [w*.52, -h*.97], [w*.28, -h], [w*.15, -h*.35], //left leg
+                    [0, -h*.19], //groin
+                  [-w*.15, -h*.35], [-w*.28, -h], [-w*.52, -h*.97], //right leg
+                   [-w*.25, -h*.22], [-w*.32, h*.13], // right waist
+                    [-w*.45, h*.1], [-w*.95, -h*.37], [-w, -h*.27], [-w*.32, h*.41], // right arm
+                   [-w*.09, h*.59], [-w*.11, h*.87], [w*.11, h*.87], [w*.09, h*.59], // head
+                ]
+                points.push(points[0]); //complete shape - closes off the shape by joining the last and first points
+                    
+                return d3.svg.line()(points);
+            }   
+        }    
+        return flow_shapes;
+    }
+}
+
+
+personBuilder.init();
+//personBuilder.renderData();
+
+
+});//]]>  
+
+</script>
+  
+</body>
+
+
+</html>
+
