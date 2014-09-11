@@ -6,7 +6,6 @@ from .models import Greeting
 import string
 import re
 from nltk import *
-from pymedtermino.snomedct import *
 import json
 
 # Create your views here.
