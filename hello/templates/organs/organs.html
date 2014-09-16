@@ -38,7 +38,12 @@
 }
 
 .motives{
-    background: #eeeeee;    
+    background: #FFFFFF;    
+}
+
+#slider_text{
+  font-size: 25px;
+  fill: grey;
 }
 
 .tooltip {
@@ -46,6 +51,49 @@
     height: 600px;
     overflow: scroll;
 }
+
+#control {
+        position: fixed;
+        height:300;
+        left: 20px;
+        top: 20px;
+      }
+
+#person {z-index: 1}
+
+#slider
+{
+  -webkit-appearance: none !important;
+    width:800px;
+    height:52px;
+    z-index:-1;
+    /*background-image:url("{{ MEDIA_URL }}/slider.png");*/
+    background-color:rgba(0,0,0,0);
+}
+::-webkit-slider-thumb 
+    {
+    -webkit-appearance: none;
+    background-image: url("{{ MEDIA_URL }}/slider.png");
+    opacity: 0.3;
+    width: 180px;
+    height: 52px;
+    position: relative;
+    top: 0px;
+    z-index: -99;
+ }
+::-moz-range-thumb{
+    /*background-image: url("{{ MEDIA_URL }}/slider.png");*/
+    width:40px;
+    height:52px;
+   }
+::-ms-thumb{
+    /*background-image: url("{{ MEDIA_URL }}/slider.png");*/
+    width:40px;
+    height:52px;
+    z-index: -9999;
+    display: block;
+    background-color: transparent;
+   }
   </style>
 
 
@@ -54,19 +102,20 @@
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/d3.superformula.v0.min.js"></script>
-
+<div id="holder">
+    <div id="person"></div>
+</div>
     <div id="control">
-      <label>Show flows for </label><label id="month" name="month">07</label>, <label id="year" name="year">2013</label>:
+      <!--<label>Show flows for </label><label id="month" name="month">07</label>, <label id="year" name="year">2013</label>-->
       <form>
       <input id="slider" type="range" name="slider" min="0" max="1" value="0" step="1"/>
       </form>
     </div>
-	
-    <div id="holder">
-		<div id="person"></div>
-	</div>
+
 
 <script type='text/javascript'>//<![CDATA[ 
+
+
 
 var input_text1;
 var input_text2;
@@ -79,6 +128,46 @@ var slider;
 
 //organs
 var heart;
+var skeleton;
+var liver;
+var large_bowel;
+var small_bowel;
+var stomach;
+var vessels;
+var lungs;
+var brain;
+var kidneys;
+var spleen;
+var pancreas;
+var blood;
+
+//other variables
+var doctor_name;
+var patient_name;
+var rothman_index;
+//function to figure out the color matched to rothman index
+var DOB;
+var code_status;
+//can make enum or list of possible values for code status
+var pcp;
+var current_date;
+var slider_text;
+var HPI_text;
+var PE_text;
+var problem_list;
+var vitals_data;
+var lab_data;
+var imaging_data;
+var medication_data;
+var allergy_data;
+var ekg_data;
+var FH;
+var SH;
+
+var organs_list_matching_problems;
+
+
+var input_data;
 
 /*
 * This is the function that actually highlights a text string by
@@ -195,13 +284,42 @@ function searchPrompt(defaultSearchText,divId,isPrompt,treatAsPhrase,textColor, 
 }
 
 
-function renderData()
+function renderData(timeLineValue)
 {
+    updateData(timeLineValue)
     //searchPrompt("67","#tooltip", false, false);
-    tooltip.text(input_text2)
-    d3.select("body")
-        .append("text")
-        .text(problems2[0]);
+    //alert("rendering the data!");
+    //tooltip.text(input_text2)
+    //d3.select("body")
+    //    .append("text")
+    //    .text(problems2[0]);
+    make_organs_opaque();
+}
+
+function make_organs_opaque()
+{
+    organs_list_matching_problems.forEach(
+      function(org)
+      {
+          org.style("opacity", 1);
+      });
+}
+
+function updateData(timeLineValue)
+{
+    //alert("updating the data!");
+    problem_list = ["NSTEM", "HTN", "Anemia", "DM"];
+    organs_list_matching_problems = [heart, vessels, blood, pancreas];
+    if (timeLineValue==0)
+    {
+      organs_list_matching_problems = [ blood];
+       slider_text.text("Sept 15, 2014");
+    }
+    else
+    {
+      organs_list_matching_problems = [heart, vessels, blood, pancreas];
+      slider_text.text("Dec 5, 2014");
+    }
 }
 
 $(window).load(function(){
@@ -213,11 +331,10 @@ var personBuilder = {
             .attr("class", "tooltip")
             .attr("id", "#tooltip")
             .style("position", "absolute")
-            .style("z-index", "10")
+            //.style("z-index", "10")
             .style("visibility", "hidden")
             //.text(input_text)//"Custom Scrollbar The scrollbar can use the styles and images you choose. Both vertical and horizontal scroll bars are supported by the code. Drag the drag bar or click on the track to scroll using the scrollbar.")
             .on("mouseleave", function(){return tooltip.style("visibility", "hidden");});
-
 
         /**
         d3.text("case1.tsv", function(data) 
@@ -259,16 +376,31 @@ var personBuilder = {
             .attr("transform", "translate("+padding+","+padding+")")
             .on("mouseenter", function(){return tooltip.style("visibility", "visible").style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
             //.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
-            
+
+        slider_text = svg.append("g").append("text")
+              .attr("id", "slider_text")
+              .style("z-index", "5")
+              .attr("x", "35")
+              .attr("y", "25");
 
         d3.select("#slider").on('change', function(d) {
           //var current = years[parseInt(this.value)],
-
+          //alert(this.value);
+          slider_text.attr("transform", "translate("+(87*this.value*7)+ " ,0)");
           //year = current.substring(0, 4),
           //month = current.substring(5);
-          d3.select("#month").text(""+month);
-          d3.select("#year").text(""+year);
-            renderData();
+          //d3.select("#month").text(""+month);
+          //d3.select("#year").text(""+year);
+            renderData(this.value);
+            //slider_text.style("visibility", "visible");
+        });
+
+        d3.select("#slider").on('mousedown', function(d) {
+          slider_text.style("visibility", "hidden");
+        });
+
+        d3.select("#slider").on('mouseup', function(d) {
+          slider_text.style("visibility", "visible");
         });
         
         this.peoples = svg.append("g")
@@ -439,98 +571,109 @@ var personBuilder = {
 
         //i think you can name each of these variables
 
-        pictures.enter()
+        skeleton = pictures.enter()
             .append("svg:image")
             .attr("xlink:href", "{{ MEDIA_URL }}/human-skeletal-system-front-view-stocktrek-images.png")
             .attr("x", "187")
             .attr("y", "3")
+            .style("opacity", 0.03)
             .attr("width", "300")
             .attr("height", "500");
 
-        pictures.enter()
+        vessels = pictures.enter()
             .append("svg:image")
             .attr("xlink:href", "{{ MEDIA_URL }}/vascular.png")
             .attr("transform", "scale(1.25,1)")
             .attr("x", "120")
             .attr("y", "3")
+            .style("opacity", 0.03)
             .attr("width", "330")
             .attr("height", "500");
 
-        pictures.enter()
+        brain = pictures.enter()
             .append("svg:image")
             .attr("xlink:href", "{{ MEDIA_URL }}/Brain-Art.png")
             .attr("x", "305")
             .attr("y", "20")
+            .style("opacity", 0.03)
             .attr("width", "60")
             .attr("height", "60");
 
-        pictures.enter()
+        kidneys = pictures.enter()
           .append("svg:image")
           .attr("xlink:href", "{{ MEDIA_URL }}/kidneys.png")
           .attr("transform", "scale(1.4)")
           .attr("x", "218")
           .attr("y", "108")
+          .style("opacity", 0.03)
           //.style("visibility", "hidden")
           .attr("width", "40")
           .attr("height", "40");
 
 
-        pictures.enter()
+        pancreas = pictures.enter()
             .append("svg:image")
             .attr("xlink:href", "{{ MEDIA_URL }}/pancreas.png")
             .attr("transform", "translate(330,140) rotate(20)")
+            .style("opacity", 0.03)
             .attr("width", "40")
             .attr("height", "40");
 
-        pictures.enter()
+        stomach = pictures.enter()
             .append("svg:image")
             .attr("xlink:href", "{{ MEDIA_URL }}/small_dyspepsia.png")
             .attr("transform", "scale(1.4)")
             .attr("x", "225")
             .attr("y", "95")
-            .style("visibility", "hidden")
+            .style("opacity", 0.03)
+            //.style("visibility", "hidden")
             .attr("width", "40")
             .attr("height", "40");
 
-        pictures.enter()
+        lungs = pictures.enter()
             .append("svg:image")
             .attr("xlink:href", "{{ MEDIA_URL }}/lungs.png")
             .attr("x", "300")
             .attr("y", "100")
+            .style("opacity", 0.03)
             .attr("width", "70")
             .attr("height", "70");
 
-        pictures.enter()
+        spleen = pictures.enter()
             .append("svg:image")
             .attr("xlink:href", "{{ MEDIA_URL }}/spleen.png")
             .attr("x", "335")
             .attr("y", "150")
+            .style("opacity", 0.03)
             .attr("width", "35")
             .attr("height", "35");
 
-        pictures.enter()
+        small_bowel = pictures.enter()
             .append("svg:image")
             .attr("xlink:href", "{{ MEDIA_URL }}/small_bowel.png")
             .attr("x", "295")
             .attr("y", "170")
+            .style("opacity", 0.03)
             .attr("width", "85")
             .attr("height", "85");
 
-        pictures.enter()
+        large_bowel = pictures.enter()
             .append("svg:image")
             .attr("xlink:href", "{{ MEDIA_URL }}/large_bowel.png")
             .attr("transform", "scale(1.4)")
             .attr("x", "210")
             .attr("y", "130")
+            .style("opacity", 0.03)
             //.style("visibility", "hidden")
             .attr("width", "55")
             .attr("height", "55");
 
-        pictures.enter()
+        liver = pictures.enter()
             .append("svg:image")
             .attr("xlink:href", "{{ MEDIA_URL }}/Liver.png")
             .attr("x", "290")
             .attr("y", "140")
+            .style("opacity", 0.03)
             .attr("width", "90")
             //.style("visibility", "hidden")
             .attr("height", "90");
@@ -541,10 +684,19 @@ var personBuilder = {
             .attr("xlink:href", "{{ MEDIA_URL }}/black_heart.png")
             .attr("x", "325")
             .attr("y", "115")
+            .style("opacity", 0.03)
             .attr("width", "40")
             .attr("height", "40");
 
-        
+        blood = pictures.enter()
+            .append("svg:image")
+            .attr("xlink:href", "{{ MEDIA_URL }}/Blausen_0761_RedBloodCells.png")
+            .attr("x", "185")
+            .attr("y", "15")
+            .attr("transform", "scale(2)")
+            .style("opacity", 0.03)
+            .attr("width", "40")
+            .attr("height", "40");
     },
 
     addLabels: function(data){
@@ -732,7 +884,7 @@ var personBuilder = {
 
 
 personBuilder.init();
-//personBuilder.renderData();
+renderData(0);
 
 
 });//]]>  
