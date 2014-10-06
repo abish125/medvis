@@ -53,20 +53,21 @@
 }
 
 #control {
-        position: fixed;
         height:300;
         left: 20px;
         top: 20px;
       }
 
-#person {z-index: 1}
+.slider {z-index: -300;}
+
+.slider_text {z-index: 300;}
+
 
 #slider
 {
   -webkit-appearance: none !important;
     width:800px;
     height:52px;
-    z-index:-1;
     /*background-image:url("{{ MEDIA_URL }}/slider.png");*/
     background-color:rgba(0,0,0,0);
 }
@@ -79,7 +80,6 @@
     height: 52px;
     position: relative;
     top: 0px;
-    z-index: -99;
  }
 ::-moz-range-thumb{
     /*background-image: url("{{ MEDIA_URL }}/slider.png");*/
@@ -90,7 +90,6 @@
     /*background-image: url("{{ MEDIA_URL }}/slider.png");*/
     width:40px;
     height:52px;
-    z-index: -9999;
     display: block;
     background-color: transparent;
    }
@@ -103,15 +102,15 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/d3.superformula.v0.min.js"></script>
 <div id="holder">
-    <div id="person"></div>
-</div>
-    <div id="control">
+    <div id="person">
+    <div id="control" class="slider">
       <!--<label>Show flows for </label><label id="month" name="month">07</label>, <label id="year" name="year">2013</label>-->
       <form>
       <input id="slider" type="range" name="slider" min="0" max="1" value="0" step="1"/>
       </form>
     </div>
-
+  </div>
+</div>
 
 <script type='text/javascript'>//<![CDATA[ 
 
@@ -124,6 +123,7 @@ var problems2;
 var tooltip;
 var svg;
 var slider;
+var slider_group;
 
 
 //organs
@@ -214,7 +214,6 @@ function doHighlight(DivText, searchTerm, highlightStartTag, highlightEndTag) {
 
     return newText;
 }
-
 
 /*
 * This is sort of a wrapper function to the doHighlight function.
@@ -367,21 +366,20 @@ var personBuilder = {
             .domain(d3.superformulaTypes)
             .rangePoints([0, 360], 1);
         
-        svg = d3.select("#person").append("svg")
+        svg = d3.select("#control").append("svg")
             .attr("width", w)
             .attr("height", h+20)
-            .attr("class", "motives")
+            .attr("class", "motives");
             //.on("mouseleave", function(){return tooltip.style("visibility", "hidden");})
-        .append("g")
-            .attr("transform", "translate("+padding+","+padding+")")
-            .on("mouseenter", function(){return tooltip.style("visibility", "visible").style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+        slider_group = svg.append("g");
+            //.on("mouseenter", function(){return tooltip.style("visibility", "visible").style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
             //.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
 
-        slider_text = svg.append("g").append("text")
+        slider_text = slider_group.append("text")
               .attr("id", "slider_text")
-              .style("z-index", "5")
+              .attr("class", "slider_text")
               .attr("x", "35")
-              .attr("y", "25");
+              .attr("y", "0");
 
         d3.select("#slider").on('change', function(d) {
           //var current = years[parseInt(this.value)],
@@ -394,6 +392,90 @@ var personBuilder = {
             renderData(this.value);
             //slider_text.style("visibility", "visible");
         });
+
+        left_info1 = svg.append("g")
+              .attr("transform", "translate("+padding+","+padding+")");
+
+        var hpi_down = false;
+        var hpi;
+        left_info1.append("text")
+              .text("HPI")
+              .attr("x", "35")
+              .attr("y", "100")
+              .on("click", function()
+              {
+                if (!hpi_down)
+                {
+                hpi = left_info1.append("g");
+                hpi.selectAll("text")
+                  .data([{"text":"chest pain","y":15}, {"text":"SOB","y":25}, {"text":"NO N/V","y":35}])
+                  .enter().append("text")
+                  .text(function(d) {return d.text;})
+                  .attr("transform", function(d) { return "translate(0," + d.y*2 + ")"; });
+                  hpi_down = true;
+                }
+                else{
+                    hpi.selectAll("text").data([])
+                      .exit().remove();
+                    hpi_down = false;
+                }
+              });
+
+        left_info2 = svg.append("g")
+              .attr("transform", "translate("+padding+","+40+")");
+
+        var pe_down = false;
+        var pe;
+        left_info2.append("text")
+              .text("PE")
+              .attr("x", "35")
+              .attr("y", "100")
+              .on("click", function()
+              {
+                if (!pe_down)
+                {
+                pe = left_info2.append("g");
+                pe.selectAll("text")
+                  .data([{"text":"RRR s1s2 no mrg","y":15}, {"text":"CTAB","y":25}, {"text":"Abd soft,nt,nd","y":35}])
+                  .enter().append("text")
+                  .text(function(d) {return d.text;})
+                  .attr("transform", function(d) { return "translate(0," + d.y*2 + ")"; });
+                  pe_down = true;
+                }
+                else{
+                    pe.selectAll("text").data([])
+                      .exit().remove();
+                    pe_down = false;
+                }
+              });
+
+        left_info3 = svg.append("g")
+              .attr("transform", "translate("+padding+","+60+")");      
+
+        var prob_down = false;
+        var prob;
+        left_info3.append("text")
+              .text("Problems")
+              .attr("x", "35")
+              .attr("y", "100")
+              .on("click", function()
+              {
+                if (!prob_down)
+                {
+                prob = left_info3.append("g");
+                prob.selectAll("text")
+                  .data([{"text":"DM","y":15}, {"text":"NSTEMI","y":25}, {"text":"HTN","y":35}])
+                  .enter().append("text")
+                  .text(function(d) {return d.text;})
+                  .attr("transform", function(d) { return "translate(0," + d.y*2 + ")"; });
+                  prob_down = true;
+                }
+                else{
+                    prob.selectAll("text").data([])
+                      .exit().remove();
+                    prob_down = false;
+                }
+              });
 
         d3.select("#slider").on('mousedown', function(d) {
           slider_text.style("visibility", "hidden");

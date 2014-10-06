@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Medical Data Visualization</title>
+  
+  <script type='text/javascript' src='//code.jquery.com/jquery-1.9.1.js'></script>
+  
+  <script src="http://d3js.org/d3.v2.min.js?2.10.0"></script>
+  <script>
+  
+  </script>
+    
+
+
+</head>
+<body>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/d3.superformula.v0.min.js"></script>
+
+    <div id="control" class="slider">
+      
+    </div>
+
+<script type='text/javascript'>
+
+var svg, slider_group, hpi_down, hpi, pe_down, pe, prob_down, prob;
+
+var h = 550;
+var w = 1100;
+
+var padding = 20;
+
+sidebar = [
+  { "title": "HPI",
+    "contents": [{"text":"chest pain","y":15}, {"text":"SOB","y":25}, {"text":"NO N/V","y":35}],
+    "open": false,
+    "prior_open": false,
+    "subgroup": "hello"},
+  { "title": "PE",
+    "contents": [{"text":"RRR s1s2 no mrg","y":15}, {"text":"CTAB","y":25}, {"text":"Abd soft,nt,nd","y":35}],
+    "open": false,
+    "prior_open": false,
+    "subgroup": "hello"},
+  {"title": "Problems",
+    "contents": [{"text":"DM","y":15}, {"text":"NSTEMI","y":25}, {"text":"HTN","y":35}],
+    "open": false,
+    "prior_open": false,
+    "subgroup": "hello" }];
+
+svg = d3.select("#control").append("svg")
+            .attr("width", w)
+            .attr("height", h+20)
+            .attr("class", "motives");
+
+var titles;
+
+//for(var k = 0; k<sidebar.length; ++k)
+//{
+//var subgroup;
+
+titles = svg.append("g")
+    .attr("transform", "translate("+padding+","+padding+")");
+titles.selectAll("text")
+    .data(sidebar)
+    .enter()
+    .append("text")
+    .text(function(d) {return d.title})
+    .attr("x", "35")
+    .attr("y", function(d,i) {
+      if (d.open)
+      {
+        d.subgroup = titles.append("g");
+        d.subgroup.selectAll("text")
+        .data(d.contents)
+        .enter().append("text")
+        .text(function(d) {return d.text;})
+        .attr("transform", function(d) { return "translate(0," + d.y*5 + ")"; });
+      }
+      /**if (d.prior_open)
+      {
+        return 100*i;
+      }
+      else
+      {
+        return 30*i;
+      }**/
+      return 30*i;
+    })
+    .on("click", function(d,i)
+              {
+                if (d.open)
+                {
+                  d.open = false;
+                  d.subgroup.selectAll("text").data([]).exit().remove();
+                }
+                else{
+                  d.open = true;
+                }
+                update_priors();
+                rerender_info();
+              });
+
+function rerender_info()
+{
+titles = svg.append("g")
+    .attr("transform", "translate("+padding+","+padding+")");
+titles.selectAll("text")
+    .data(sidebar)
+    .enter()
+    .append("text")
+    .text(function(d) {return d.title})
+    .attr("x", "35")
+    .attr("y", function(d,i) {
+      if (d.open)
+      {
+        d.subgroup = titles.append("g");
+        d.subgroup.selectAll("text")
+        .data(d.contents)
+        .enter().append("text")
+        .text(function(d) {return d.text;})
+        .attr("transform", function(d) { return "translate(0," + d.y*5 + ")"; });
+      } 
+      /**if (d.prior_open)
+      {
+        return 100*i;
+      }
+      else
+      {
+        return 30*i;
+      }**/
+      return 30*i;
+    })
+    .on("click", function(d,i)
+              {
+                if (d.open)
+                {
+                  d.open = false;
+                  d.subgroup.selectAll("text").data([]).exit().remove();
+                }
+                else{
+                  d.open = true;
+                }
+                update_priors();
+                rerender_info();
+              });
+}
+/**
+var data = [200, 300, 250];
+
+var svg = d3.select('body').append('svg');
+var lines = svg.selectAll('line').data(data);
+
+function x(d, i) { return i * 50 + 50; }
+function y(d) { return d - 180; }
+function previous(func, seed) {
+  return function(d, i) {
+    return i > 0 ? func(data[i-1], i-1) : (seed || 0);
+  }
+}
+
+lines.enter()
+  .append('line')
+  .attr( {
+    'stroke-width': 2,
+    stroke: '#000',
+    x1: previous(x), 
+    y1: previous(y),
+    x2: x,
+    y2: y
+  });
+**/ 
+
+function update_priors()
+{
+  previous= false;
+  sidebar.forEach(function(sb)
+  {
+    if(previous)
+    {
+      sb.prior_open = true;
+    }
+    else
+    {
+      sb.prior_open = false;
+    }
+    if(sb.open)
+    {
+      previous = true;
+    }
+    else
+    {
+      previous = false;
+    }
+  })
+}
+
+/**function rerender_info()
+{
+subgroup = titles.append("g");
+                  subgroup.selectAll("text")
+                  .data(d.contents)
+                  .enter().append("text")
+                  .text(function(d) {return d.text;})
+                  .attr("transform", function(d) { return "translate(0," + d.y*2 + ")"; });
+
+subgroup.selectAll("text").data([])
+                      .exit().remove(); 
+}**/
+//}
+
+/*
+
+        left_info1 = svg.append("g")
+              .attr("transform", "translate("+padding+","+padding+")");
+
+        var hpi_down = false;
+        var hpi;
+        left_info1.append("text")
+              .text("HPI")
+              .attr("x", "35")
+              .attr("y", "100")
+              .on("click", function()
+              {
+                alert(left_info1);
+                if (!hpi_down)
+                {
+                hpi = left_info1.append("g");
+                hpi.selectAll("text")
+                  .data([{"text":"chest pain","y":15}, {"text":"SOB","y":25}, {"text":"NO N/V","y":35}])
+                  .enter().append("text")
+                  .text(function(d) {return d.text;})
+                  .attr("transform", function(d) { return "translate(0," + d.y*2 + ")"; });
+                  hpi_down = true;
+                }
+                else{
+                    hpi.selectAll("text").data([])
+                      .exit().remove();
+                    hpi_down = false;
+                }
+              });
+
+        left_info2 = svg.append("g")
+              .attr("transform", "translate("+padding+","+40+")");
+
+        var pe_down = false;
+        var pe;
+        left_info2.append("text")
+              .text("PE")
+              .attr("x", "35")
+              .attr("y", "100")
+              .on("click", function()
+              {
+                if (!pe_down)
+                {
+                pe = left_info2.append("g");
+                pe.selectAll("text")
+                  .data([{"text":"RRR s1s2 no mrg","y":15}, {"text":"CTAB","y":25}, {"text":"Abd soft,nt,nd","y":35}])
+                  .enter().append("text")
+                  .text(function(d) {return d.text;})
+                  .attr("transform", function(d) { return "translate(0," + d.y*2 + ")"; });
+                  pe_down = true;
+                }
+                else{
+                    pe.selectAll("text").data([])
+                      .exit().remove();
+                    pe_down = false;
+                }
+              });
+
+        left_info3 = svg.append("g")
+              .attr("transform", "translate("+padding+","+60+")");      
+
+        var prob_down = false;
+        var prob;
+        left_info3.append("text")
+              .text("Problems")
+              .attr("x", "35")
+              .attr("y", "100")
+              .on("click", function()
+              {
+                if (!prob_down)
+                {
+                prob = left_info3.append("g");
+                prob.selectAll("text")
+                  .data([{"text":"DM","y":15}, {"text":"NSTEMI","y":25}, {"text":"HTN","y":35}])
+                  .enter().append("text")
+                  .text(function(d) {return d.text;})
+                  .attr("transform", function(d) { return "translate(0," + d.y*2 + ")"; });
+                  prob_down = true;
+                }
+                else{
+                    prob.selectAll("text").data([])
+                      .exit().remove();
+                    prob_down = false;
+                }
+              });
+**/
+</script>
+  
+</body>
+
+
+</html>
+
