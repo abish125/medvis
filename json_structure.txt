@@ -1,0 +1,97 @@
+sidebar = [
+  { "title": "HPI",
+    "contents": [{"text":"chest pain","y":15}, {"text":"SOB","y":25}, {"text":"NO N/V","y":35}],
+    "open": false},
+  { "title": "PE",
+    "contents": [{"text":"RRR s1s2 no mrg","y":15}, {"text":"CTAB","y":25}, {"text":"Abd soft,nt,nd","y":35}],
+    "open": false},
+  {"title": "Problems",
+    "contents": [{"text":"DM","y":15}, {"text":"NSTEMI","y":25}, {"text":"HTN","y":35}],
+    "open": false}];
+
+
+ Overall = [
+ 	{"Patient ID": "0000000",
+ 		"Patient Name": "Claus, Santa",
+ 		"DOB": "3/25/14",
+ 		"Dates":
+ 			[{"Date": "6/22/2014",
+ 				"Sources":
+ 				[{"Source": "Admission Note",
+ 					"Specialties":
+ 						[{"Specialty":"Cardiology",
+ 						 "Specialty":"Endocrinology"}]},
+ 					"Organs":
+ 						[{"Organ":"Heart",
+ 						"Organ":"Pancreas"}]
+ 				{"Source": "Labs"},
+ 				{"Source": "Chest Xray"}]},
+ 			{"Date": "6/23/2014",
+ 				"Sources":
+ 				[{"Source": "Progress Note"},
+ 				{"Source": "Labs"}]},
+ 			{"Date": "9/1/2014"},
+ 	  		{"Date": "10/7/2014"}]
+ 	  }]
+
+/** Hierarchy structure
+
+Patient(ID) -> Date -> Source -> Category (organ vs specialty vs part of the body) -> Problem -> details 
+Patient(ID) -> Date -> Source -> Specialty -> Problem -> details
+Patient(ID) -> Date -> Source -> part of the body -> Problem -> details
+Patient(ID) -> Date -> Source -> organ -> Problem -> details
+
+We need an association between categories (organ vs specialty vs part of the body)
+part of body can have many organs and many specialties
+specialty can have many parts of body and many organs
+organ can have many specialties (skin can have both dermatology and rheumatology) and many parts of body (small intestine covers the all quadrants of the abdomen)
+
+Problems:
+These can be quite broad and quite specific. We need to have levels of problems:
+We also need types of problems (chronic vs acute, resolved vs continued, treated vs untreated, iatrogenic (caused by the hospital) vs organic)
+The SNOMEDCT database that I have access to will help with a hierarchy of problems and their associated organ etc.
+
+How do notes fit into this? Notes are one of the sources...
+other sources include lab values from the laboratory, ct scan images, nursing documentation, vital sign data, post-op notes, discharge notes, most sources will be text that need to be parsed. 
+
+what if you have info that does not fit under a problem? Let's say the lab values are normal? 
+We could still have problems under the note that are not actually present for that patient. Like hyponatremia may be a problem for a patient note, but if the sodium is normal that would be false under hyponatremia for that patient.
+
+So there will be a certain number of problems that every patient is assessed for and sometimes we will add problems for some patients depending on what the source says. 
+
+The structure of the details under the problem should be organized like the note is generally organized:
+history data associated with the patient (hpi, pmh, sh, fh, meds, allergies, ros)
+physical exam data associated with the patient (vitals, general, lungs, heart, abdomen, extremities, neuro, heent, etc.)
+Assessment and plan should also be included here.
+
+There needs to be different ways of organizing this data as well. We should also be able to organize details by category, whether that be organ, specialty, or part of the body. Which would look like this: 
+Patient(ID) -> Date -> Source -> Category (organ vs specialty vs part of the body) -> details
+
+I think some power will be derived from connections we have between organ, part of body, specialty and the overlapping details and how they associate with the problem.
+Example: CHEST PAIN 
+--> CHEST (this is a part of the body that has many organs and many specialties): 
+--------> this part of the body may have a long list of possible problems under it.
+--> PAIN this is a detail under that category that may have many other attributes... (can decide how that is set up later)
+--------> this also will have many problems associated with it 
+We can find the overlap between the two and have a list of problems associated with chest pain (later on we will also maybe have likelihoods also measure for these things)
+
+As we get more details like SHORTNESS OF BREATH:
+shortness of breath: organ lungs (with associated specialties and parts of body)
+detail: symptom shortness of breath: associated with many problems 
+
+Find the overlap between CHEST PAIN and SHORTNESS OF BREATH
+**/ 
+
+/** List of things to include
+
+Connecting problems that show up from multiple different sources. (maybe a statistical analysis on this since there will be a lot of sources... might not be worth doing early on)
+
+**/
+
+/** Things to consider
+
+How to connect the actual visualization to the data? 
+If we have 20 problems from one day do we show all of them or just the ones that show up most often or just the ones that are "important" how do we figure that out so we're not showing too much data? 
+Important if they are mentioned at the end of the physician note in the assessment and plan
+
+**/

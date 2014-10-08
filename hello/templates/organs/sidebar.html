@@ -36,19 +36,13 @@ var padding = 20;
 sidebar = [
   { "title": "HPI",
     "contents": [{"text":"chest pain","y":15}, {"text":"SOB","y":25}, {"text":"NO N/V","y":35}],
-    "open": false,
-    "prior_open": false,
-    "subgroup": "hello"},
+    "open": false},
   { "title": "PE",
     "contents": [{"text":"RRR s1s2 no mrg","y":15}, {"text":"CTAB","y":25}, {"text":"Abd soft,nt,nd","y":35}],
-    "open": false,
-    "prior_open": false,
-    "subgroup": "hello"},
+    "open": false},
   {"title": "Problems",
     "contents": [{"text":"DM","y":15}, {"text":"NSTEMI","y":25}, {"text":"HTN","y":35}],
-    "open": false,
-    "prior_open": false,
-    "subgroup": "hello" }];
+    "open": false}];
 
 svg = d3.select("#control").append("svg")
             .attr("width", w)
@@ -56,6 +50,7 @@ svg = d3.select("#control").append("svg")
             .attr("class", "motives");
 
 var titles;
+var subgroups = [];
 
 //for(var k = 0; k<sidebar.length; ++k)
 //{
@@ -173,6 +168,7 @@ lines.enter()
   });
 **/ 
 
+/**
 function update_priors()
 {
   previous= false;
@@ -196,6 +192,7 @@ function update_priors()
     }
   })
 }
+**/
 
 /**function rerender_info()
 {
