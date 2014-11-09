@@ -13,17 +13,31 @@ sidebar = [
  Overall = [
  	{"Patient ID": "0000000",
  		"Patient Name": "Claus, Santa",
- 		"DOB": "3/25/14",
+ 		"DOB": "3/25/1944",
  		"Dates":
  			[{"Date": "6/22/2014",
  				"Sources":
  				[{"Source": "Admission Note",
  					"Specialties":
  						[{"Specialty":"Cardiology",
+ 							"Problems":
+ 								[{"Problem":"NSTEMI",
+ 									"Details":
+ 										[{
+ 											"Troponin": "1.23",
+ 											"EKG":
+ 												[{"Intervals":
+ 													[{"PR": "0.2",
+ 													  "RR": ""}]
+ 										}]}]
  						 "Specialty":"Endocrinology"}]},
  					"Organs":
  						[{"Organ":"Heart",
- 						"Organ":"Pancreas"}]
+ 						"Organ":"Pancreas"}],
+ 					"Body Part":
+ 						[{"Body Part": "Chest",
+ 						"Body Part": "Toes",
+ 						"Body Part": "Fingers"}]
  				{"Source": "Labs"},
  				{"Source": "Chest Xray"}]},
  			{"Date": "6/23/2014",

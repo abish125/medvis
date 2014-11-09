@@ -1,0 +1,57 @@
+<!DOCTYPE html >
+<html >
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>d3 x3dom demo</title>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+    <script type="text/javascript" src="http://x3dom.org/x3dom/example/x3dom.js"></script>
+  </head>
+  <body>
+    <script>
+
+    var body_part = [];
+    d3.csv("{{ MEDIA_URL }}/body_part.csv", function(d) {
+      body_part.push({id: +d.id, x:+d.cp_x,y:+d.cp_y, z: +d.cp_z, name: d.name, snomedct_code: d.snomed_ct_code});
+    }, function(error, r) {
+      console.log(r);
+    });
+
+    /**
+    var organ = [];
+    d3.csv("{{ MEDIA_URL }}/organ.csv", function(d) {
+      organ.push({x:+d.cp_x,y:+d.cp_y, z: +d.cp_z, name: d.name});
+    }, function(error, r) {
+      console.log(r);
+    });
+      
+  var specialty = [];
+  d3.csv("{{ MEDIA_URL }}/specialty.csv", function(d) {
+  specialty.push({x:+d.cp_x,y:+d.cp_y, z: +d.cp_z, name: d.name});
+    }, function(error, r) {
+      console.log(r);
+    });
+
+  var org_spec = []
+  d3.csv("{{ MEDIA_URL }}/org_spec.csv", function(d) {
+      org_spec.push({x:+d.cp_x,y:+d.cp_y, z: +d.cp_z, name: d.name});
+    }, function(error, r) {
+      console.log(r);
+    });
+
+  var spec_part = [];
+    d3.csv("{{ MEDIA_URL }}/spec_part.csv", function(d) {
+    spec_part.push({x:+d.cp_x,y:+d.cp_y, z: +d.cp_z, name: d.name});
+    }, function(error, r) {
+      console.log(r);
+    });
+
+    var org_part = [];
+    d3.csv("{{ MEDIA_URL }}/org_part.csv", function(d) {
+      org_part.push({x:+d.cp_x,y:+d.cp_y, z: +d.cp_z, name: d.name});
+    }, function(error, r) {
+      console.log(r);
+    });**/
+    </script>
+  </body>
+</html>

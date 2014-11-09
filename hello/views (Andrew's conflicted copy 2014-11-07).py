@@ -10,7 +10,7 @@ import json
 
 # Create your views here.
 def index(request):
-	return render(request, 'organs/index.html')
+	return render(request, 'organs/organize_data.html')
 
 
 def db(request):
