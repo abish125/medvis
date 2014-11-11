@@ -10,7 +10,7 @@ import json
 
 # Create your views here.
 def index(request):
-	return render(request, 'organs/using_queue_for_csv.html')
+	return render(request, 'organs/clean_code1.html')
 
 
 def db(request):
