@@ -93,10 +93,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = 'gettingstarted/media'
+MEDIA_ROOT = 'gettingstarted/media/'
 MEDIA_URL = '/media/'
 
+TEMPLATE_URL = '../templates/'
 
+ORGAN_URL = '../templates/organs/'
 
 
 # Parse database configuration from $DATABASE_URL
@@ -117,4 +119,4 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'gettingstarted.settings'

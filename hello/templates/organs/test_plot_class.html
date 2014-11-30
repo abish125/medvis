@@ -1,0 +1,492 @@
+<!DOCTYPE html >
+<html>
+
+<style>
+body {
+    font: 11px sans-serif;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.dot {
+    stroke: #000;
+    fill: steelblue;
+}
+.tooltip {
+    position: absolute;
+    width: 200px;
+    height: 28px;
+    pointer-events: none;
+}
+.selected {
+    stroke: #000;
+    fill: red;
+}
+.button {
+    border-top: 1px solid #96d1f8;
+    background: #65a9d7;
+    background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
+    background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
+    background: -moz-linear-gradient(top, #3e779d, #65a9d7);
+    background: -ms-linear-gradient(top, #3e779d, #65a9d7);
+    background: -o-linear-gradient(top, #3e779d, #65a9d7);
+    padding: 5px 10px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
+    -moz-box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
+    box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
+    text-shadow: rgba(0, 0, 0, .4) 0 1px 0;
+    color: white;
+    font-size: 14px;
+    font-family: Georgia, serif;
+    text-decoration: none;
+    vertical-align: middle;
+}
+.button:hover {
+    border-top-color: #28597a;
+    background: #28597a;
+    color: #ccc;
+}
+.button:active {
+    border-top-color: #1b435e;
+    background: #1b435e;
+}
+#divSearch {
+    width: 300px;
+    position: absolute;
+    margin-left: 600px;
+    height: 16px;
+}
+#divResults {
+    width: 120px;
+    position: absolute;
+    margin-left: 800px;
+    margin-top: 50px;
+    height: 20px;
+}
+#divAdd {
+    margin:0px;
+    width: 1000px;
+    position: absolute;
+    height: 20px;
+}
+
+#organ_add_textbox
+{
+    margin-left: 500px;
+}
+
+</style>
+
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>3D Scatter Plot</title>
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="http://x3dom.org/x3dom/dist/x3dom-full.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script type="text/javascript" src="plot_class.js"></script>
+    <script type="text/javascript" src="spec_org_class.js"></script>
+    <script type="text/javascript">
+    // Create a 3d scatter plot within d3 selection parent.
+    var body_part;
+    var selected_parts = [];
+    var first_click = 1;
+    var new_point = {};
+    var manager;
+    var add_mode = false;
+    var spec_svg;
+
+    function scatterPlot3d(parent) {
+
+        var x3d = parent
+            .append("x3d")
+            .style("width", parseInt(parent.style("width")) + "px")
+            .style("height", parseInt(parent.style("height")) + "px")
+            .style("border", "none")
+
+        var scene = x3d.append("scene")
+
+        scene.append("orthoviewpoint")
+            .attr("centerOfRotation", [5, 5, 5])
+            .attr("fieldOfView", [-5, -5, 15, 15])
+            .attr("orientation", [-0.5, 1, 0.2, 1.12 * Math.PI / 4])
+            .attr("position", [8, 4, 15])
+
+        var margin = {
+                top: 0,
+                right: 20,
+                bottom: 30,
+                left: 40
+            },
+            width = 300 - margin.left - margin.right,
+            height = 100 - margin.top - margin.bottom;
+
+        //spec_svg = d3.select("#divPlot").append("svg")
+        //    .attr("width", width + margin.left + margin.right)
+        //   .attr("height", height + margin.top + margin.bottom);
+
+        queue()
+            .defer(d3.csv, "body_part.csv")
+            .defer(d3.csv, "org_part.csv")
+            .defer(d3.csv, "spec_part.csv")
+            .defer(d3.csv, "specialty.csv")
+            .defer(d3.csv, "organ.csv")
+            .defer(d3.csv, "org_part.csv")
+            .await(function(error, csv_file_1, csv_file_2, csv_file_3, csv_file_4, csv_file_5, csv_file_6, whaterver_function_return_value) {
+                csv_file_1.forEach(function(d1) {
+                    d1.id = +d1.id;
+                    d1.x = +d1.cp_x;
+                    d1.y = +d1.cp_y;
+                    d1.z = +d1.cp_z;
+                    d1.organ_id = [];
+                    d1.specialty_id = [];
+                    d1.specialty_name = [];
+                    d1.organ_name = [];
+                    d1.select = false;
+                    csv_file_2.forEach(function(d2) {
+                        if (+d1.id == +d2.part_id) {
+                            d1.organ_id.push(+d2.org_id);
+                        }
+                    });
+                    csv_file_3.forEach(function(d3) {
+                        if (+d1.id == +d3.part_id) {
+                            d1.specialty_id.push(+d3.spec_id);
+                        }
+                    });
+                    csv_file_4.forEach(function(d4) {
+                        d1.specialty_id.forEach(function(id_spec) {
+                            if (+d4.id == id_spec) {
+                                d1.specialty_name.push(d4.name);
+                            }
+                        });
+                    });
+                    csv_file_5.forEach(function(d5) {
+                        d1.organ_id.forEach(function(id_org) {
+                            if (+d5.id == id_org) {
+                                d1.organ_name.push(d5.name);
+                            }
+                        });
+                    });
+                });
+                body_part = csv_file_1;
+                manager = new Manager();
+
+                var axisRange = [0, 10];
+                var scales = [];
+                var initialDuration = 0;
+                var defaultDuration = 800;
+                var ease = 'linear';
+                var time = 0;
+                var axisKeys = ["x", "y", "z"];
+
+                // Helper functions for initializeAxis() and drawAxis()
+                function axisName(name, axisIndex) {
+                    return ['x', 'y', 'z'][axisIndex] + name;
+                }
+
+                function constVecWithAxisValue(otherValue, axisValue, axisIndex) {
+                    var result = [otherValue, otherValue, otherValue];
+                    result[axisIndex] = axisValue;
+                    return result;
+                }
+
+                // Used to make 2d elements visible
+                function makeSolid(selection, color) {
+                    selection.append("appearance")
+                        .append("material")
+                        .attr("diffuseColor", color || "black")
+                    return selection;
+                }
+
+                // Initialize the axes lines and labels.
+                function initializePlot() {
+                    initializeAxis(0);
+                    initializeAxis(1);
+                    initializeAxis(2);
+                }
+
+                function initializeAxis(axisIndex) {
+                    var key = axisKeys[axisIndex];
+                    drawAxis(axisIndex, key, initialDuration);
+
+                    var scaleMin = axisRange[0];
+                    var scaleMax = axisRange[1];
+
+                    // the axis line
+                    var newAxisLine = scene.append("transform")
+                        .attr("class", axisName("Axis", axisIndex))
+                        .attr("rotation", ([
+                            [0, 0, 0, 0],
+                            [0, 0, 1, Math.PI / 2],
+                            [0, 1, 0, -Math.PI / 2]
+                        ][axisIndex]))
+                        .append("shape")
+                    newAxisLine
+                        .append("appearance")
+                        .append("material")
+                        .attr("emissiveColor", "lightgray")
+                    newAxisLine
+                        .append("polyline2d")
+                        // Line drawn along y axis does not render in Firefox, so draw one
+                        // along the x axis instead and rotate it (above).
+                        .attr("lineSegments", "0 0," + scaleMax + " 0")
+
+                    // axis labels
+                    var newAxisLabel = scene.append("transform")
+                        .attr("class", axisName("AxisLabel", axisIndex))
+                        .attr("translation", constVecWithAxisValue(0, scaleMin + 1.1 * (scaleMax - scaleMin), axisIndex))
+
+                    var newAxisLabelShape = newAxisLabel
+                        .append("billboard")
+                        .attr("axisOfRotation", "0 0 0") // face viewer
+                        .append("shape")
+                        .call(makeSolid)
+
+                    var labelFontSize = 0.6;
+
+                    newAxisLabelShape
+                        .append("text")
+                        .attr("class", axisName("AxisLabelText", axisIndex))
+                        .attr("solid", "true")
+                        .attr("string", key)
+                        .append("fontstyle")
+                        .attr("size", labelFontSize)
+                        .attr("family", "SANS")
+                        .attr("justify", "END MIDDLE")
+                }
+
+
+                // Assign key to axis, creating or updating its ticks, grid lines, and labels.
+                function drawAxis(axisIndex, key, duration) {
+
+                    var scale = d3.scale.linear()
+                        .domain([-5, 5]) // demo data range
+                        .range(axisRange)
+
+                    scales[axisIndex] = scale;
+
+                    var numTicks = 8;
+                    var tickSize = 0.1;
+                    var tickFontSize = 0.5;
+
+                    // ticks along each axis
+                    var ticks = scene.selectAll("." + axisName("Tick", axisIndex))
+                        .data(scale.ticks(numTicks));
+                    var newTicks = ticks.enter()
+                        .append("transform")
+                        .attr("class", axisName("Tick", axisIndex));
+                    newTicks.append("shape").call(makeSolid)
+                        .append("box")
+                        .attr("size", tickSize + " " + tickSize + " " + tickSize);
+                    // enter + update
+                    ticks.transition().duration(duration)
+                        .attr("translation", function(tick) {
+                            return constVecWithAxisValue(0, scale(tick), axisIndex);
+                        })
+                    ticks.exit().remove();
+
+                    // tick labels
+                    var tickLabels = ticks.selectAll("billboard shape text")
+                        .data(function(d) {
+                            return [d];
+                        });
+                    var newTickLabels = tickLabels.enter()
+                        .append("billboard")
+                        .attr("axisOfRotation", "0 0 0")
+                        .append("shape")
+                        .call(makeSolid)
+                    newTickLabels.append("text")
+                        .attr("string", scale.tickFormat(10))
+                        .attr("solid", "true")
+                        .append("fontstyle")
+                        .attr("size", tickFontSize)
+                        .attr("family", "SANS")
+                        .attr("justify", "END MIDDLE");
+                    tickLabels // enter + update
+                        .attr("string", scale.tickFormat(10))
+                    tickLabels.exit().remove();
+
+                    // base grid lines
+                    if (axisIndex == 0 || axisIndex == 2) {
+
+                        var gridLines = scene.selectAll("." + axisName("GridLine", axisIndex))
+                            .data(scale.ticks(numTicks));
+                        gridLines.exit().remove();
+
+                        var newGridLines = gridLines.enter()
+                            .append("transform")
+                            .attr("class", axisName("GridLine", axisIndex))
+                            .attr("rotation", axisIndex == 0 ? [0, 1, 0, -Math.PI / 2] : [0, 0, 0, 0])
+                            .append("shape")
+
+                        newGridLines.append("appearance")
+                            .append("material")
+                            .attr("emissiveColor", "gray")
+                        newGridLines.append("polyline2d");
+
+                        gridLines.selectAll("shape polyline2d").transition().duration(duration)
+                            .attr("lineSegments", "0 0, " + axisRange[1] + " 0")
+
+                        gridLines.transition().duration(duration)
+                            .attr("translation", axisIndex == 0 ? function(d) {
+                                return scale(d) + " 0 0";
+                            } : function(d) {
+                                return "0 0 " + scale(d);
+                            })
+                    }
+
+                }
+
+
+                function plotData(duration) {
+
+                    if (!body_part) {
+                        console.log("no rows to plot.")
+                        return;
+                    }
+
+                    var x = scales[0],
+                        y = scales[1],
+                        z = scales[2];
+                    var sphereRadius = 0.2;
+
+                    // Draw a sphere at each x,y,z coordinate.
+                    var datapoints = scene.selectAll(".datapoint").data(body_part);
+                    datapoints.exit().remove()
+
+                    var newDatapoints = datapoints.enter()
+                        .append("transform")
+                        .attr("class", "datapoint")
+                        .attr("scale", [sphereRadius, sphereRadius, sphereRadius])
+                        .attr("string", "hello")
+                        .append("shape")
+                    newDatapoints
+                        .append("appearance")
+                        .append("material");
+                    newDatapoints
+                        .append("sphere")
+                        .append("x3d:text")
+                        .attr("text", "hello")
+                        // Does not work on Chrome; use transform instead
+                        //.attr("radius", sphereRadius)
+
+                    datapoints.selectAll("shape appearance material")
+                        .attr("diffuseColor", function(d) {
+                            if (d.select) {
+                                return 'red';
+                            } else {
+                                return 'steelblue';
+                            }
+                        })
+
+                    datapoints.transition().ease(ease).duration(duration)
+                        .attr("translation", function(row) {
+                            return x(row[axisKeys[0]]) + " " + y(row[axisKeys[1]]) + " " + z(row[axisKeys[2]])
+                        })
+
+                    // Draw a stem from the x-z plane to each sphere at elevation y.
+                    // This convention was chosen to be consistent with x3d primitive ElevationGrid. 
+                    var stems = scene.selectAll(".stem").data(body_part);
+                    stems.exit().remove();
+                    var newStems = stems.enter()
+                        .append("transform")
+                        .attr("class", "stem")
+                        .append("shape");
+                    newStems
+                        .append("appearance")
+                        .append("material")
+                        .attr("emissiveColor", "gray")
+                    newStems
+                        .append("polyline2d")
+                        .attr("lineSegments", function(row) {
+                            return "0 1, 0 0";
+                        })
+
+                }
+
+                function updateData() {
+                    time += Math.PI / 8;
+                    if (x3d.node() && x3d.node().runtime) {
+                        /**for (var r=0; r<rows.length; ++r) {
+                          var x = rows[r].x;
+                          var z = rows[r].z;
+                          rows[r].y = 5*( Math.sin(0.5*x + time) * Math.cos(0.25*z + time));
+                        }**/
+                        plotData(defaultDuration);
+                    } else {
+                        console.log('x3d not ready.');
+                    }
+                }
+
+                //initializeDataGrid();
+                initializePlot();
+                setInterval(updateData, defaultDuration);
+                //alert(JSON.stringify(rows));
+            });
+
+    }
+
+    function add_button() {
+        add_mode = true;
+        d3.select("#select_btn").classed("button", false);
+        document.getElementById("select_btn").disabled = false;
+        d3.select("#add_btn").classed("button", true);
+        document.getElementById("add_btn").disabled = true;
+        document.getElementById("save_btn").disabled = false;
+    }
+
+    function select_button() {
+        add_mode = false;
+        d3.select("#select_btn").classed("button", true);
+        document.getElementById("select_btn").disabled = true;
+        d3.select("#add_btn").classed("button", false);
+        document.getElementById("add_btn").disabled = false;
+        document.getElementById("save_btn").disabled = true;
+    }
+
+    function save_button() {
+
+    }
+    </script>
+    <link rel="stylesheet" type="text/css" href="http://www.x3dom.org/download/dev/x3dom.css" />
+</head>
+
+<body>
+    <div id="divSearch" align="right">
+        <input type="text" id="search_textbox" name="search_textbox" value="search">
+        <input type="submit" id="search_button" name="search_button" value="Search">
+    </div>
+    <div id="divResults" style="visibility: hidden" align="right" style="width:100px">
+        These are the results
+    </div>
+
+    <div id="divPlot" style="position:relative;" align="left">
+        <input type="submit" name="button" id="select_btn" onclick="select_button()" value="select" class="button" disabled="true" />
+        <input type="submit" name="button" id="add_btn" onclick="add_button()" value="add" />
+        <input type="submit" name="button" id="save_btn" onclick="myfunction()" value="save" disabled="true" />
+    </div>
+    <div id="divAdd" style="visibility: visible">
+        <input type="text" id="specialty_add_textbox" value="specialty">
+        <input type="submit" id="add_specialty_button" name="add_specialty_button" value="Add Specialty">
+        <input type="text" id="organ_add_textbox" name="organ" value="organ">
+        <input type="submit" id="add_organ_button" name="add_organ_button" value="Add Organ">
+    </div>
+    <div 
+    <div id="divPlot"></div>
+    <script>
+    d3.select('html').style('height', '100%').style('width', '1150px');
+    d3.select('body').style('height', '100%').style('width', '1150px');
+    d3.select('#divPlot').style('width', "950px").style('height', "325px").style('align', 'center');
+    d3.select('save_btn').on("click", save_button);
+    scatterPlot3d(d3.select('#divPlot'));
+    </script>
+</body>
+
+</html>

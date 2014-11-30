@@ -1,14 +1,19 @@
 import requests
 from django.shortcuts import render
 from django.http import HttpResponse
-
+import os
 from .models import Greeting
+import string
+import re
+from nltk import *
+import json
 
 # Create your views here.
-def index(request):
-    r = requests.get('http://httpbin.org/status/418')
-    print r.text
-    return HttpResponse('<pre>' + r.text + '</pre>')
+def index(request):	
+	if request.POST:
+		name = request.POST['name']
+		age = request.POST['age']
+	return render(request, 'organs/test_plot_class2.html')
 
 
 def db(request):
