@@ -4,7 +4,7 @@ from django.views.decorators.csrf import requires_csrf_token, ensure_csrf_cookie
 from django.core.context_processors import csrf
 from django.http import HttpResponse
 import os
-from .models import Greeting
+#from .models import Greeting
 import string
 import re
 from nltk import *

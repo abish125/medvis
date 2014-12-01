@@ -1,6 +1,6 @@
 from django.db import models
 
-class Publication(models.Model):
+'''class Publication(models.Model):
     title = models.CharField(max_length=30)
 
     def __str__(self):              # __unicode__ on Python 2
@@ -32,3 +32,4 @@ class DOI(models.Model):
     doi = models.CharField(max_length=1000)
     name = models.CharField(max_length=1000)
     role = models.CharField(max_length=50)
+'''
