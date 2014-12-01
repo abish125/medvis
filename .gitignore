@@ -2,4 +2,8 @@ venv
 *.pyc
 staticfiles
 .env
+<<<<<<< HEAD
 .DS_Store
+=======
+.DS_Store
+>>>>>>> 197c0b10e6b859c0b45b0017a3c7cb307db2ac30
