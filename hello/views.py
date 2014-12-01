@@ -9,28 +9,34 @@ import string
 import re
 from nltk import *
 import json
+import csv
+
 
 # Create your views here.
 def index(request):	
 	c = {}
 	c.update(csrf(request))
 	#assert False, "hello"
-	print "hello"
 	if request.POST:
-		ame = request.POST['name']
+		name = request.POST['name']
 		age = request.POST['age']
-	#print name
 	return render(request, 'organs/test_plot_class2.html',c)
 
 def save(request):
 	c = {}
 	c.update(csrf(request))
-	#assert False, c
 	if request.POST:
+		id = request.POST['id']
 		name = request.POST['name']
-		age = request.POST['age']
-	print name
-	print age
+		snomedct_code = ""
+		cp_x = request.POST['x']
+		cp_y = request.POST['y']
+		cp_z = request.POST['z']
+		fd = open(os.getcwd() + '/gettingstarted/media/body_part.csv', 'a')
+		print [id, name, snomedct_code, cp_x, cp_y, cp_z];
+		fd.write("\n" + id+","+name+","+"Hello"+","+cp_x+","+cp_y+","+cp_z)
+		fd.close()
+		print "hello"
 	return render(request, 'test_post.html', c)
 
 def db(request):
