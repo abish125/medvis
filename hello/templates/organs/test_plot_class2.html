@@ -451,13 +451,16 @@ body {
     }
 
     function save_function() {
-
+        var new_id = body_part.length;
         $.ajax({
             url: 'save',
             type: "POST",
             data: {
-                name: 'name',
-                age: 'age',
+                id: new_id,
+                name: document.getElementById("add_name").value,
+                x: new_point.x, 
+                y: new_point.y,
+                z: new_point.z,
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(response) {
@@ -490,6 +493,7 @@ body {
     <div id="divAdd" style="visibility: visible">
         <input type="text" id="specialty_add_textbox" value="specialty">
         <input type="submit" id="add_specialty_button" name="add_specialty_button" value="Add Specialty">
+        <input type="text" id="add_name" name="name" value="name">
         <input type="text" id="organ_add_textbox" name="organ" value="organ">
         <input type="submit" id="add_organ_button" name="add_organ_button" value="Add Organ">
     </div>
