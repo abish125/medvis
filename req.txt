@@ -1,0 +1,15 @@
+Django==1.7.1
+South==1.0.1
+Werkzeug==0.9.6
+dj-database-url==0.3.0
+dj-static==0.0.6
+django-debug-toolbar==1.2.2
+django-extensions==1.4.8
+nltk==3.0.0
+redis==2.10.3
+requests==2.4.3
+rq==0.4.6
+six==1.8.0
+sqlparse==0.1.14
+static3==0.5.1
+wsgiref==0.1.2

@@ -4,7 +4,7 @@ from django.views.decorators.csrf import requires_csrf_token, ensure_csrf_cookie
 from django.core.context_processors import csrf
 from django.http import HttpResponse
 import os
-#from .models import Greeting
+from .models import Body_Point
 import string
 import re
 from nltk import *
@@ -41,10 +41,10 @@ def save(request):
 
 def db(request):
 
-    greeting = Greeting()
-    greeting.save()
+    body_point = Body_Point()
+    body_point.save()
 
-    greetings = Greeting.objects.all()
+    body_points = Body_Point.objects.all()
 
-    return render(request, 'db.html', {'greetings': greetings})
+    return render(request, 'db.html', {'body_points': body_points})
 
