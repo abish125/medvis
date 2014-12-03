@@ -227,6 +227,19 @@ var update = function(p) {
                 return "dot";
             }
         })
+        .on("click", function(d) {
+            body_part[body_part.indexOf(d)].select = !d.select;
+            d3.select(this).classed("selected", d.select);
+            p.plot1.update(p);
+            p.plot2.update(p);
+            p.plot3.update(p);
+            if (d.select) {
+                selected_parts.push(d);
+            } else {
+                selected_parts.splice(selected_parts.indexOf(d), 1);
+            }
+            draw_specialties();
+        })
 }
 
 var add_point = function(c) {
@@ -371,8 +384,49 @@ var add_mode = function() {
         });
 }
 
+var updateManager = function() {
+    this.plot1.selectAll("circle").data(body_part).enter().append("circle")
+    .attr("r", 3.5)
+        .attr("cx", this.plot1.xMap)
+        .attr("cy", this.plot1.yMap)
+        .attr("class", function(d) {
+            if (d.select) {
+                return "selected";
+            } else {
+                return "dot";
+            }
+        });
+    this.plot2.selectAll("circle").data(body_part).enter().append("circle")
+    .attr("r", 3.5)
+        .attr("cx", this.plot2.xMap)
+        .attr("cy", this.plot2.yMap)
+        .attr("class", function(d) {
+            if (d.select) {
+                return "selected";
+            } else {
+                return "dot";
+            }
+        });
+    this.plot3.selectAll("circle").data(body_part).enter().append("circle")
+    .attr("r", 3.5)
+        .attr("cx", this.plot3.xMap)
+        .attr("cy", this.plot3.yMap)
+        .attr("class", function(d) {
+            if (d.select) {
+                return "selected";
+            } else {
+                return "dot";
+            }
+        });
+
+    this.plot1.update();
+    this.plot2.update();
+    this.plot3.update();
+}
+
 Manager.prototype.constructor = Manager;
 Manager.prototype.add_mode = add_mode;
+Manager.prototype.update = updateManager;
 
 Plot.prototype.constructor = Plot;
 Plot.prototype.update = update;
