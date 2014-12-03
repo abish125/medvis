@@ -4,7 +4,7 @@ from django.views.decorators.csrf import requires_csrf_token, ensure_csrf_cookie
 from django.core.context_processors import csrf
 from django.http import HttpResponse
 import os
-from .models import Body_Point
+from hello.models import Body_Point
 import string
 import re
 from nltk import *
@@ -14,13 +14,7 @@ import csv
 
 # Create your views here.
 def index(request):	
-	c = {}
-	c.update(csrf(request))
-	#assert False, "hello"
-	if request.POST:
-		name = request.POST['name']
-		age = request.POST['age']
-	return render(request, 'organs/test_plot_class2.html',c)
+	return render(request, 'organs/test_plot_class2.html',{"bp":Body_Point.objects.all()})
 
 def save(request):
 	c = {}

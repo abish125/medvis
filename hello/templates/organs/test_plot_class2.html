@@ -483,7 +483,9 @@ body {
     <div id="divResults" style="visibility: hidden" align="right" style="width:100px">
         These are the results
     </div>
-
+    {%for b in bp %}
+    <p>{{b.name}}</p>
+    {%endfor%}
     <div id="divPlot" style="position:relative;" align="left">
         {% csrf_token %}
         <input type="submit" name="button" id="select_btn" onclick="select_button()" value="select" class="button" disabled="true" />
@@ -497,7 +499,7 @@ body {
         <input type="text" id="organ_add_textbox" name="organ" value="organ">
         <input type="submit" id="add_organ_button" name="add_organ_button" value="Add Organ">
     </div>
-    <div <div id="divPlot"></div>
+    <div div id="divPlot"></div>
     <div style="display:none">
         <input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token" />
     </div>
