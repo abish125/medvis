@@ -6,7 +6,7 @@ class Organ(models.Model):
 
 class Specialty(models.Model):
     name = models.CharField(max_length=1000)
-    organs = models.ManyToManyField(Organ)
+    organs = models.ManyToManyField(Organ, blank=True)
 
 class Body_Point(models.Model):
     name = models.CharField(max_length=1000)
@@ -14,5 +14,5 @@ class Body_Point(models.Model):
     cp_x = models.FloatField()
     cp_y = models.FloatField()
     cp_z = models.FloatField()
-    organs = models.ManyToManyField(Organ)
-    specialties = models.ManyToManyField(Specialty)
+    organs = models.ManyToManyField(Organ, blank=True)
+    specialties = models.ManyToManyField(Specialty, blank=True)
