@@ -16,4 +16,5 @@ urlpatterns = patterns('',
     url(r'^db', hello.views.db, name='db'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
+    url(r'^send_data', hello.views.send_data, name='send_data'),
 )

@@ -10,11 +10,16 @@ import re
 from nltk import *
 import json
 import csv
+from django.http import JsonResponse
 
 
 # Create your views here.
 def index(request):	
 	return render(request, 'organs/test_plot_class2.html',{"bp":Body_Point.objects.all()})
+
+def send_data(request):
+	data = Body_Point.objects.all()
+	return JsonResponse(list(data), safe=False)
 
 def save(request):
 	c = {}

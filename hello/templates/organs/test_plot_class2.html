@@ -101,335 +101,356 @@ body {
     var manager;
     var add_mode = false;
     var spec_svg;
+    var specialties;
+    var organs;
+    var body_points;
 
     function scatterPlot3d(parent) {
 
-        var x3d = parent
-            .append("x3d")
-            .style("width", parseInt(parent.style("width")) + "px")
-            .style("height", parseInt(parent.style("height")) + "px")
-            .style("border", "none")
-
-        var scene = x3d.append("scene")
-
-        scene.append("orthoviewpoint")
-            .attr("centerOfRotation", [5, 5, 5])
-            .attr("fieldOfView", [-5, -5, 15, 15])
-            .attr("orientation", [-0.5, 1, 0.2, 1.12 * Math.PI / 4])
-            .attr("position", [8, 4, 15])
-
-        var margin = {
-                top: 0,
-                right: 20,
-                bottom: 30,
-                left: 40
-            },
-            width = 300 - margin.left - margin.right,
-            height = 100 - margin.top - margin.bottom;
-
-        //spec_svg = d3.select("#divPlot").append("svg")
-        //    .attr("width", width + margin.left + margin.right)
-        //   .attr("height", height + margin.top + margin.bottom);
-
         queue()
-            .defer(d3.csv, "{{MEDIA_URL}}body_part.csv")
-            .defer(d3.csv, "{{MEDIA_URL}}org_part.csv")
-            .defer(d3.csv, "{{MEDIA_URL}}spec_part.csv")
-            .defer(d3.csv, "{{MEDIA_URL}}specialty.csv")
-            .defer(d3.csv, "{{MEDIA_URL}}organ.csv")
-            .defer(d3.csv, "{{MEDIA_URL}}org_part.csv")
-            .await(function(error, csv_file_1, csv_file_2, csv_file_3, csv_file_4, csv_file_5, csv_file_6, whaterver_function_return_value) {
-                csv_file_1.forEach(function(d1) {
-                    d1.id = +d1.id;
-                    d1.x = +d1.cp_x;
-                    d1.y = +d1.cp_y;
-                    d1.z = +d1.cp_z;
-                    d1.organ_id = [];
-                    d1.specialty_id = [];
-                    d1.specialty_name = [];
-                    d1.organ_name = [];
-                    d1.select = false;
-                    csv_file_2.forEach(function(d2) {
-                        if (+d1.id == +d2.part_id) {
-                            d1.organ_id.push(+d2.org_id);
-                        }
+            .defer(d3.json, "{% url "send_data"  %}")
+            .await(function(error, data) {
+                    data.forEach(function(d) {
+                        d.id = +d.id;
+                        d.x = +d.cp_x;
+                        d.y = +d.cp_y;
+                        d.z = +d.cp_z;
+                        d.organ_id = [];
+                        d.specialty_id = [];
+                        d.specialty_name = [];
+                        d.organ_name = [];
+                        d.select = false;
                     });
-                    csv_file_3.forEach(function(d3) {
-                        if (+d1.id == +d3.part_id) {
-                            d1.specialty_id.push(+d3.spec_id);
-                        }
-                    });
-                    csv_file_4.forEach(function(d4) {
-                        d1.specialty_id.forEach(function(id_spec) {
-                            if (+d4.id == id_spec) {
-                                d1.specialty_name.push(d4.name);
+                    body_points = data;
+                    alert(body_points);
+                }
+
+                var x3d = parent
+                    .append("x3d")
+                    .style("width", parseInt(parent.style("width")) + "px")
+                    .style("height", parseInt(parent.style("height")) + "px")
+                    .style("border", "none")
+
+                var scene = x3d.append("scene")
+
+                scene.append("orthoviewpoint")
+                .attr("centerOfRotation", [5, 5, 5])
+                .attr("fieldOfView", [-5, -5, 15, 15])
+                .attr("orientation", [-0.5, 1, 0.2, 1.12 * Math.PI / 4])
+                .attr("position", [8, 4, 15])
+
+                var margin = {
+                        top: 0,
+                        right: 20,
+                        bottom: 30,
+                        left: 40
+                    },
+                    width = 300 - margin.left - margin.right,
+                    height = 100 - margin.top - margin.bottom;
+
+                //spec_svg = d3.select("#divPlot").append("svg")
+                //    .attr("width", width + margin.left + margin.right)
+                //   .attr("height", height + margin.top + margin.bottom);
+
+                queue()
+                .defer(d3.csv, "{{MEDIA_URL}}body_part.csv")
+                .defer(d3.csv, "{{MEDIA_URL}}org_part.csv")
+                .defer(d3.csv, "{{MEDIA_URL}}spec_part.csv")
+                .defer(d3.csv, "{{MEDIA_URL}}specialty.csv")
+                .defer(d3.csv, "{{MEDIA_URL}}organ.csv")
+                .defer(d3.csv, "{{MEDIA_URL}}org_part.csv")
+                .await(function(error, csv_file_1, csv_file_2, csv_file_3, csv_file_4, csv_file_5, csv_file_6, whaterver_function_return_value) {
+                    csv_file_1.forEach(function(d1) {
+                        d1.id = +d1.id;
+                        d1.x = +d1.cp_x;
+                        d1.y = +d1.cp_y;
+                        d1.z = +d1.cp_z;
+                        d1.organ_id = [];
+                        d1.specialty_id = [];
+                        d1.specialty_name = [];
+                        d1.organ_name = [];
+                        d1.select = false;
+                        csv_file_2.forEach(function(d2) {
+                            if (+d1.id == +d2.part_id) {
+                                d1.organ_id.push(+d2.org_id);
                             }
                         });
-                    });
-                    csv_file_5.forEach(function(d5) {
-                        d1.organ_id.forEach(function(id_org) {
-                            if (+d5.id == id_org) {
-                                d1.organ_name.push(d5.name);
+                        csv_file_3.forEach(function(d3) {
+                            if (+d1.id == +d3.part_id) {
+                                d1.specialty_id.push(+d3.spec_id);
                             }
                         });
-                    });
-                });
-                body_part = csv_file_1;
-                manager = new Manager();
-
-                var axisRange = [0, 10];
-                var scales = [];
-                var initialDuration = 0;
-                var defaultDuration = 800;
-                var ease = 'linear';
-                var time = 0;
-                var axisKeys = ["x", "y", "z"];
-
-                // Helper functions for initializeAxis() and drawAxis()
-                function axisName(name, axisIndex) {
-                    return ['x', 'y', 'z'][axisIndex] + name;
-                }
-
-                function constVecWithAxisValue(otherValue, axisValue, axisIndex) {
-                    var result = [otherValue, otherValue, otherValue];
-                    result[axisIndex] = axisValue;
-                    return result;
-                }
-
-                // Used to make 2d elements visible
-                function makeSolid(selection, color) {
-                    selection.append("appearance")
-                        .append("material")
-                        .attr("diffuseColor", color || "black")
-                    return selection;
-                }
-
-                // Initialize the axes lines and labels.
-                function initializePlot() {
-                    initializeAxis(0);
-                    initializeAxis(1);
-                    initializeAxis(2);
-                }
-
-                function initializeAxis(axisIndex) {
-                    var key = axisKeys[axisIndex];
-                    drawAxis(axisIndex, key, initialDuration);
-
-                    var scaleMin = axisRange[0];
-                    var scaleMax = axisRange[1];
-
-                    // the axis line
-                    var newAxisLine = scene.append("transform")
-                        .attr("class", axisName("Axis", axisIndex))
-                        .attr("rotation", ([
-                            [0, 0, 0, 0],
-                            [0, 0, 1, Math.PI / 2],
-                            [0, 1, 0, -Math.PI / 2]
-                        ][axisIndex]))
-                        .append("shape")
-                    newAxisLine
-                        .append("appearance")
-                        .append("material")
-                        .attr("emissiveColor", "lightgray")
-                    newAxisLine
-                        .append("polyline2d")
-                        // Line drawn along y axis does not render in Firefox, so draw one
-                        // along the x axis instead and rotate it (above).
-                        .attr("lineSegments", "0 0," + scaleMax + " 0")
-
-                    // axis labels
-                    var newAxisLabel = scene.append("transform")
-                        .attr("class", axisName("AxisLabel", axisIndex))
-                        .attr("translation", constVecWithAxisValue(0, scaleMin + 1.1 * (scaleMax - scaleMin), axisIndex))
-
-                    var newAxisLabelShape = newAxisLabel
-                        .append("billboard")
-                        .attr("axisOfRotation", "0 0 0") // face viewer
-                        .append("shape")
-                        .call(makeSolid)
-
-                    var labelFontSize = 0.6;
-
-                    newAxisLabelShape
-                        .append("text")
-                        .attr("class", axisName("AxisLabelText", axisIndex))
-                        .attr("solid", "true")
-                        .attr("string", key)
-                        .append("fontstyle")
-                        .attr("size", labelFontSize)
-                        .attr("family", "SANS")
-                        .attr("justify", "END MIDDLE")
-                }
-
-
-                // Assign key to axis, creating or updating its ticks, grid lines, and labels.
-                function drawAxis(axisIndex, key, duration) {
-
-                    var scale = d3.scale.linear()
-                        .domain([-5, 5]) // demo data range
-                        .range(axisRange)
-
-                    scales[axisIndex] = scale;
-
-                    var numTicks = 8;
-                    var tickSize = 0.1;
-                    var tickFontSize = 0.5;
-
-                    // ticks along each axis
-                    var ticks = scene.selectAll("." + axisName("Tick", axisIndex))
-                        .data(scale.ticks(numTicks));
-                    var newTicks = ticks.enter()
-                        .append("transform")
-                        .attr("class", axisName("Tick", axisIndex));
-                    newTicks.append("shape").call(makeSolid)
-                        .append("box")
-                        .attr("size", tickSize + " " + tickSize + " " + tickSize);
-                    // enter + update
-                    ticks.transition().duration(duration)
-                        .attr("translation", function(tick) {
-                            return constVecWithAxisValue(0, scale(tick), axisIndex);
-                        })
-                    ticks.exit().remove();
-
-                    // tick labels
-                    var tickLabels = ticks.selectAll("billboard shape text")
-                        .data(function(d) {
-                            return [d];
+                        csv_file_4.forEach(function(d4) {
+                            d1.specialty_id.forEach(function(id_spec) {
+                                if (+d4.id == id_spec) {
+                                    d1.specialty_name.push(d4.name);
+                                }
+                            });
                         });
-                    var newTickLabels = tickLabels.enter()
-                        .append("billboard")
-                        .attr("axisOfRotation", "0 0 0")
-                        .append("shape")
-                        .call(makeSolid)
-                    newTickLabels.append("text")
-                        .attr("string", scale.tickFormat(10))
-                        .attr("solid", "true")
-                        .append("fontstyle")
-                        .attr("size", tickFontSize)
-                        .attr("family", "SANS")
-                        .attr("justify", "END MIDDLE");
-                    tickLabels // enter + update
-                        .attr("string", scale.tickFormat(10))
-                    tickLabels.exit().remove();
+                        csv_file_5.forEach(function(d5) {
+                            d1.organ_id.forEach(function(id_org) {
+                                if (+d5.id == id_org) {
+                                    d1.organ_name.push(d5.name);
+                                }
+                            });
+                        });
+                    });
+                    body_part = csv_file_1;
+                    manager = new Manager();
 
-                    // base grid lines
-                    if (axisIndex == 0 || axisIndex == 2) {
+                    var axisRange = [0, 10];
+                    var scales = [];
+                    var initialDuration = 0;
+                    var defaultDuration = 800;
+                    var ease = 'linear';
+                    var time = 0;
+                    var axisKeys = ["x", "y", "z"];
 
-                        var gridLines = scene.selectAll("." + axisName("GridLine", axisIndex))
-                            .data(scale.ticks(numTicks));
-                        gridLines.exit().remove();
+                    // Helper functions for initializeAxis() and drawAxis()
+                    function axisName(name, axisIndex) {
+                        return ['x', 'y', 'z'][axisIndex] + name;
+                    }
 
-                        var newGridLines = gridLines.enter()
-                            .append("transform")
-                            .attr("class", axisName("GridLine", axisIndex))
-                            .attr("rotation", axisIndex == 0 ? [0, 1, 0, -Math.PI / 2] : [0, 0, 0, 0])
+                    function constVecWithAxisValue(otherValue, axisValue, axisIndex) {
+                        var result = [otherValue, otherValue, otherValue];
+                        result[axisIndex] = axisValue;
+                        return result;
+                    }
+
+                    // Used to make 2d elements visible
+                    function makeSolid(selection, color) {
+                        selection.append("appearance")
+                            .append("material")
+                            .attr("diffuseColor", color || "black")
+                        return selection;
+                    }
+
+                    // Initialize the axes lines and labels.
+                    function initializePlot() {
+                        initializeAxis(0);
+                        initializeAxis(1);
+                        initializeAxis(2);
+                    }
+
+                    function initializeAxis(axisIndex) {
+                        var key = axisKeys[axisIndex];
+                        drawAxis(axisIndex, key, initialDuration);
+
+                        var scaleMin = axisRange[0];
+                        var scaleMax = axisRange[1];
+
+                        // the axis line
+                        var newAxisLine = scene.append("transform")
+                            .attr("class", axisName("Axis", axisIndex))
+                            .attr("rotation", ([
+                                [0, 0, 0, 0],
+                                [0, 0, 1, Math.PI / 2],
+                                [0, 1, 0, -Math.PI / 2]
+                            ][axisIndex]))
                             .append("shape")
+                        newAxisLine
+                            .append("appearance")
+                            .append("material")
+                            .attr("emissiveColor", "lightgray")
+                        newAxisLine
+                            .append("polyline2d")
+                            // Line drawn along y axis does not render in Firefox, so draw one
+                            // along the x axis instead and rotate it (above).
+                            .attr("lineSegments", "0 0," + scaleMax + " 0")
 
-                        newGridLines.append("appearance")
+                        // axis labels
+                        var newAxisLabel = scene.append("transform")
+                            .attr("class", axisName("AxisLabel", axisIndex))
+                            .attr("translation", constVecWithAxisValue(0, scaleMin + 1.1 * (scaleMax - scaleMin), axisIndex))
+
+                        var newAxisLabelShape = newAxisLabel
+                            .append("billboard")
+                            .attr("axisOfRotation", "0 0 0") // face viewer
+                            .append("shape")
+                            .call(makeSolid)
+
+                        var labelFontSize = 0.6;
+
+                        newAxisLabelShape
+                            .append("text")
+                            .attr("class", axisName("AxisLabelText", axisIndex))
+                            .attr("solid", "true")
+                            .attr("string", key)
+                            .append("fontstyle")
+                            .attr("size", labelFontSize)
+                            .attr("family", "SANS")
+                            .attr("justify", "END MIDDLE")
+                    }
+
+
+                    // Assign key to axis, creating or updating its ticks, grid lines, and labels.
+                    function drawAxis(axisIndex, key, duration) {
+
+                        var scale = d3.scale.linear()
+                            .domain([-5, 5]) // demo data range
+                            .range(axisRange)
+
+                        scales[axisIndex] = scale;
+
+                        var numTicks = 8;
+                        var tickSize = 0.1;
+                        var tickFontSize = 0.5;
+
+                        // ticks along each axis
+                        var ticks = scene.selectAll("." + axisName("Tick", axisIndex))
+                            .data(scale.ticks(numTicks));
+                        var newTicks = ticks.enter()
+                            .append("transform")
+                            .attr("class", axisName("Tick", axisIndex));
+                        newTicks.append("shape").call(makeSolid)
+                            .append("box")
+                            .attr("size", tickSize + " " + tickSize + " " + tickSize);
+                        // enter + update
+                        ticks.transition().duration(duration)
+                            .attr("translation", function(tick) {
+                                return constVecWithAxisValue(0, scale(tick), axisIndex);
+                            })
+                        ticks.exit().remove();
+
+                        // tick labels
+                        var tickLabels = ticks.selectAll("billboard shape text")
+                            .data(function(d) {
+                                return [d];
+                            });
+                        var newTickLabels = tickLabels.enter()
+                            .append("billboard")
+                            .attr("axisOfRotation", "0 0 0")
+                            .append("shape")
+                            .call(makeSolid)
+                        newTickLabels.append("text")
+                            .attr("string", scale.tickFormat(10))
+                            .attr("solid", "true")
+                            .append("fontstyle")
+                            .attr("size", tickFontSize)
+                            .attr("family", "SANS")
+                            .attr("justify", "END MIDDLE");
+                        tickLabels // enter + update
+                            .attr("string", scale.tickFormat(10))
+                        tickLabels.exit().remove();
+
+                        // base grid lines
+                        if (axisIndex == 0 || axisIndex == 2) {
+
+                            var gridLines = scene.selectAll("." + axisName("GridLine", axisIndex))
+                                .data(scale.ticks(numTicks));
+                            gridLines.exit().remove();
+
+                            var newGridLines = gridLines.enter()
+                                .append("transform")
+                                .attr("class", axisName("GridLine", axisIndex))
+                                .attr("rotation", axisIndex == 0 ? [0, 1, 0, -Math.PI / 2] : [0, 0, 0, 0])
+                                .append("shape")
+
+                            newGridLines.append("appearance")
+                                .append("material")
+                                .attr("emissiveColor", "gray")
+                            newGridLines.append("polyline2d");
+
+                            gridLines.selectAll("shape polyline2d").transition().duration(duration)
+                                .attr("lineSegments", "0 0, " + axisRange[1] + " 0")
+
+                            gridLines.transition().duration(duration)
+                                .attr("translation", axisIndex == 0 ? function(d) {
+                                    return scale(d) + " 0 0";
+                                } : function(d) {
+                                    return "0 0 " + scale(d);
+                                })
+                        }
+
+                    }
+
+
+                    function plotData(duration) {
+
+                        if (!body_part) {
+                            console.log("no rows to plot.")
+                            return;
+                        }
+
+                        var x = scales[0],
+                            y = scales[1],
+                            z = scales[2];
+                        var sphereRadius = 0.2;
+
+                        // Draw a sphere at each x,y,z coordinate.
+                        var datapoints = scene.selectAll(".datapoint").data(body_part);
+                        datapoints.exit().remove()
+
+                        var newDatapoints = datapoints.enter()
+                            .append("transform")
+                            .attr("class", "datapoint")
+                            .attr("scale", [sphereRadius, sphereRadius, sphereRadius])
+                            .attr("string", "hello")
+                            .append("shape")
+                        newDatapoints
+                            .append("appearance")
+                            .append("material");
+                        newDatapoints
+                            .append("sphere")
+                            .append("x3d:text")
+                            .attr("text", "hello")
+                            // Does not work on Chrome; use transform instead
+                            //.attr("radius", sphereRadius)
+
+                        datapoints.selectAll("shape appearance material")
+                            .attr("diffuseColor", function(d) {
+                                if (d.select) {
+                                    return 'red';
+                                } else {
+                                    return 'steelblue';
+                                }
+                            })
+
+                        datapoints.transition().ease(ease).duration(duration)
+                            .attr("translation", function(row) {
+                                return x(row[axisKeys[0]]) + " " + y(row[axisKeys[1]]) + " " + z(row[axisKeys[2]])
+                            })
+
+                        // Draw a stem from the x-z plane to each sphere at elevation y.
+                        // This convention was chosen to be consistent with x3d primitive ElevationGrid. 
+                        var stems = scene.selectAll(".stem").data(body_part);
+                        stems.exit().remove();
+                        var newStems = stems.enter()
+                            .append("transform")
+                            .attr("class", "stem")
+                            .append("shape");
+                        newStems
+                            .append("appearance")
                             .append("material")
                             .attr("emissiveColor", "gray")
-                        newGridLines.append("polyline2d");
-
-                        gridLines.selectAll("shape polyline2d").transition().duration(duration)
-                            .attr("lineSegments", "0 0, " + axisRange[1] + " 0")
-
-                        gridLines.transition().duration(duration)
-                            .attr("translation", axisIndex == 0 ? function(d) {
-                                return scale(d) + " 0 0";
-                            } : function(d) {
-                                return "0 0 " + scale(d);
+                        newStems
+                            .append("polyline2d")
+                            .attr("lineSegments", function(row) {
+                                return "0 1, 0 0";
                             })
+
                     }
 
-                }
-
-
-                function plotData(duration) {
-
-                    if (!body_part) {
-                        console.log("no rows to plot.")
-                        return;
+                    function updateData() {
+                        time += Math.PI / 8;
+                        if (x3d.node() && x3d.node().runtime) {
+                            /**for (var r=0; r<rows.length; ++r) {
+                              var x = rows[r].x;
+                              var z = rows[r].z;
+                              rows[r].y = 5*( Math.sin(0.5*x + time) * Math.cos(0.25*z + time));
+                            }**/
+                            plotData(defaultDuration);
+                        } else {
+                            console.log('x3d not ready.');
+                        }
                     }
 
-                    var x = scales[0],
-                        y = scales[1],
-                        z = scales[2];
-                    var sphereRadius = 0.2;
-
-                    // Draw a sphere at each x,y,z coordinate.
-                    var datapoints = scene.selectAll(".datapoint").data(body_part);
-                    datapoints.exit().remove()
-
-                    var newDatapoints = datapoints.enter()
-                        .append("transform")
-                        .attr("class", "datapoint")
-                        .attr("scale", [sphereRadius, sphereRadius, sphereRadius])
-                        .attr("string", "hello")
-                        .append("shape")
-                    newDatapoints
-                        .append("appearance")
-                        .append("material");
-                    newDatapoints
-                        .append("sphere")
-                        .append("x3d:text")
-                        .attr("text", "hello")
-                        // Does not work on Chrome; use transform instead
-                        //.attr("radius", sphereRadius)
-
-                    datapoints.selectAll("shape appearance material")
-                        .attr("diffuseColor", function(d) {
-                            if (d.select) {
-                                return 'red';
-                            } else {
-                                return 'steelblue';
-                            }
-                        })
-
-                    datapoints.transition().ease(ease).duration(duration)
-                        .attr("translation", function(row) {
-                            return x(row[axisKeys[0]]) + " " + y(row[axisKeys[1]]) + " " + z(row[axisKeys[2]])
-                        })
-
-                    // Draw a stem from the x-z plane to each sphere at elevation y.
-                    // This convention was chosen to be consistent with x3d primitive ElevationGrid. 
-                    var stems = scene.selectAll(".stem").data(body_part);
-                    stems.exit().remove();
-                    var newStems = stems.enter()
-                        .append("transform")
-                        .attr("class", "stem")
-                        .append("shape");
-                    newStems
-                        .append("appearance")
-                        .append("material")
-                        .attr("emissiveColor", "gray")
-                    newStems
-                        .append("polyline2d")
-                        .attr("lineSegments", function(row) {
-                            return "0 1, 0 0";
-                        })
-
-                }
-
-                function updateData() {
-                    time += Math.PI / 8;
-                    if (x3d.node() && x3d.node().runtime) {
-                        /**for (var r=0; r<rows.length; ++r) {
-                          var x = rows[r].x;
-                          var z = rows[r].z;
-                          rows[r].y = 5*( Math.sin(0.5*x + time) * Math.cos(0.25*z + time));
-                        }**/
-                        plotData(defaultDuration);
-                    } else {
-                        console.log('x3d not ready.');
-                    }
-                }
-
-                //initializeDataGrid();
-                initializePlot();
-                setInterval(updateData, defaultDuration);
-                //alert(JSON.stringify(rows));
-            });
-
+                    //initializeDataGrid();
+                    initializePlot();
+                    setInterval(updateData, defaultDuration);
+                    //alert(JSON.stringify(rows));
+                });
+            }
     }
 
     function add_button() {
@@ -439,6 +460,7 @@ body {
         d3.select("#add_btn").classed("button", true);
         document.getElementById("add_btn").disabled = true;
         document.getElementById("save_btn").disabled = false;
+        document.getElementById("divAdd").style.visibility = "visible";
     }
 
     function select_button() {
@@ -448,7 +470,7 @@ body {
         d3.select("#add_btn").classed("button", false);
         document.getElementById("add_btn").disabled = false;
         document.getElementById("save_btn").disabled = true;
-        debugger;
+        document.getElementById("divAdd").style.visibility = "hidden";
         manager.update();
     }
 
@@ -460,7 +482,7 @@ body {
             data: {
                 id: new_id,
                 name: document.getElementById("add_name").value,
-                x: new_point.x, 
+                x: new_point.x,
                 y: new_point.y,
                 z: new_point.z,
                 csrfmiddlewaretoken: '{{ csrf_token }}'
@@ -485,16 +507,13 @@ body {
     <div id="divResults" style="visibility: hidden" align="right" style="width:100px">
         These are the results
     </div>
-    {%for b in bp %}
-    <p>{{b.name}}</p>
-    {%endfor%}
     <div id="divPlot" style="position:relative;" align="left">
         {% csrf_token %}
         <input type="submit" name="button" id="select_btn" onclick="select_button()" value="select" class="button" disabled="true" />
         <input type="submit" name="button" id="add_btn" onclick="add_button()" value="add" />
         <input type="submit" name="button" id="save_btn" onclick="save_function()" value="save" disabled="true" />
     </div>
-    <div id="divAdd" style="visibility: visible">
+    <div id="divAdd" style="visibility: hidden">
         <input type="text" id="specialty_add_textbox" value="specialty">
         <input type="submit" id="add_specialty_button" name="add_specialty_button" value="Add Specialty">
         <input type="text" id="add_name" name="name" value="name">
