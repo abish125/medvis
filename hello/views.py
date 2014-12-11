@@ -4,13 +4,14 @@ from django.views.decorators.csrf import requires_csrf_token, ensure_csrf_cookie
 from django.core.context_processors import csrf
 from django.http import HttpResponse
 import os
-from hello.models import Body_Point
+from hello.models import Body_Point, Organ, Specialty
 import string
 import re
 from nltk import *
 import json
 import csv
 from django.http import JsonResponse
+from django.forms.models import model_to_dict
 
 
 # Create your views here.
@@ -18,8 +19,26 @@ def index(request):
 	return render(request, 'organs/test_plot_class2.html',{"bp":Body_Point.objects.all()})
 
 def send_data(request):
-	data = Body_Point.objects.all()
-	return JsonResponse(list(data), safe=False)
+	d = Body_Point.objects.all()
+	#data = [ob.as_json() for ob in d]
+	data = []
+	for a in d:
+		data = data + [model_to_dict(a)]
+	return HttpResponse(json.dumps(data))
+
+def send_sp(request):
+	d = Specialty.objects.all()
+	data = []
+	for a in d:
+		data = data + [model_to_dict(a)]
+	return HttpResponse(json.dumps(data))
+
+def send_orgs(request):
+	d = Organ.objects.all()
+	data = []
+	for a in d:
+		data = data + [model_to_dict(a)]
+	return HttpResponse(json.dumps(data))
 
 def save(request):
 	c = {}
