@@ -55,6 +55,22 @@ body {
     border-top-color: #1b435e;
     background: #1b435e;
 }
+#divPlot
+{
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    margin-top: 0px;
+    margin-left: 150px;
+}
+#div3Plots
+{
+    position: absolute;
+    width: 900px;
+    height: 325px;
+    margin-top: 310px;
+    margin-left: 0px;
+}
 #divSpec{
     width: 300px;
     position: absolute;
@@ -66,19 +82,19 @@ body {
     width: 300px;
     position: absolute;
     margin-top: 50px;
-    margin-left: 850px;
+    margin-left: 600px;
     height: 300px;
 }
 #divSearch {
     width: 300px;
     position: absolute;
-    margin-left: 600px;
+    margin-left: 500px;
     height: 16px;
 }
 #divResults {
     width: 120px;
     position: absolute;
-    margin-left: 800px;
+    margin-left: 700px;
     margin-top: 50px;
     height: 20px;
 }
@@ -171,7 +187,7 @@ body {
                     d.id = +d.id;
                     d.name = d.name;
                     d.organs = d.organs;
-                    d.select = true;
+                    d.select = false;
                 });
                 data3.forEach(function(d)
                 {
@@ -231,8 +247,6 @@ body {
 **/
                 body_part = body_points;
                 manager = new Manager();
-                specialty = new Specialty(specialties);
-                organ = new Organ();
 
                 var axisRange = [0, 10];
                 var scales = [];
@@ -545,11 +559,13 @@ body {
     <div id="divResults" style="visibility: hidden" align="right" style="width:100px">
         These are the results
     </div>
-    <div id="divPlot" style="position:relative;" align="left">
+    <div id="divPlot">
         {% csrf_token %}
         <input type="submit" name="button" id="select_btn" onclick="select_button()" value="select" class="button" disabled="true" />
         <input type="submit" name="button" id="add_btn" onclick="add_button()" value="add" />
         <input type="submit" name="button" id="save_btn" onclick="save_function()" value="save" disabled="true" />
+    </div>
+    <div id="div3Plots">
     </div>
     <div id="divAdd" style="visibility: hidden">
         <input type="text" id="specialty_add_textbox" value="specialty">
@@ -564,7 +580,6 @@ body {
     <script>
     d3.select('html').style('height', '100%').style('width', '1150px');
     d3.select('body').style('height', '100%').style('width', '1150px');
-    d3.select('#divPlot').style('width', "950px").style('height', "325px").style('align', 'center');
     d3.select('save_btn').on("click", save_function);
     scatterPlot3d(d3.select('#divPlot'));
     </script>

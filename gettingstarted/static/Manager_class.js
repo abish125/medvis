@@ -88,7 +88,7 @@ var Plot = function(p, which_plot) {
         color = d3.scale.category10();
 
     // add the graph canvas to the body of the webpage
-    this.svg = d3.select("body").append("svg")
+    this.svg = d3.select("#div3Plots").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .on("click", function() {
@@ -130,7 +130,7 @@ var Plot = function(p, which_plot) {
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Protein (g)");
+        .text("vertical axis");
 
     // draw dots
     this.circles = this.svg.selectAll("circle")
@@ -311,76 +311,125 @@ var updateManager = function() {
     this.plot1.update();
     this.plot2.update();
     this.plot3.update();
+    this.spec_list.update();
+    this.org_list.update();
+}
+
+
+var Spec_list = function(m) {
+    this.manager = m;
+    current_object = this
+    this.spec_text = spec_svg.selectAll("text");
+    this.spec_text.data(specialties).enter().append("text")
+        .attr("x", 5)
+        .attr("y", function(d, i) {
+            return 20 * (i + 1);
+        })
+        .text(function(d) {
+            return d.name;
+        })
+        .attr("class", function(d) {
+            if (d.select) {
+                return "selected";
+            } else {
+                return "dot";
+            }
+        })
+        .on("click", function(d) 
+        {
+            specialties[specialties.indexOf(d)].select = !d.select;
+            current_object.update()
+        });
+}
+
+var updateSpec_list = function()
+{
+    current_object = this
+    this.spec_text = spec_svg.selectAll("text");
+    this.spec_text
+        .attr("x", 5)
+        .attr("y", function(d, i) {
+            return 20 * (i + 1);
+        })
+        .text(function(d) {
+            return d.name;
+        })
+        .attr("class", function(d) {
+            if (d.select) {
+                return "selected";
+            } else {
+                return "dot";
+            }
+        })
+        .on("click", function(d) 
+        {
+            specialties[specialties.indexOf(d)].select = !d.select;
+            current_object.update()
+        });
+}
+
+var Org_list = function(m) {
+    this.manager = m;
+    current_object = this;
+    this.org_text = org_svg.selectAll("text");
+    this.org_text.data(organs).enter().append("text")
+        .attr("x", 5)
+        .attr("y", function(d, i) {
+            return 20 * (i + 1);
+        })
+        .text(function(d) {
+            return d.name;
+        })
+        .attr("class", function(d) {
+            if (d.select) {
+                return "selected";
+            } else {
+                return "dot";
+            }
+        })
+        .on("click", function(d) {
+            organs[organs.indexOf(d)].select = !d.select;
+            current_object.update()
+        });
+}
+
+var updateOrg_list = function()
+{
+    this.org_text = org_svg.selectAll("text");
+    this.org_text
+        .attr("x", 5)
+        .attr("y", function(d, i) {
+            return 20 * (i + 1);
+        })
+        .text(function(d) {
+            return d.name;
+        })
+        .attr("class", function(d) {
+            if (d.select) {
+                return "selected";
+            } else {
+                return "dot";
+            }
+        })
+        .on("click", function(d) {
+            organs[organs.indexOf(d)].select = !d.select;
+            current_object.update()
+        });
 }
 
 Manager.prototype.constructor = Manager;
 Manager.prototype.add_mode = add_mode;
 Manager.prototype.update = updateManager;
 //when do you update? 
-Manager.prototype.select_point = select_point;
-Manager.prototype.select_spec = select_spec;
-Manager.prototype.select_org = select_org;
+//Manager.prototype.select_point = select_point;
+//Manager.prototype.select_spec = select_spec;
+//Manager.prototype.select_org = select_org;
 
 Plot.prototype.constructor = Plot;
 Plot.prototype.update = update;
-Plot.prototype.add_point = add_point;
 
 Spec_list.prototype.constructor = Spec_list;
 Spec_list.prototype.update = updateSpec_list;
 
 Org_list.prototype.constructor = Org_list;
-Org_list.prototype.update = updateSpec_list;
-
-var Spec_list = function(m) {
-    this.manager = m;
-    this.spec = specialties;
-    var spec_text;
-    spec_text = spec_svg.selectAll("text");
-    text.data(specialties).enter().append("text")
-        .attr("x", 5)
-        .attr("y", function(d, i) {
-            return 20 * (i + 1);
-        })
-        .text(function(d) {
-            return d.name;
-        })
-        .attr("class", function(d) {
-            if (d.select) {
-                return "selected";
-            } else {
-                return "dot";
-            }
-        });
-}
-
-var updateSpec_list = function()
-{
-    //spec_text
-}
-
-var Org_list = function(m) {
-    this.manager = m;
-    this.org = organs;
-    var org_text;
-    org_text = org_svg.selectAll("text");
-    text.data(organs).enter().append("text")
-        .attr("x", 5)
-        .attr("y", function(d, i) {
-            return 20 * (i + 1);
-        })
-        .text(function(d) {
-            return d.name;
-        })
-        .attr("class", function(d) {
-            if (d.select) {
-                return "selected";
-            } else {
-                return "dot";
-            }
-        })
-}
-
-var updateOrg_list = function()
-{
-
-}
+Org_list.prototype.update = updateOrg_list;
