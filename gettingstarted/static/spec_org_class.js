@@ -30,9 +30,9 @@ function draw_organs() {
     });
 }
 
-var Specialty = function() {
+var Specialty = function(sp) {
+    this.speciaties = sp;
     var text = spec_svg.selectAll("text");
-    var j = 1
     text.data(specialties).enter().append("text")
         .attr("x", 5)
         .attr("y", function(d, i) {
@@ -40,6 +40,13 @@ var Specialty = function() {
         })
         .text(function(d) {
             return d.name;
+        })
+        .attr("class", function(d) {
+            if (d.select) {
+                return "selected";
+            } else {
+                return "dot";
+            }
         });
 }
 
@@ -48,15 +55,20 @@ Specialty.prototype.constructor = Specialty;
 
 var Organ = function() {
     var text = org_svg.selectAll("text");
-    var j = 1
     text.data(organs).enter().append("text")
         .attr("x", 5)
         .attr("y", function(d, i) {
-            return 20 * (i + 1) * j;
+            return 20 * (i + 1);
         })
         .text(function(d) {
             return d.name;
-        });
-    j++;
+        })
+        .attr("class", function(d) {
+            if (d.select) {
+                return "selected";
+            } else {
+                return "dot";
+            }
+        })
 }
 Organ.prototype.constructor = Organ;

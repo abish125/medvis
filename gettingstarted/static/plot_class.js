@@ -159,7 +159,7 @@ var Plot = function(p, which_plot) {
             } else {
                 selected_parts.splice(selected_parts.indexOf(d), 1);
             }
-            draw_specialties();
+            //draw_specialties();
         })
         .on("mouseover", function(d) {
             tooltip.transition()
@@ -228,6 +228,7 @@ var update = function(p) {
             }
         })
         .on("click", function(d) {
+            var current_part = body_part[body_part.indexOf(d)]
             body_part[body_part.indexOf(d)].select = !d.select;
             d3.select(this).classed("selected", d.select);
             p.plot1.update(p);
@@ -238,8 +239,19 @@ var update = function(p) {
             } else {
                 selected_parts.splice(selected_parts.indexOf(d), 1);
             }
-            draw_specialties();
-        })
+            //draw_specialties();
+            /**
+            current_part.specialties.forEach(function(sp)
+            {
+                specialties.forEach(function(sp_text)
+                {
+                    if(sp.name == sp_text.name)
+                    {
+                        sp_text.select = true
+                    }
+                });
+            });**/
+        });
 }
 
 var add_point = function(c) {
