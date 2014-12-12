@@ -16,7 +16,7 @@ from django.forms.models import model_to_dict
 
 # Create your views here.
 def index(request):	
-	return render(request, 'organs/test_plot_class2.html',{"bp":Body_Point.objects.all()})
+	return render(request, 'organs/test_plot_class3.html',{"bp":Body_Point.objects.all()})
 
 def send_data(request):
 	d = Body_Point.objects.all()
