@@ -92,9 +92,11 @@ var Plot = function(p, which_plot) {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .on("click", function() {
-            var coordinates = [0, 0];
-            coordinates = d3.mouse(this);
-            current_plot.add_point(coordinates);
+            if (add_mode) {
+                var coordinates = [0, 0];
+                coordinates = d3.mouse(this);
+                current_plot.add_point(coordinates);
+            }
         })
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -241,6 +243,111 @@ var update = function(p) {
         });
 }
 
+var add_point = function(c) {
+    var current_plot = this;
+    var margin = {
+            top: 20,
+            right: 20,
+            bottom: 30,
+            left: 40
+        },
+        width = 300 - margin.left - margin.right,
+        height = 50 - margin.top - margin.bottom;
+
+
+    if (first_click) {
+        if (current_plot.which_plot == 1) {
+            new_point = {
+                "x": current_plot.xScale.invert(c[0]) - 1.73,
+                "y": current_plot.yScale.invert(c[1]) + 1.25,
+                "z": null
+            };
+        } else if (current_plot.which_plot == 2) {
+            new_point = {
+                "x": current_plot.xScale.invert(c[0]) - 1.5,
+                "y": null,
+                "z": current_plot.yScale.invert(c[1]) + 0.23
+            };
+        } else {
+            new_point = {
+                "x": null,
+                "y": current_plot.yScale.invert(c[1]) + 1,
+                "z": current_plot.xScale.invert(c[0]) - 0.50
+            };
+        }
+        current_plot.svg.attr("visibility", "hidden");
+    } else {
+        if (current_plot.which_plot == 1 && current_plot.manager.plot2.svg.attr("visibility") == "hidden") {
+            new_point = {
+                "x": new_point.x,
+                "y": current_plot.yScale.invert(c[1]) + 1.25,
+                "z": new_point.z
+            };
+            current_plot.manager.plot2.svg.attr("visibility", "visible")
+        } else if (current_plot.which_plot == 1 && current_plot.manager.p.plot3.svg.attr("visibility") == "hidden") {
+            new_point = {
+                "x": current_plot.xScale.invert(c[0]) - 1.73,
+                "y": new_point.y,
+                "z": new_point.z
+            };
+            current_plot.manager.plot3.svg.attr("visibility", "visible")
+        } else if (current_plot.which_plot == 2 && current_plot.manager.plot1.svg.attr("visibility") == "hidden") {
+            new_point = {
+                "x": new_point.x,
+                "y": new_point.y,
+                "z": current_plot.yScale.invert(c[1]) + 0.23
+            };
+            current_plot.manager.plot1.svg.attr("visibility", "visible")
+        } else if (current_plot.which_plot == 2 && current_plot.manager.plot3.svg.attr("visibility") == "hidden") {
+            new_point = {
+                "x": current_plot.xScale.invert(c[0]) - 1.5,
+                "y": new_point.y,
+                "z": new_point.z
+            };
+            current_plot.manager.plot3.svg.attr("visibility", "visible")
+        } else if (current_plot.which_plot == 3 && current_plot.manager.plot2.svg.attr("visibility") == "hidden") {
+            new_point = {
+                "x": new_point.x,
+                "y": current_plot.yScale.invert(c[1]) + 1,
+                "z": new_point.z
+            };
+            current_plot.manager.plot2.svg.attr("visibility", "visible")
+        } else if (current_plot.which_plot == 3 && current_plot.manager.plot1.svg.attr("visibility") == "hidden") {
+            new_point = {
+                "x": new_point.x,
+                "y": new_point.y,
+                "z": current_plot.xScale.invert(c[0]) - 0.50
+            };
+            current_plot.manager.plot1.svg.attr("visibility", "visible")
+        } else {
+            alert("error");
+        }
+        new_point.select = true;
+        body_part.push(new_point);
+        current_plot.manager.plot1.update();
+        current_plot.manager.plot2.update();
+        current_plot.manager.plot3.update();
+
+        var s = d3.select("#divList").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom);
+        var text = s.selectAll("text").data(new_point).enter().append("text");
+        text
+            .attr("x", 5)
+            .attr("y", function(d, i) {
+                return 20 * (i + 1);
+            })
+            .text(function(d, i) {
+                if (i == 0) {
+                    return current_plot.xMap(d).toString() + " " + current_plot.yMap(d).toString();
+                }
+            });
+        add_mode = false;
+    }
+    first_click = !first_click;
+
+}
+
 var Manager = function() {
     this.plot1 = new Plot(this, 1);
     this.plot2 = new Plot(this, 2);
@@ -249,33 +356,9 @@ var Manager = function() {
     this.org_list = new Org_list(this);
 }
 
-
-var add_mode = function() {
-    man = this;
-    man.plot1.svg
-
-        .on("click", function() {
-        var coordinates = [0, 0];
-        coordinates = d3.mouse(this);
-        man.plot1.add_point(coordinates);
-    });
-    man.plot2.svg
-        .on("click", function() {
-            var coordinates = [0, 0];
-            coordinates = d3.mouse(this);
-            man.plot2.add_point(coordinates);
-        });
-    man.plot3.svg
-        .on("click", function() {
-            var coordinates = [0, 0];
-            coordinates = d3.mouse(this);
-            man.plot3.add_point(coordinates);
-        });
-}
-
 var updateManager = function() {
     this.plot1.selectAll("circle").data(body_part).enter().append("circle")
-    .attr("r", 3.5)
+        .attr("r", 3.5)
         .attr("cx", this.plot1.xMap)
         .attr("cy", this.plot1.yMap)
         .attr("class", function(d) {
@@ -286,7 +369,7 @@ var updateManager = function() {
             }
         });
     this.plot2.selectAll("circle").data(body_part).enter().append("circle")
-    .attr("r", 3.5)
+        .attr("r", 3.5)
         .attr("cx", this.plot2.xMap)
         .attr("cy", this.plot2.yMap)
         .attr("class", function(d) {
@@ -297,7 +380,7 @@ var updateManager = function() {
             }
         });
     this.plot3.selectAll("circle").data(body_part).enter().append("circle")
-    .attr("r", 3.5)
+        .attr("r", 3.5)
         .attr("cx", this.plot3.xMap)
         .attr("cy", this.plot3.yMap)
         .attr("class", function(d) {
@@ -318,7 +401,7 @@ var updateManager = function() {
 
 var Spec_list = function(m) {
     this.manager = m;
-    current_object = this
+    var current_object = this;
     this.spec_text = spec_svg.selectAll("text");
     this.spec_text.data(specialties).enter().append("text")
         .attr("x", 5)
@@ -335,42 +418,15 @@ var Spec_list = function(m) {
                 return "dot";
             }
         })
-        .on("click", function(d) 
-        {
+        .on("click", function(d) {
             specialties[specialties.indexOf(d)].select = !d.select;
-            current_object.update()
-        });
-}
-
-var updateSpec_list = function()
-{
-    current_object = this
-    this.spec_text = spec_svg.selectAll("text");
-    this.spec_text
-        .attr("x", 5)
-        .attr("y", function(d, i) {
-            return 20 * (i + 1);
-        })
-        .text(function(d) {
-            return d.name;
-        })
-        .attr("class", function(d) {
-            if (d.select) {
-                return "selected";
-            } else {
-                return "dot";
-            }
-        })
-        .on("click", function(d) 
-        {
-            specialties[specialties.indexOf(d)].select = !d.select;
-            current_object.update()
+            current_object.update();
         });
 }
 
 var Org_list = function(m) {
     this.manager = m;
-    current_object = this;
+    var current_object = this;
     this.org_text = org_svg.selectAll("text");
     this.org_text.data(organs).enter().append("text")
         .attr("x", 5)
@@ -389,12 +445,36 @@ var Org_list = function(m) {
         })
         .on("click", function(d) {
             organs[organs.indexOf(d)].select = !d.select;
-            current_object.update()
+            current_object.update();
         });
 }
 
-var updateOrg_list = function()
-{
+var updateSpec_list = function() {
+    var current_object = this;
+    this.spec_text = spec_svg.selectAll("text");
+    this.spec_text
+        .attr("x", 5)
+        .attr("y", function(d, i) {
+            return 20 * (i + 1);
+        })
+        .text(function(d) {
+            return d.name;
+        })
+        .attr("class", function(d) {
+            if (d.select) {
+                return "selected";
+            } else {
+                return "dot";
+            }
+        })
+        .on("click", function(d) {
+            specialties[specialties.indexOf(d)].select = !d.select;
+            current_object.update();
+        });
+}
+
+var updateOrg_list = function() {
+    var current_object = this;
     this.org_text = org_svg.selectAll("text");
     this.org_text
         .attr("x", 5)
@@ -418,7 +498,6 @@ var updateOrg_list = function()
 }
 
 Manager.prototype.constructor = Manager;
-Manager.prototype.add_mode = add_mode;
 Manager.prototype.update = updateManager;
 //when do you update? 
 //Manager.prototype.select_point = select_point;
@@ -427,6 +506,7 @@ Manager.prototype.update = updateManager;
 
 Plot.prototype.constructor = Plot;
 Plot.prototype.update = update;
+Plot.prototype.add_point = add_point;
 
 Spec_list.prototype.constructor = Spec_list;
 Spec_list.prototype.update = updateSpec_list;
