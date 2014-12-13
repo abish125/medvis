@@ -147,11 +147,16 @@ var Plot = function(p, which_plot) {
             if (d.select) {
                 return "selected";
             } else {
-                return "dot";
+                if (d.dep_sel) {
+                    return "dep_sel"
+                } else {
+                    return "dot";
+                }
             }
         })
         .on("click", function(d) {
             body_part[body_part.indexOf(d)].select = !d.select;
+            selected_parts.push
             d3.select(this).classed("selected", d.select);
             p.plot1.update(p);
             p.plot2.update(p);
@@ -161,6 +166,7 @@ var Plot = function(p, which_plot) {
             } else {
                 selected_parts.splice(selected_parts.indexOf(d), 1);
             }
+            p.select_point();
         })
         .on("mouseover", function(d) {
             tooltip.transition()
@@ -213,7 +219,11 @@ var update = function(p) {
             if (d.select) {
                 return "selected";
             } else {
-                return "dot";
+                if (d.dep_sel) {
+                    return "dep_sel"
+                } else {
+                    return "dot";
+                }
             }
         })
         .data(body_part)
@@ -225,7 +235,11 @@ var update = function(p) {
             if (d.select) {
                 return "selected";
             } else {
-                return "dot";
+                if (d.dep_sel) {
+                    return "dep_sel"
+                } else {
+                    return "dot";
+                }
             }
         })
         .on("click", function(d) {
@@ -240,6 +254,7 @@ var update = function(p) {
             } else {
                 selected_parts.splice(selected_parts.indexOf(d), 1);
             }
+            p.select_point();
         });
 }
 
@@ -365,7 +380,11 @@ var updateManager = function() {
             if (d.select) {
                 return "selected";
             } else {
-                return "dot";
+                if (d.dep_sel) {
+                    return "dep_sel"
+                } else {
+                    return "dot";
+                }
             }
         });
     this.plot2.selectAll("circle").data(body_part).enter().append("circle")
@@ -376,7 +395,11 @@ var updateManager = function() {
             if (d.select) {
                 return "selected";
             } else {
-                return "dot";
+                if (d.dep_sel) {
+                    return "dep_sel"
+                } else {
+                    return "dot";
+                }
             }
         });
     this.plot3.selectAll("circle").data(body_part).enter().append("circle")
@@ -387,10 +410,13 @@ var updateManager = function() {
             if (d.select) {
                 return "selected";
             } else {
-                return "dot";
+                if (d.dep_sel) {
+                    return "dep_sel"
+                } else {
+                    return "dot";
+                }
             }
         });
-
     this.plot1.update();
     this.plot2.update();
     this.plot3.update();
@@ -415,7 +441,11 @@ var Spec_list = function(m) {
             if (d.select) {
                 return "selected";
             } else {
-                return "dot";
+                if (d.dep_sel) {
+                    return "dep_sel"
+                } else {
+                    return "dot";
+                }
             }
         })
         .on("click", function(d) {
@@ -440,7 +470,11 @@ var Org_list = function(m) {
             if (d.select) {
                 return "selected";
             } else {
-                return "dot";
+                if (d.dep_sel) {
+                    return "dep_sel"
+                } else {
+                    return "dot";
+                }
             }
         })
         .on("click", function(d) {
@@ -464,7 +498,11 @@ var updateSpec_list = function() {
             if (d.select) {
                 return "selected";
             } else {
-                return "dot";
+                if (d.dep_sel) {
+                    return "dep_sel"
+                } else {
+                    return "dot";
+                }
             }
         })
         .on("click", function(d) {
@@ -488,7 +526,11 @@ var updateOrg_list = function() {
             if (d.select) {
                 return "selected";
             } else {
-                return "dot";
+                if (d.dep_sel) {
+                    return "dep_sel"
+                } else {
+                    return "dot";
+                }
             }
         })
         .on("click", function(d) {
@@ -497,10 +539,24 @@ var updateOrg_list = function() {
         });
 }
 
+var select_point = function() {
+    debugger;
+    selected_parts.forEach(function(p) {
+        p.organ_names.forEach(function(p_o) {
+            organs.forEach(function(o) {
+                if (p_o == o.name) {
+                    o.dep_sel = true;
+                }
+            })
+        });
+    });
+    this.org_list.update();
+}
+
 Manager.prototype.constructor = Manager;
 Manager.prototype.update = updateManager;
 //when do you update? 
-//Manager.prototype.select_point = select_point;
+Manager.prototype.select_point = select_point;
 //Manager.prototype.select_spec = select_spec;
 //Manager.prototype.select_org = select_org;
 

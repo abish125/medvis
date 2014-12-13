@@ -14,14 +14,17 @@ body {
 .dot {
     fill: steelblue;
 }
+.selected {
+    fill: red;
+}
+.dep_sel {
+    fill: green;
+}
 .tooltip {
     position: absolute;
     width: 200px;
     height: 28px;
     pointer-events: none;
-}
-.selected {
-    fill: red;
 }
 .button {
     border-top: 1px solid #96d1f8;
@@ -54,30 +57,27 @@ body {
     border-top-color: #1b435e;
     background: #1b435e;
 }
-#divPlot
-{
+#divPlot {
     position: absolute;
     width: 400px;
     height: 300px;
     margin-top: 0px;
     margin-left: 150px;
 }
-#div3Plots
-{
+#div3Plots {
     position: absolute;
     width: 900px;
     height: 325px;
     margin-top: 310px;
     margin-left: 0px;
 }
-#divSpec{
+#divSpec {
     width: 300px;
     position: absolute;
     margin-top: 50px;
     height: 300px;
 }
-#divOrg
-{
+#divOrg {
     width: 300px;
     position: absolute;
     margin-top: 50px;
@@ -106,7 +106,6 @@ body {
 #organ_add_textbox {
     margin-left: 500px;
 }
-
 </style>
 
 
@@ -177,73 +176,90 @@ body {
                     d.x = +d.cp_x;
                     d.y = +d.cp_y;
                     d.z = +d.cp_z;
-                    d.organs = d.organs;
-                    d.specialties = d.specialties;
+                    d.organ_ids = d.organs;
+                    d.organ_names = [];
+                    d.organ_ids.forEach(function(o_id) {
+                        data3.forEach(function(organ) {
+                            if (o_id == organ.id) {
+                                d.organ_names.push(organ.name)
+                            }
+                        });
+                    });
+                    d.specialty_ids = d.specialties;
+                    d.specialty_names = [];
+                    d.specialty_ids.forEach(function(sp_id) {
+                        data2.forEach(function(spec) {
+                            if (sp_id == spec.id) {
+                                d.specialty_names.push(spec.name)
+                            }
+                        });
+                    });
                     d.select = false;
+                    d.dep_sel = false;
                 });
-                data2.forEach(function(d)
-                {
+                data2.forEach(function(d) {
                     d.id = +d.id;
                     d.name = d.name;
                     d.organs = d.organs;
                     d.select = false;
+                    d.dep_sel = false;
                 });
-                data3.forEach(function(d)
-                {
+                data3.forEach(function(d) {
                     d.id = +d.id;
                     d.name = d.name;
                     d.snomed_ct_code = d.snomed_ct_code;
                     d.select = false;
+                    d.dep_sel = false;
                 });
                 body_points = data1;
                 specialties = data2;
                 organs = data3;
-/**
-            });
-        queue()
-            .defer(d3.csv, "{{MEDIA_URL}}body_part.csv")
-            .defer(d3.csv, "{{MEDIA_URL}}org_part.csv")
-            .defer(d3.csv, "{{MEDIA_URL}}spec_part.csv")
-            .defer(d3.csv, "{{MEDIA_URL}}specialty.csv")
-            .defer(d3.csv, "{{MEDIA_URL}}organ.csv")
-            .defer(d3.csv, "{{MEDIA_URL}}org_part.csv")
-            .await(function(error, csv_file_1, csv_file_2, csv_file_3, csv_file_4, csv_file_5, csv_file_6, whaterver_function_return_value) {
-                csv_file_1.forEach(function(d1) {
-                    d1.id = +d1.id;
-                    d1.x = +d1.cp_x;
-                    d1.y = +d1.cp_y;
-                    d1.z = +d1.cp_z;
-                    d1.organ_id = [];
-                    d1.specialty_id = [];
-                    d1.specialty_name = [];
-                    d1.organ_name = [];
-                    d1.select = false;
-                    csv_file_2.forEach(function(d2) {
-                        if (+d1.id == +d2.part_id) {
-                            d1.organ_id.push(+d2.org_id);
-                        }
-                    });
-                    csv_file_3.forEach(function(d3) {
-                        if (+d1.id == +d3.part_id) {
-                            d1.specialty_id.push(+d3.spec_id);
-                        }
-                    });
-                    csv_file_4.forEach(function(d4) {
-                        d1.specialty_id.forEach(function(id_spec) {
-                            if (+d4.id == id_spec) {
-                                d1.specialty_name.push(d4.name);
-                            }
-                        });
-                    });
-                    csv_file_5.forEach(function(d5) {
-                        d1.organ_id.forEach(function(id_org) {
-                            if (+d5.id == id_org) {
-                                d1.organ_name.push(d5.name);
-                            }
-                        });
-                    });
-                });
-**/
+                /**
+                            });
+                        queue()
+                            .defer(d3.csv, "{{MEDIA_URL}}body_part.csv")
+                            .defer(d3.csv, "{{MEDIA_URL}}org_part.csv")
+                            .defer(d3.csv, "{{MEDIA_URL}}spec_part.csv")
+                            .defer(d3.csv, "{{MEDIA_URL}}specialty.csv")
+                            .defer(d3.csv, "{{MEDIA_URL}}organ.csv")
+                            .defer(d3.csv, "{{MEDIA_URL}}org_part.csv")
+                            .await(function(error, csv_file_1, csv_file_2, csv_file_3, csv_file_4, csv_file_5, csv_file_6, whaterver_function_return_value) {
+                                csv_file_1.forEach(function(d1) {
+                                    d1.id = +d1.id;
+                                    d1.x = +d1.cp_x;
+                                    d1.y = +d1.cp_y;
+                                    d1.z = +d1.cp_z;
+                                    d1.organ_id = [];
+                                    d1.specialty_id = [];
+                                    d1.specialty_name = [];
+                                    d1.organ_name = [];
+                                    d1.select = false;
+                                    csv_file_2.forEach(function(d2) {
+                                        if (+d1.id == +d2.part_id) {
+                                            d1.organ_id.push(+d2.org_id);
+                                        }
+                                    });
+                                    csv_file_3.forEach(function(d3) {
+                                        if (+d1.id == +d3.part_id) {
+                                            d1.specialty_id.push(+d3.spec_id);
+                                        }
+                                    });
+                                    csv_file_4.forEach(function(d4) {
+                                        d1.specialty_id.forEach(function(id_spec) {
+                                            if (+d4.id == id_spec) {
+                                                d1.specialty_name.push(d4.name);
+                                            }
+                                        });
+                                    });
+                                    csv_file_5.forEach(function(d5) {
+                                        d1.organ_id.forEach(function(id_org) {
+                                            if (+d5.id == id_org) {
+                                                d1.organ_name.push(d5.name);
+                                            }
+                                        });
+                                    });
+                                });
+                **/
                 body_part = body_points;
                 manager = new Manager();
 
