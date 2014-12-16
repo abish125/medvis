@@ -451,6 +451,12 @@ var Spec_list = function(m) {
         .on("click", function(d) {
             specialties[specialties.indexOf(d)].select = !d.select;
             current_object.update();
+            if (d.select) {
+                selected_specs.push(d);
+            } else {
+                selected_specs.splice(selected_specs.indexOf(d), 1);
+            }
+            current_object.manager.select_spec();
         });
 }
 
@@ -480,6 +486,12 @@ var Org_list = function(m) {
         .on("click", function(d) {
             organs[organs.indexOf(d)].select = !d.select;
             current_object.update();
+            if (d.select) {
+                selected_orgs.push(d);
+            } else {
+                selected_orgs.splice(selected_orgs.indexOf(d), 1);
+            }
+            current_object.manager.select_org();
         });
 }
 
@@ -508,6 +520,13 @@ var updateSpec_list = function() {
         .on("click", function(d) {
             specialties[specialties.indexOf(d)].select = !d.select;
             current_object.update();
+            if (d.select) {
+                selected_specs.push(d);
+            } else {
+                selected_specs.splice(selected_spec.indexOf(d), 1);
+            }
+            current_object.manager.select_spec();
+
         });
 }
 
@@ -535,12 +554,17 @@ var updateOrg_list = function() {
         })
         .on("click", function(d) {
             organs[organs.indexOf(d)].select = !d.select;
-            current_object.update()
+            current_object.update();
+            if (d.select) {
+                selected_orgs.push(d);
+            } else {
+                selected_orgs.splice(selected_orgs.indexOf(d), 1);
+            }
+            current_object.manager.select_org();
         });
 }
 
 var select_point = function() {
-    debugger;
     selected_parts.forEach(function(p) {
         p.organ_names.forEach(function(p_o) {
             organs.forEach(function(o) {
@@ -553,12 +577,40 @@ var select_point = function() {
     this.org_list.update();
 }
 
+var select_spec = function() {
+    selected_spec.forEach(function(p) {
+        p.organ_names.forEach(function(p_o) {
+            organs.forEach(function(o) {
+                if (p_o == o.name) {
+                    o.dep_sel = true;
+                }
+            })
+        });
+    });
+    this.org_list.update();
+}
+
+var select_org = function() {
+    selected_parts.forEach(function(p) {
+        p.organ_names.forEach(function(p_o) {
+            organs.forEach(function(o) {
+                if (p_o == o.name) {
+                    o.dep_sel = true;
+                }
+            })
+        });
+    });
+    this.org_list.update();
+}
+
+
+
 Manager.prototype.constructor = Manager;
 Manager.prototype.update = updateManager;
 //when do you update? 
 Manager.prototype.select_point = select_point;
-//Manager.prototype.select_spec = select_spec;
-//Manager.prototype.select_org = select_org;
+Manager.prototype.select_spec = select_spec;
+Manager.prototype.select_org = select_org;
 
 Plot.prototype.constructor = Plot;
 Plot.prototype.update = update;
