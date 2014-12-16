@@ -50,12 +50,19 @@ def save(request):
 		cp_x = request.POST['x']
 		cp_y = request.POST['y']
 		cp_z = request.POST['z']
-		fd = open(os.getcwd() + '/gettingstarted/media/body_part.csv', 'a')
-		print [id, name, snomedct_code, cp_x, cp_y, cp_z];
-		fd.write("\n" + id+","+name+","+"Hello"+","+cp_x+","+cp_y+","+cp_z)
-		fd.close()
-		print "hello"
+		#fd = open(os.getcwd() + '/gettingstarted/media/body_part.csv', 'a')
+		#print [id, name, snomedct_code, cp_x, cp_y, cp_z];
+		#fd.write("\n" + id+","+name+","+"Hello"+","+cp_x+","+cp_y+","+cp_z)
+		#fd.close()
+		#print "hello"
 	return render(request, 'test_post.html', c)
+
+def delete(request):
+	c = {}
+	c.update(csrf(request))
+	if request.POST:
+		id = request.POST['id']
+
 
 def db(request):
 

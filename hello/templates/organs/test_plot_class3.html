@@ -543,6 +543,18 @@ body {
 
     function save_function() {
         var new_id = body_part.length;
+
+        list_of_sp = []
+        selected_specs.forEach(function(sp)
+        {
+            list_of_sp.push(sp.id);
+        });
+
+        list_of_or = []
+        selected_orgs.forEach(function(or)
+        {
+            list_of_or.push(or.id)
+        });
         $.ajax({
             url: 'save',
             type: "POST",
@@ -552,6 +564,30 @@ body {
                 x: new_point.x,
                 y: new_point.y,
                 z: new_point.z,
+                sp: list_of_sp,
+                or: list_of_or,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                //debugger
+                document.getElementById("organ_add_textbox").value = response;
+            },
+            omplete: function() {},
+            error: function(xhr, textStatus, thrownError) {}
+        });
+    }
+
+    function delete_function() {
+        list_of_ids = []
+        selected_parts.forEach(function(sp)
+        {
+            list_of_ids.push(sp.id);
+        })
+        $.ajax({
+            url: 'delete',
+            type: "POST",
+            data: {
+                id: list_of_ids,
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(response) {
