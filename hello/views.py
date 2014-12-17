@@ -50,6 +50,10 @@ def save(request):
 		cp_x = request.POST['x']
 		cp_y = request.POST['y']
 		cp_z = request.POST['z']
+		#sp = request.POST['sp']
+		#org = request.POST['or']
+		bp = Body_Point(int(id), name, snomedct_code, float(cp_x), float(cp_y), float(cp_z))
+    	bp.save()
 		#fd = open(os.getcwd() + '/gettingstarted/media/body_part.csv', 'a')
 		#print [id, name, snomedct_code, cp_x, cp_y, cp_z];
 		#fd.write("\n" + id+","+name+","+"Hello"+","+cp_x+","+cp_y+","+cp_z)
@@ -62,6 +66,9 @@ def delete(request):
 	c.update(csrf(request))
 	if request.POST:
 		id = request.POST['id']
+	bp = Body_Point.objects.filter(id=int(id))
+	bp.delete()
+	return HttpResponse("hello")
 
 
 def db(request):

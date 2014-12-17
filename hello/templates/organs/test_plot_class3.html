@@ -99,9 +99,10 @@ body {
 }
 #divAdd {
     margin: 0px;
-    width: 1000px;
+    width: 100px;
     position: absolute;
     height: 20px;
+    margin-top: 250px;
 }
 #organ_add_textbox {
     margin-left: 500px;
@@ -543,16 +544,13 @@ body {
 
     function save_function() {
         var new_id = body_part.length;
-
         list_of_sp = []
-        selected_specs.forEach(function(sp)
-        {
+        selected_specs.forEach(function(sp) {
             list_of_sp.push(sp.id);
         });
 
         list_of_or = []
-        selected_orgs.forEach(function(or)
-        {
+        selected_orgs.forEach(function(or) {
             list_of_or.push(or.id)
         });
         $.ajax({
@@ -564,30 +562,61 @@ body {
                 x: new_point.x,
                 y: new_point.y,
                 z: new_point.z,
-                sp: list_of_sp,
-                or: list_of_or,
+                //sp: list_of_sp,
+                //or: list_of_or,
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(response) {
                 //debugger
                 document.getElementById("organ_add_textbox").value = response;
             },
-            omplete: function() {},
+            complete: function() {},
             error: function(xhr, textStatus, thrownError) {}
         });
     }
 
-    function delete_function() {
-        list_of_ids = []
-        selected_parts.forEach(function(sp)
+    function delete_button() {
+        var r = confirm("Are you sure you want to Delete selected item(s)");
+        if (r == true) {
+            selected_parts.forEach(function(sp) {
+            $.ajax({
+                url: 'delete/',
+                type: "POST",
+                data: {
+                    id: sp.id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    //debugger
+                    document.getElementById("organ_add_textbox").value = response;
+                },
+                complete: function() {},
+                error: function(xhr, textStatus, thrownError) {}
+            });
+        })
+        }
+    }
+
+
+    function add_relation() {
+        if(selected_parts.length == 0 && selected_orgs.length == 0 && selected_specs.length == 0)
         {
+
+        }
+        if(selected_orgs.length != 0)
+        {}
+        if(selected_specs.length != 0)
+        {}
+
+        list_of_ids = []
+        selected_parts.forEach(function(sp) {
             list_of_ids.push(sp.id);
         })
         $.ajax({
-            url: 'delete',
+            url: 'add_relation',
             type: "POST",
             data: {
-                id: list_of_ids,
+                //id: ,
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(response) {
@@ -616,16 +645,19 @@ body {
         {% csrf_token %}
         <input type="submit" name="button" id="select_btn" onclick="select_button()" value="select" class="button" disabled="true" />
         <input type="submit" name="button" id="add_btn" onclick="add_button()" value="add" />
-        <input type="submit" name="button" id="save_btn" onclick="save_function()" value="save" disabled="true" />
+        <input type="submit" name="button" id="delete_btn" onclick="delete_button()" value="delete" />
+        <input type="submit" name="button" id="add_relation" onclick="add_relation()" value="add relation" />
+        <input type="submit" name="button" id="save_btn" onclick="save_function()" value="save" />
     </div>
     <div id="div3Plots">
     </div>
     <div id="divAdd" style="visibility: hidden">
-        <input type="text" id="specialty_add_textbox" value="specialty">
-        <input type="submit" id="add_specialty_button" name="add_specialty_button" value="Add Specialty">
+        <!-- Write your comments here -->
+        <!--<input type="text" id="specialty_add_textbox" value="specialty">
+        <input type="submit" id="add_specialty_button" name="add_specialty_button" value="Add Specialty"> -->
         <input type="text" id="add_name" name="name" value="name">
-        <input type="text" id="organ_add_textbox" name="organ" value="organ">
-        <input type="submit" id="add_organ_button" name="add_organ_button" value="Add Organ">
+        <!-- <input type="text" id="organ_add_textbox" name="organ" value="organ">
+        <input type="submit" id="add_organ_button" name="add_organ_button" value="Add Organ"> -->
     </div>
     <div style="display:none">
         <input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token" />
