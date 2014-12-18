@@ -575,19 +575,31 @@ var select_point = function() {
         });
     });
     this.org_list.update();
-}
 
-var select_spec = function() {
-    selected_spec.forEach(function(p) {
-        p.organ_names.forEach(function(p_o) {
-            organs.forEach(function(o) {
-                if (p_o == o.name) {
-                    o.dep_sel = true;
+    selected_parts.forEach(function(p) {
+        p.specialty_names.forEach(function(p_sp) {
+            specialties.forEach(function(sp) {
+                if (p_sp == sp.name) {
+                    sp.dep_sel = true;
                 }
             })
         });
     });
-    this.org_list.update();
+    this.spec_list.update();
+}
+
+var select_spec = function() {
+
+    selected_spec.forEach(function(p) {
+        p.specialty_names.forEach(function(p_sp) {
+            specialties.forEach(function(sp) {
+                if (p_sp == sp.name) {
+                    sp.dep_sel = true;
+                }
+            })
+        });
+    });
+    this.spec_list.update();
 }
 
 var select_org = function() {

@@ -576,7 +576,7 @@ body {
     }
 
     function delete_button() {
-        var r = confirm("Are you sure you want to Delete selected item(s)");
+        var r = confirm("Are you sure you want to Delete selected item(s). You will lose all relations as well!");
         if (r == true) {
             selected_parts.forEach(function(sp) {
             $.ajax({
@@ -689,6 +689,7 @@ body {
         {
             selected_parts.forEach(function(p)
             {
+                alert(p.id)
                 selected_specs.forEach(function(sp) {
                     selected_orgs.forEach(function(or) 
                     {
