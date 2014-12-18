@@ -599,33 +599,119 @@ body {
 
 
     function add_relation() {
+
         if(selected_parts.length == 0 && selected_orgs.length == 0 && selected_specs.length == 0)
         {
-
+            alert("There is nothing selected.")
         }
-        if(selected_orgs.length != 0)
-        {}
-        if(selected_specs.length != 0)
-        {}
-
-        list_of_ids = []
-        selected_parts.forEach(function(sp) {
-            list_of_ids.push(sp.id);
-        })
-        $.ajax({
-            url: 'add_relation',
-            type: "POST",
-            data: {
-                //id: ,
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            success: function(response) {
-                //debugger
-                document.getElementById("organ_add_textbox").value = response;
-            },
-            omplete: function() {},
-            error: function(xhr, textStatus, thrownError) {}
-        });
+        else if(selected_parts.length != 0 && selected_orgs.length == 0 && selected_specs.length == 0)
+        {
+            alert("You only have points selected. You may be able to group these...later")
+        }
+        else if(selected_parts.length == 0 && selected_orgs.length != 0 && selected_specs.length == 0)
+        {
+            alert("You only have organs selected.")
+        }
+        else if(selected_parts.length == 0 && selected_orgs.length == 0 && selected_specs.length != 0)
+        {
+            alert("You only have specialties selected")
+        }
+        else if(selected_parts.length != 0 && selected_orgs.length != 0 && selected_specs.length == 0)
+        {
+            selected_parts.forEach(function(p)
+            {
+                selected_orgs.forEach(function(or) {
+                $.ajax({
+                url: 'add_relation/',
+                type: "POST",
+                data: {
+                    items: "p,or",
+                    p_id: p.id,
+                    or_id: or.id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert(response);
+                },
+                complete: function() {},
+                error: function(xhr, textStatus, thrownError) {}
+                });
+            });
+            });
+        }
+        else if(selected_parts.length == 0 && selected_orgs.length != 0 && selected_specs.length != 0)
+        {
+            selected_specs.forEach(function(sp)
+            {
+                selected_orgs.forEach(function(or) {
+                $.ajax({
+                url: 'add_relation/',
+                type: "POST",
+                data: {
+                    items: "or,sp",
+                    or_id: or.id,
+                    sp_id: sp.id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert(response);
+                },
+                complete: function() {},
+                error: function(xhr, textStatus, thrownError) {}
+                });
+                });
+            });
+        }
+        else if(selected_parts.length != 0 && selected_orgs.length == 0 && selected_specs.length != 0)
+        {
+            selected_parts.forEach(function(p)
+            {
+                selected_specs.forEach(function(sp) {
+                $.ajax({
+                url: 'add_relation/',
+                type: "POST",
+                data: {
+                    items: "p,sp",
+                    p_id: p.id,
+                    sp_id: sp.id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert(response);
+                },
+                complete: function() {},
+                error: function(xhr, textStatus, thrownError) {}
+                });
+                });
+            });
+        }
+        else //if(selected_parts.length != 0 && selected_orgs.length != 0 && selected_specs.length != 0)
+        {
+            selected_parts.forEach(function(p)
+            {
+                selected_specs.forEach(function(sp) {
+                    selected_orgs.forEach(function(or) 
+                    {
+                        $.ajax({
+                        url: 'add_relation/',
+                        type: "POST",
+                        data: {
+                            items: "p,sp,or",
+                            p_id: p.id,
+                            sp_id: sp.id,
+                            or_id: or.id,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            alert(response);
+                        },
+                        complete: function() {},
+                        error: function(xhr, textStatus, thrownError) {}
+                        });
+                        });
+                    });
+            });
+        }
     }
     </script>
     <link rel="stylesheet" type="text/css" href="http://www.x3dom.org/download/dev/x3dom.css" />

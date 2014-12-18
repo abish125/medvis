@@ -20,4 +20,5 @@ urlpatterns = patterns('',
     url(r'^send_sp/', hello.views.send_sp, name='send_sp'),
     url(r'^send_orgs/', hello.views.send_orgs, name='send_orgs'),
     url(r'^delete/', hello.views.delete, name='delete'),
+    url(r'^add_relation/', hello.views.add_relation, name='add_relation'),
 )

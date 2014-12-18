@@ -61,6 +61,13 @@ def save(request):
 		#print "hello"
 	return render(request, 'test_post.html', c)
 
+def add_relation(request):
+	c = {}
+	c.update(csrf(request))
+	if request.POST:
+		item_types = request.POST['items'].split(",")
+	return HttpResponse(item_types[0],item_types[1])
+
 def delete(request):
 	c = {}
 	c.update(csrf(request))
