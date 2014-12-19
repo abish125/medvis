@@ -156,17 +156,17 @@ var Plot = function(p, which_plot) {
         })
         .on("click", function(d) {
             body_part[body_part.indexOf(d)].select = !d.select;
-            selected_parts.push
             d3.select(this).classed("selected", d.select);
             p.plot1.update(p);
             p.plot2.update(p);
             p.plot3.update(p);
             if (d.select) {
                 selected_parts.push(d);
+                p.select_point(d);
             } else {
                 selected_parts.splice(selected_parts.indexOf(d), 1);
+                p.deselect_point(d);
             }
-            p.select_point();
         })
         .on("mouseover", function(d) {
             tooltip.transition()
@@ -251,10 +251,11 @@ var update = function(p) {
             p.plot3.update(p);
             if (d.select) {
                 selected_parts.push(d);
+                p.select_point(d);
             } else {
                 selected_parts.splice(selected_parts.indexOf(d), 1);
+                p.deselect_point(d);
             }
-            p.select_point();
         });
 }
 
@@ -523,7 +524,7 @@ var updateSpec_list = function() {
             if (d.select) {
                 selected_specs.push(d);
             } else {
-                selected_specs.splice(selected_spec.indexOf(d), 1);
+                selected_specs.splice(selected_specs.indexOf(d), 1);
             }
             current_object.manager.select_spec();
 
@@ -564,25 +565,61 @@ var updateOrg_list = function() {
         });
 }
 
-var select_point = function() {
-    selected_parts.forEach(function(p) {
-        p.organ_names.forEach(function(p_o) {
-            organs.forEach(function(o) {
-                if (p_o == o.name) {
-                    o.dep_sel = true;
-                }
-            })
+var select_point = function(point) {
+    point.organ_names.forEach(function(p_o) {
+        organs.forEach(function(o) {
+            if (p_o == o.name) {
+                o.dep_sel = true;
+            }
         });
     });
     this.org_list.update();
 
-    selected_parts.forEach(function(p) {
-        p.specialty_names.forEach(function(p_sp) {
+    point.specialty_names.forEach(function(p_sp) {
+        specialties.forEach(function(sp) {
+            if (p_sp == sp.name) {
+                sp.dep_sel = true;
+            }
+        })
+    });
+    this.spec_list.update();
+}
+
+var deselect_point = function(point) {
+    point.organ_names.forEach(function(p_o) {
+        organs.forEach(function(o) {
+            if (p_o == o.name) {
+                o.dep_sel = false;
+            }
+        });
+    });
+    selected_parts.forEach(function(point)
+    {
+        point.organ_names.forEach(function(p_o) {
+            organs.forEach(function(o) {
+                if (p_o == o.name) {
+                    o.dep_sel = true;
+                }
+            });
+        });
+    });
+    this.org_list.update();
+
+    point.specialty_names.forEach(function(p_sp) {
+        specialties.forEach(function(sp) {
+            if (p_sp == sp.name) {
+                sp.dep_sel = false;
+            }
+        })
+    });
+    selected_parts.forEach(function(point)
+    {
+        point.specialty_names.forEach(function(p_sp) {
             specialties.forEach(function(sp) {
                 if (p_sp == sp.name) {
                     sp.dep_sel = true;
                 }
-            })
+            });
         });
     });
     this.spec_list.update();
@@ -590,11 +627,11 @@ var select_point = function() {
 
 var select_spec = function() {
 
-    selected_spec.forEach(function(p) {
+    selected_specs.forEach(function(p) {
         p.specialty_names.forEach(function(p_sp) {
             specialties.forEach(function(sp) {
                 if (p_sp == sp.name) {
-                    sp.dep_sel = true;
+                    sp.dep_sel = !sp.dep_sel;
                 }
             })
         });
@@ -607,7 +644,7 @@ var select_org = function() {
         p.organ_names.forEach(function(p_o) {
             organs.forEach(function(o) {
                 if (p_o == o.name) {
-                    o.dep_sel = true;
+                    o.dep_sel = !o.dep_sel;
                 }
             })
         });
@@ -619,10 +656,10 @@ var select_org = function() {
 
 Manager.prototype.constructor = Manager;
 Manager.prototype.update = updateManager;
-//when do you update? 
 Manager.prototype.select_point = select_point;
 Manager.prototype.select_spec = select_spec;
 Manager.prototype.select_org = select_org;
+Manager.prototype.deselect_point = deselect_point;
 
 Plot.prototype.constructor = Plot;
 Plot.prototype.update = update;

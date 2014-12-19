@@ -567,7 +567,6 @@ body {
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(response) {
-                //debugger
                 document.getElementById("organ_add_textbox").value = response;
             },
             complete: function() {},
@@ -689,7 +688,6 @@ body {
         {
             selected_parts.forEach(function(p)
             {
-                alert(p.id)
                 selected_specs.forEach(function(sp) {
                     selected_orgs.forEach(function(or) 
                     {
