@@ -1,0 +1,413 @@
+<!DOCTYPE html >
+<html>
+
+<style>
+body {
+    font: 11px sans-serif;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.dot {
+    fill: steelblue;
+}
+.selected {
+    fill: red;
+}
+.dep_sel {
+    fill: green;
+}
+.tooltip {
+    position: absolute;
+    width: 200px;
+    height: 28px;
+    pointer-events: none;
+}
+.button {
+    border-top: 1px solid #96d1f8;
+    background: #65a9d7;
+    background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
+    background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
+    background: -moz-linear-gradient(top, #3e779d, #65a9d7);
+    background: -ms-linear-gradient(top, #3e779d, #65a9d7);
+    background: -o-linear-gradient(top, #3e779d, #65a9d7);
+    padding: 5px 10px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
+    -moz-box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
+    box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
+    text-shadow: rgba(0, 0, 0, .4) 0 1px 0;
+    color: white;
+    font-size: 14px;
+    font-family: Georgia, serif;
+    text-decoration: none;
+    vertical-align: middle;
+}
+.button:hover {
+    border-top-color: #28597a;
+    background: #28597a;
+    color: #ccc;
+}
+.button:active {
+    border-top-color: #1b435e;
+    background: #1b435e;
+}
+#divPlot {
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    margin-top: 0px;
+    margin-left: 150px;
+}
+#div3Plots {
+    position: absolute;
+    width: 900px;
+    height: 325px;
+    margin-top: 310px;
+    margin-left: 0px;
+}
+#divSpec {
+    width: 300px;
+    position: absolute;
+    margin-top: 50px;
+    height: 300px;
+}
+#divOrg {
+    width: 300px;
+    position: absolute;
+    margin-top: 50px;
+    margin-left: 600px;
+    height: 300px;
+}
+#divSearch {
+    width: 300px;
+    position: absolute;
+    margin-left: 500px;
+    height: 16px;
+}
+#divResults {
+    width: 120px;
+    position: absolute;
+    margin-left: 700px;
+    margin-top: 50px;
+    height: 20px;
+}
+#divAdd {
+    margin: 0px;
+    width: 100px;
+    position: absolute;
+    height: 20px;
+    margin-top: 250px;
+}
+#organ_add_textbox {
+    margin-left: 500px;
+}
+</style>
+
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>3D Scatter Plot</title>
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="http://x3dom.org/x3dom/dist/x3dom-full.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}Manager.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}Plot.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}Plot3d.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}Specialty.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}Organ.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}wear_protection.js"></script>
+    <script type="text/javascript">
+    // Create a 3d scatter plot within d3 selection parent.
+    var body_part;
+    var selected_parts = [];
+    var selected_specs = [];
+    var selected_orgs = [];
+    var first_click = 1;
+    var new_point = {};
+    var manager;
+    var add_mode = false;
+    var spec_svg;
+    var specialties;
+    var organs;
+    var body_points;
+
+    function scatterPlot3d(parent) {
+
+        queue()
+            .defer(d3.json, "{% url "send_data"  %}")
+            .defer(d3.json, "{% url "send_sp"  %}")
+            .defer(d3.json, "{% url "send_orgs"  %}")
+            .await(function(error, data1, data2, data3) {
+                data1.forEach(function(d) {
+                    d.id = +d.id;
+                    d.x = +d.cp_x;
+                    d.y = +d.cp_y;
+                    d.z = +d.cp_z;
+                    d.organ_ids = d.organs;
+                    d.organ_names = [];
+                    d.organ_ids.forEach(function(o_id) {
+                        data3.forEach(function(organ) {
+                            if (o_id == organ.id) {
+                                d.organ_names.push(organ.name)
+                            }
+                        });
+                    });
+                    d.specialty_ids = d.specialties;
+                    d.specialty_names = [];
+                    d.specialty_ids.forEach(function(sp_id) {
+                        data2.forEach(function(spec) {
+                            if (sp_id == spec.id) {
+                                d.specialty_names.push(spec.name)
+                            }
+                        });
+                    });
+                    d.select = false;
+                    d.dep_sel = false;
+                });
+                data2.forEach(function(d) {
+                    d.id = +d.id;
+                    d.name = d.name;
+                    d.organs = d.organs;
+                    d.select = false;
+                    d.dep_sel = false;
+                });
+                data3.forEach(function(d) {
+                    d.id = +d.id;
+                    d.name = d.name;
+                    d.snomed_ct_code = d.snomed_ct_code;
+                    d.select = false;
+                    d.dep_sel = false;
+                });
+                body_points = data1;
+                specialties = data2;
+                organs = data3;
+                body_part = body_points;
+                manager = new Manager();
+                plot3d = new Plot3d(parent, body_part);
+            })
+    }
+
+    function add_button() {
+        add_mode = true;
+        d3.select("#select_btn").classed("button", false);
+        document.getElementById("select_btn").disabled = false;
+        d3.select("#add_btn").classed("button", true);
+        document.getElementById("add_btn").disabled = true;
+        document.getElementById("save_btn").disabled = false;
+        document.getElementById("divAdd").style.visibility = "visible";
+    }
+
+    function select_button() {
+        add_mode = false;
+        d3.select("#select_btn").classed("button", true);
+        document.getElementById("select_btn").disabled = true;
+        d3.select("#add_btn").classed("button", false);
+        document.getElementById("add_btn").disabled = false;
+        document.getElementById("save_btn").disabled = true;
+        document.getElementById("divAdd").style.visibility = "hidden";
+        manager.update();
+    }
+
+    function save_function() {
+        var new_id = body_part.length;
+        list_of_sp = []
+        selected_specs.forEach(function(sp) {
+            list_of_sp.push(sp.id);
+        });
+
+        list_of_or = []
+        selected_orgs.forEach(function(or) {
+            list_of_or.push(or.id)
+        });
+        $.ajax({
+            url: 'save',
+            type: "POST",
+            data: {
+                id: new_id,
+                name: document.getElementById("add_name").value,
+                x: new_point.x,
+                y: new_point.y,
+                z: new_point.z,
+                //sp: list_of_sp,
+                //or: list_of_or,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                document.getElementById("organ_add_textbox").value = response;
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {}
+        });
+    }
+
+    function delete_button() {
+        var r = confirm("Are you sure you want to Delete selected item(s). You will lose all relations as well!");
+        if (r == true) {
+            selected_parts.forEach(function(sp) {
+                $.ajax({
+                    url: 'delete/',
+                    type: "POST",
+                    data: {
+                        id: sp.id,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        //debugger
+                        document.getElementById("organ_add_textbox").value = response;
+                    },
+                    complete: function() {},
+                    error: function(xhr, textStatus, thrownError) {}
+                });
+            })
+        }
+    }
+
+
+    function add_relation() {
+
+        if (selected_parts.length == 0 && selected_orgs.length == 0 && selected_specs.length == 0) {
+            alert("There is nothing selected.")
+        } else if (selected_parts.length != 0 && selected_orgs.length == 0 && selected_specs.length == 0) {
+            alert("You only have points selected. You may be able to group these...later")
+        } else if (selected_parts.length == 0 && selected_orgs.length != 0 && selected_specs.length == 0) {
+            alert("You only have organs selected.")
+        } else if (selected_parts.length == 0 && selected_orgs.length == 0 && selected_specs.length != 0) {
+            alert("You only have specialties selected")
+        } else if (selected_parts.length != 0 && selected_orgs.length != 0 && selected_specs.length == 0) {
+            selected_parts.forEach(function(p) {
+                selected_orgs.forEach(function(or) {
+                    $.ajax({
+                        url: 'add_relation/',
+                        type: "POST",
+                        data: {
+                            items: "p,or",
+                            p_id: p.id,
+                            or_id: or.id,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            alert(response);
+                        },
+                        complete: function() {},
+                        error: function(xhr, textStatus, thrownError) {}
+                    });
+                });
+            });
+        } else if (selected_parts.length == 0 && selected_orgs.length != 0 && selected_specs.length != 0) {
+            selected_specs.forEach(function(sp) {
+                selected_orgs.forEach(function(or) {
+                    $.ajax({
+                        url: 'add_relation/',
+                        type: "POST",
+                        data: {
+                            items: "or,sp",
+                            or_id: or.id,
+                            sp_id: sp.id,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            alert(response);
+                        },
+                        complete: function() {},
+                        error: function(xhr, textStatus, thrownError) {}
+                    });
+                });
+            });
+        } else if (selected_parts.length != 0 && selected_orgs.length == 0 && selected_specs.length != 0) {
+            selected_parts.forEach(function(p) {
+                selected_specs.forEach(function(sp) {
+                    $.ajax({
+                        url: 'add_relation/',
+                        type: "POST",
+                        data: {
+                            items: "p,sp",
+                            p_id: p.id,
+                            sp_id: sp.id,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            alert(response);
+                        },
+                        complete: function() {},
+                        error: function(xhr, textStatus, thrownError) {}
+                    });
+                });
+            });
+        } else //if(selected_parts.length != 0 && selected_orgs.length != 0 && selected_specs.length != 0)
+        {
+            selected_parts.forEach(function(p) {
+                selected_specs.forEach(function(sp) {
+                    selected_orgs.forEach(function(or) {
+                        $.ajax({
+                            url: 'add_relation/',
+                            type: "POST",
+                            data: {
+                                items: "p,sp,or",
+                                p_id: p.id,
+                                sp_id: sp.id,
+                                or_id: or.id,
+                                csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            success: function(response) {
+                                alert(response);
+                            },
+                            complete: function() {},
+                            error: function(xhr, textStatus, thrownError) {}
+                        });
+                    });
+                });
+            });
+        }
+    }
+    </script>
+    <link rel="stylesheet" type="text/css" href="http://www.x3dom.org/download/dev/x3dom.css" />
+</head>
+
+<body>
+    <div id="divSearch" align="right">
+        <input type="text" id="search_textbox" name="search_textbox" value="search">
+        <input type="submit" id="search_button" name="search_button" value="Search">
+    </div>
+    <div id="divSpec"></div>
+    <div id="divOrg"></div>
+    <div id="divResults" style="visibility: hidden" align="right" style="width:100px">
+        These are the results
+    </div>
+    <div id="divPlot">
+        {% csrf_token %}
+        <input type="submit" name="button" id="select_btn" onclick="select_button()" value="select" class="button" disabled="true" />
+        <input type="submit" name="button" id="add_btn" onclick="add_button()" value="add" />
+        <input type="submit" name="button" id="delete_btn" onclick="delete_button()" value="delete" />
+        <input type="submit" name="button" id="add_relation" onclick="add_relation()" value="add relation" />
+        <input type="submit" name="button" id="save_btn" onclick="save_function()" value="save" />
+    </div>
+    <div id="div3Plots">
+    </div>
+    <div id="divAdd" style="visibility: hidden">
+        <!-- Write your comments here -->
+        <!--<input type="text" id="specialty_add_textbox" value="specialty">
+        <input type="submit" id="add_specialty_button" name="add_specialty_button" value="Add Specialty"> -->
+        <input type="text" id="add_name" name="name" value="name">
+        <!-- <input type="text" id="organ_add_textbox" name="organ" value="organ">
+        <input type="submit" id="add_organ_button" name="add_organ_button" value="Add Organ"> -->
+    </div>
+    <div style="display:none">
+        <input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token" />
+    </div>
+    <script>
+    d3.select('html').style('height', '100%').style('width', '1150px');
+    d3.select('body').style('height', '100%').style('width', '1150px');
+    d3.select('save_btn').on("click", save_function);
+    scatterPlot3d(d3.select('#divPlot'));
+    </script>
+</body>
+
+</html>
