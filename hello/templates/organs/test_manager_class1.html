@@ -138,6 +138,7 @@ body {
     var specialties;
     var organs;
     var body_points;
+    var p3d;
 
     function scatterPlot3d(parent) {
 
@@ -191,8 +192,11 @@ body {
                 organs = data3;
                 body_part = body_points;
                 manager = new Manager();
-                plot3d = new Plot3d(parent, body_part);
+                p3d.initializePlot();
             })
+            p3d = new Plot3d(parent, body_part);
+            p3d.initializePlot();
+            setInterval(p3d.updateData, p3d.defaultDuration);
     }
 
     function add_button() {
@@ -341,7 +345,7 @@ body {
                     });
                 });
             });
-        } else //if(selected_parts.length != 0 && selected_orgs.length != 0 && selected_specs.length != 0)
+        } else
         {
             selected_parts.forEach(function(p) {
                 selected_specs.forEach(function(sp) {
@@ -367,6 +371,104 @@ body {
             });
         }
     }
+
+    function remove_relation() {
+
+        if (selected_parts.length == 0 && selected_orgs.length == 0 && selected_specs.length == 0) {
+            alert("There is nothing selected.")
+        } else if (selected_parts.length != 0 && selected_orgs.length == 0 && selected_specs.length == 0) {
+            alert("You only have points selected. You may be able to group these...later")
+        } else if (selected_parts.length == 0 && selected_orgs.length != 0 && selected_specs.length == 0) {
+            alert("You only have organs selected.")
+        } else if (selected_parts.length == 0 && selected_orgs.length == 0 && selected_specs.length != 0) {
+            alert("You only have specialties selected")
+        } else if (selected_parts.length != 0 && selected_orgs.length != 0 && selected_specs.length == 0) {
+            selected_parts.forEach(function(p) {
+                selected_orgs.forEach(function(or) {
+                    $.ajax({
+                        url: 'remove_relation/',
+                        type: "POST",
+                        data: {
+                            items: "p,or",
+                            p_id: p.id,
+                            or_id: or.id,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            alert(response);
+                        },
+                        complete: function() {},
+                        error: function(xhr, textStatus, thrownError) {}
+                    });
+                });
+            });
+        } else if (selected_parts.length == 0 && selected_orgs.length != 0 && selected_specs.length != 0) {
+            selected_specs.forEach(function(sp) {
+                selected_orgs.forEach(function(or) {
+                    $.ajax({
+                        url: 'remove_relation/',
+                        type: "POST",
+                        data: {
+                            items: "or,sp",
+                            or_id: or.id,
+                            sp_id: sp.id,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            alert(response);
+                        },
+                        complete: function() {},
+                        error: function(xhr, textStatus, thrownError) {}
+                    });
+                });
+            });
+        } else if (selected_parts.length != 0 && selected_orgs.length == 0 && selected_specs.length != 0) {
+            selected_parts.forEach(function(p) {
+                selected_specs.forEach(function(sp) {
+                    $.ajax({
+                        url: 'remove_relation/',
+                        type: "POST",
+                        data: {
+                            items: "p,sp",
+                            p_id: p.id,
+                            sp_id: sp.id,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            alert(response);
+                        },
+                        complete: function() {},
+                        error: function(xhr, textStatus, thrownError) {}
+                    });
+                });
+            });
+        } else
+        {
+            selected_parts.forEach(function(p) {
+                selected_specs.forEach(function(sp) {
+                    selected_orgs.forEach(function(or) {
+                        $.ajax({
+                            url: 'remove_relation/',
+                            type: "POST",
+                            data: {
+                                items: "p,sp,or",
+                                p_id: p.id,
+                                sp_id: sp.id,
+                                or_id: or.id,
+                                csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            success: function(response) {
+                                alert(response);
+                            },
+                            complete: function() {},
+                            error: function(xhr, textStatus, thrownError) {}
+                        });
+                    });
+                });
+            });
+        }
+    }
+
     </script>
     <link rel="stylesheet" type="text/css" href="http://www.x3dom.org/download/dev/x3dom.css" />
 </head>
@@ -387,6 +489,7 @@ body {
         <input type="submit" name="button" id="add_btn" onclick="add_button()" value="add" />
         <input type="submit" name="button" id="delete_btn" onclick="delete_button()" value="delete" />
         <input type="submit" name="button" id="add_relation" onclick="add_relation()" value="add relation" />
+        <input type="submit" name="button" id="remove_relation" onclick="remove_relation()" value="remove relation" />
         <input type="submit" name="button" id="save_btn" onclick="save_function()" value="save" />
     </div>
     <div id="div3Plots">
@@ -396,6 +499,7 @@ body {
         <!--<input type="text" id="specialty_add_textbox" value="specialty">
         <input type="submit" id="add_specialty_button" name="add_specialty_button" value="Add Specialty"> -->
         <input type="text" id="add_name" name="name" value="name">
+        <input type="text" id="add_snomed" name="snomed" value="snomedct code">
         <!-- <input type="text" id="organ_add_textbox" name="organ" value="organ">
         <input type="submit" id="add_organ_button" name="add_organ_button" value="Add Organ"> -->
     </div>

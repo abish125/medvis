@@ -12,7 +12,6 @@ function get_CSS_Class(d) {
     }
 }
 
-
 var Plot = function(p, which_plot) {
     var margin = {
             top: 20,

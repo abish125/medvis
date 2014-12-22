@@ -217,52 +217,7 @@ body {
                 body_points = data1;
                 specialties = data2;
                 organs = data3;
-                /**
-                            });
-                        queue()
-                            .defer(d3.csv, "{{MEDIA_URL}}body_part.csv")
-                            .defer(d3.csv, "{{MEDIA_URL}}org_part.csv")
-                            .defer(d3.csv, "{{MEDIA_URL}}spec_part.csv")
-                            .defer(d3.csv, "{{MEDIA_URL}}specialty.csv")
-                            .defer(d3.csv, "{{MEDIA_URL}}organ.csv")
-                            .defer(d3.csv, "{{MEDIA_URL}}org_part.csv")
-                            .await(function(error, csv_file_1, csv_file_2, csv_file_3, csv_file_4, csv_file_5, csv_file_6, whaterver_function_return_value) {
-                                csv_file_1.forEach(function(d1) {
-                                    d1.id = +d1.id;
-                                    d1.x = +d1.cp_x;
-                                    d1.y = +d1.cp_y;
-                                    d1.z = +d1.cp_z;
-                                    d1.organ_id = [];
-                                    d1.specialty_id = [];
-                                    d1.specialty_name = [];
-                                    d1.organ_name = [];
-                                    d1.select = false;
-                                    csv_file_2.forEach(function(d2) {
-                                        if (+d1.id == +d2.part_id) {
-                                            d1.organ_id.push(+d2.org_id);
-                                        }
-                                    });
-                                    csv_file_3.forEach(function(d3) {
-                                        if (+d1.id == +d3.part_id) {
-                                            d1.specialty_id.push(+d3.spec_id);
-                                        }
-                                    });
-                                    csv_file_4.forEach(function(d4) {
-                                        d1.specialty_id.forEach(function(id_spec) {
-                                            if (+d4.id == id_spec) {
-                                                d1.specialty_name.push(d4.name);
-                                            }
-                                        });
-                                    });
-                                    csv_file_5.forEach(function(d5) {
-                                        d1.organ_id.forEach(function(id_org) {
-                                            if (+d5.id == id_org) {
-                                                d1.organ_name.push(d5.name);
-                                            }
-                                        });
-                                    });
-                                });
-                **/
+                
                 body_part = body_points;
                 manager = new Manager();
 
@@ -500,7 +455,6 @@ body {
                 }
 
                 function updateData() {
-                    debugger
                     time += Math.PI / 8;
                     if (x3d.node() && x3d.node().runtime) {
                         /**for (var r=0; r<rows.length; ++r) {

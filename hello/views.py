@@ -88,6 +88,33 @@ def add_relation(request):
 			spec.organs.add(organ)
 	return HttpResponse("success")
 
+def remove_relation(request):
+	c = {}
+	c.update(csrf(request))
+	if request.POST:
+		item_types = request.POST['items'].split(",")
+		if len(item_types) == 2:
+			if item_types[0] == "p":
+				bp = Body_Point.objects.filter(id=int(request.POST["p_id"]))[0]
+				if item_types[1] == "sp":
+					spec = Specialty.objects.filter(id=int(request.POST["sp_id"]))[0]
+					bp.specialties.remove(spec)
+				else:
+					organ = Organ.objects.filter(id=int(request.POST["or_id"]))[0]
+					bp.organs.remove(organ)
+			elif item_types[0] == "or":
+				organ = Organ.objects.filter(id=int(request.POST["or_id"]))[0]			
+				spec = Specialty.objects.filter(id=int(request.POST["sp_id"]))[0]
+				spec.organs.remove(organ)
+		else:
+			bp = Body_Point.objects.filter(id=int(request.POST["p_id"]))[0]
+			organ = Organ.objects.filter(id=int(request.POST["or_id"]))[0]
+			spec = Specialty.objects.filter(id=int(request.POST["sp_id"]))[0]
+			bp.specialties.remove(spec)
+			bp.organs.remove(organ)
+			spec.organs.remove(organ)
+	return HttpResponse("success")
+
 def delete(request):
 	c = {}
 	c.update(csrf(request))
