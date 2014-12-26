@@ -22,4 +22,5 @@ urlpatterns = patterns('',
     url(r'^delete/', hello.views.delete, name='delete'),
     url(r'^add_relation/', hello.views.add_relation, name='add_relation'),
     url(r'^remove_relation/', hello.views.remove_relation, name='remove_relation'),
+    url(r'^search/', hello.views.search, name='search'),
 )

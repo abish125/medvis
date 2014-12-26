@@ -46,7 +46,7 @@ def save(request):
 	if request.POST:
 		id = request.POST['id']
 		name = request.POST['name']
-		snomedct_code = ""
+		snomedct_code = request.POST['snomed']
 		cp_x = request.POST['x']
 		cp_y = request.POST['y']
 		cp_z = request.POST['z']
@@ -124,6 +124,13 @@ def delete(request):
 	bp.delete()
 	return HttpResponse("hello")
 
+def search(request):
+	c = {}
+	c.update(csrf(request))
+	if request.POST:
+		id = request.POST['id']
+	
+	return HttpResponse("hello")
 
 def db(request):
 

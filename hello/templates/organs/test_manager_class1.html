@@ -107,6 +107,19 @@ body {
 #organ_add_textbox {
     margin-left: 500px;
 }
+#add_text
+{
+    width: 200px;
+    height: 100px;
+}
+#newText
+{
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    margin-top: 600px;
+    margin-left: 0px;
+}
 </style>
 
 
@@ -123,6 +136,7 @@ body {
     <script type="text/javascript" src="{{STATIC_URL}}Plot3d.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}Specialty.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}Organ.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}Text_Adder.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}wear_protection.js"></script>
     <script type="text/javascript">
     // Create a 3d scatter plot within d3 selection parent.
@@ -194,6 +208,7 @@ body {
                 manager = new Manager();
                 p3d.initializePlot();
             })
+            //this happens before the part above
             p3d = new Plot3d(parent, body_part);
             p3d.initializePlot();
             setInterval(p3d.updateData, p3d.defaultDuration);
@@ -221,7 +236,8 @@ body {
     }
 
     function save_function() {
-        var new_id = body_part.length;
+        var new_id = body_part.length+1;
+        /**
         list_of_sp = []
         selected_specs.forEach(function(sp) {
             list_of_sp.push(sp.id);
@@ -230,13 +246,14 @@ body {
         list_of_or = []
         selected_orgs.forEach(function(or) {
             list_of_or.push(or.id)
-        });
+        });**/
         $.ajax({
             url: 'save',
             type: "POST",
             data: {
                 id: new_id,
                 name: document.getElementById("add_name").value,
+                snomed: document.getElementById("add_snomed").value,
                 x: new_point.x,
                 y: new_point.y,
                 z: new_point.z,
@@ -246,6 +263,31 @@ body {
             },
             success: function(response) {
                 document.getElementById("organ_add_textbox").value = response;
+
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {}
+        });
+    }
+
+    function search_function() {
+        $.ajax({
+            url: 'search',
+            type: "POST",
+            data: {
+                id: new_id,
+                name: document.getElementById("add_name").value,
+                snomed: document.getElementById("add_snomed").value,
+                x: new_point.x,
+                y: new_point.y,
+                z: new_point.z,
+                //sp: list_of_sp,
+                //or: list_of_or,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                document.getElementById("organ_add_textbox").value = response;
+
             },
             complete: function() {},
             error: function(xhr, textStatus, thrownError) {}
@@ -469,6 +511,11 @@ body {
         }
     }
 
+function add_text_function()
+{
+    var a_text = new Text_Adder(document.getElementById("add_text").value, document.getElementById("add_main_topic").value);
+}
+
     </script>
     <link rel="stylesheet" type="text/css" href="http://www.x3dom.org/download/dev/x3dom.css" />
 </head>
@@ -502,6 +549,11 @@ body {
         <input type="text" id="add_snomed" name="snomed" value="snomedct code">
         <!-- <input type="text" id="organ_add_textbox" name="organ" value="organ">
         <input type="submit" id="add_organ_button" name="add_organ_button" value="Add Organ"> -->
+    </div>
+    <div id="newText">
+        <input type="text" id="add_text">
+        <input type="submit" id="add_text_button" name="add_text_button" value="Add Text" onclick="add_text_function()">
+        <input type="text" id="add_main_topic">
     </div>
     <div style="display:none">
         <input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token" />

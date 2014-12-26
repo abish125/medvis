@@ -7,6 +7,28 @@ var Plot = function(p, which_plot) {
         },
         width = 300 - margin.left - margin.right,
         height = 250 - margin.top - margin.bottom;
+
+    var drag = d3.behavior.drag()
+        /**.origin(function(d) {
+            return d;
+        })**/
+        .on("dragstart", dragstarted)
+        .on("drag", dragged)
+        .on("dragend", dragended);
+
+    function dragstarted(d) {
+        d3.event.sourceEvent.stopPropagation();
+        d3.select(this).classed("dragging", true);
+    }
+
+    function dragged(d) {
+        d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+    }
+
+    function dragended(d) {
+        d3.select(this).classed("dragging", false);
+    }
+
     this.which_plot = which_plot;
     this.manager = p;
     var current_plot = this;
@@ -164,7 +186,8 @@ var Plot = function(p, which_plot) {
             tooltip.transition()
                 .duration(500)
                 .style("opacity", 0);
-        });
+        })
+        //.call(drag);
 }
 
 var update = function(p) {
@@ -198,7 +221,8 @@ var update = function(p) {
                 selected_parts.splice(selected_parts.indexOf(d), 1);
                 p.deselect_point(d);
             }
-        });
+        })
+        //.call(drag);
 }
 
 var add_point = function(c) {
