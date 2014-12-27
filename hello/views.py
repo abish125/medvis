@@ -132,6 +132,13 @@ def search(request):
 	
 	return HttpResponse("hello")
 
+def add_items(request):
+	c = {}
+	c.update(csrf(request))
+	if request.POST:
+		names
+	return HttpResponse("")
+
 def db(request):
 
     body_point = Body_Point()

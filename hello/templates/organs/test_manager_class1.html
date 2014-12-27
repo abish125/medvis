@@ -20,6 +20,29 @@ body {
 .dep_sel {
     fill: green;
 }
+.not_selected {
+    fill: black;
+}
+
+.organ {
+    fill: green;
+}
+.specialty {
+    fill: red;
+}
+.body_point {
+    fill: blue;
+}
+.condition {
+    fill: rgb(255, 128, 0);
+}
+.finding {
+    fill: purple;
+}
+.joining {
+    fill: rgb(255,105,180);
+}
+
 .tooltip {
     position: absolute;
     width: 200px;
@@ -109,10 +132,19 @@ body {
 }
 #add_text
 {
-    width: 200px;
+    width: 1000px;
     height: 100px;
+    word-wrap: true;
 }
 #newText
+{
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    margin-top: 600px;
+    margin-left: 0px;
+}
+#selectingText
 {
     position: absolute;
     width: 400px;
@@ -237,16 +269,6 @@ body {
 
     function save_function() {
         var new_id = body_part.length+1;
-        /**
-        list_of_sp = []
-        selected_specs.forEach(function(sp) {
-            list_of_sp.push(sp.id);
-        });
-
-        list_of_or = []
-        selected_orgs.forEach(function(or) {
-            list_of_or.push(or.id)
-        });**/
         $.ajax({
             url: 'save',
             type: "POST",
@@ -513,7 +535,41 @@ body {
 
 function add_text_function()
 {
-    var a_text = new Text_Adder(document.getElementById("add_text").value, document.getElementById("add_main_topic").value);
+    manager.text_adder.add_text(document.getElementById("add_text").value, [document.getElementById("add_main_topic").value]);
+    document.getElementById("selectingText").style.visibility = "visible";
+    document.getElementById("newText").style.visibility = "hidden";
+}
+
+function add_stuff_function()
+{
+    manager.text_adder.add_points();
+    //d3.select("#word_label_1").style("fill") this gets you what you need
+    $.ajax({
+            url: 'add_items/',
+            type: "POST",
+            data: {
+                specialties: manager.text_adder.getType("specialty"),
+                organs: manager.text_adder.getType("organ"),
+                body_points: manager.text_adder.getType("body_point"),
+//                snomed: //get these with capserjs,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                document.getElementById("organ_add_textbox").value = response;
+
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {}
+        });
+    document.getElementById("selectingText").style.visibility = "hidden";
+    document.getElementById("newText").style.visibility = "visible";
+}
+
+function go_back()
+{
+    document.getElementById("selectingText").style.visibility = "hidden";
+    document.getElementById("newText").style.visibility = "visible";
+    manager.text_adder.clear();
 }
 
     </script>
@@ -550,10 +606,15 @@ function add_text_function()
         <!-- <input type="text" id="organ_add_textbox" name="organ" value="organ">
         <input type="submit" id="add_organ_button" name="add_organ_button" value="Add Organ"> -->
     </div>
-    <div id="newText">
-        <input type="text" id="add_text">
-        <input type="submit" id="add_text_button" name="add_text_button" value="Add Text" onclick="add_text_function()">
+    <div id="selectingText" style="visibility: hidden">
+        <input type="submit" id="go_back" name="go_back_button" value="Go Back" onclick="go_back()">
+        <input type="submit" id="add_stuff" name="add_stuff_button" value="Add Stuff" onclick="add_stuff_function()">
+    </div>
+    <div id="newText" style="visibility: visible">
         <input type="text" id="add_main_topic">
+        <br>
+        <textarea type="textarea" cols="40" rows="10" id="add_text"></textarea>
+        <input type="submit" id="add_text_button" name="add_text_button" value="Add Text" onclick="add_text_function()">
     </div>
     <div style="display:none">
         <input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token" />

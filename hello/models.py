@@ -1,12 +1,24 @@
 from django.db import models
 
+class Finding(models.Model):
+    name = models.CharField(max_length=1000);
+    snomed_ct_code = models.CharField(max_length=1000);
+
+class Condition(models.Model):
+    name = models.CharField(max_length=1000);
+    snomed_ct_code = models.CharField(max_length=1000);
+
 class Organ(models.Model):
     name = models.CharField(max_length=1000)
     snomed_ct_code = models.CharField(max_length=1000)
+    findings = models.ManyToManyField(Finding, blank=True)
+    conditions = models.ManyToManyField(Condition, blank=True)
 
 class Specialty(models.Model):
     name = models.CharField(max_length=1000)
     organs = models.ManyToManyField(Organ, blank=True)
+    findings = models.ManyToManyField(Finding, blank=True)
+    conditions = models.ManyToManyField(Condition, blank=True)
 
 class Body_Point(models.Model):
     name = models.CharField(max_length=1000)
@@ -16,3 +28,5 @@ class Body_Point(models.Model):
     cp_z = models.FloatField()
     organs = models.ManyToManyField(Organ, blank=True)
     specialties = models.ManyToManyField(Specialty, blank=True)
+    findings = models.ManyToManyField(Finding, blank=True)
+    conditions = models.ManyToManyField(Condition, blank=True)

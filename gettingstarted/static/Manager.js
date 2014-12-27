@@ -16,6 +16,7 @@ var Manager = function() {
     this.plot3 = new Plot(this, 3);
     this.spec_list = new Spec_list(this);
     this.org_list = new Org_list(this);
+    this.text_adder = new Text_Adder(this)
 }
 
 var updateManager = function() {
@@ -132,8 +133,18 @@ var select_org = function() {
     this.org_list.update();
 }
 
+var refresh = function() {
+    this.plot1.refresh();
+    this.plot2.refresh();
+    this.plot3.refresh();
+    this.spec_list.refresh();
+    this.org_list.refresh();
+    //this.text_adder.refresh();
+}
+
 Manager.prototype.constructor = Manager;
 Manager.prototype.update = updateManager;
+Manager.prototype.refresh = refresh;
 Manager.prototype.select_point = select_point;
 Manager.prototype.select_spec = select_spec;
 Manager.prototype.select_org = select_org;
