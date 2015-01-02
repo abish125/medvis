@@ -542,7 +542,7 @@ function add_text_function()
 
 function add_stuff_function()
 {
-    manager.text_adder.add_points();
+    //manager.text_adder.add_points();
     //d3.select("#word_label_1").style("fill") this gets you what you need
     $.ajax({
             url: 'add_items/',
@@ -555,7 +555,7 @@ function add_stuff_function()
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(response) {
-                document.getElementById("organ_add_textbox").value = response;
+                alert(response);
 
             },
             complete: function() {},

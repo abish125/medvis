@@ -142,6 +142,21 @@ var refresh = function() {
     //this.text_adder.refresh();
 }
 
+var add_points_with_names = function (names) {
+    add_mode =  true;
+    d3.select("#select_btn").classed("button", false);
+    document.getElementById("select_btn").disabled = false;
+    d3.select("#add_btn").classed("button", true);
+    document.getElementById("add_btn").disabled = true;
+    document.getElementById("save_btn").disabled = false;
+    document.getElementById("divAdd").style.visibility = "visible";
+    names.forEach(function (name)
+    {
+        alert("add point location for", name);
+        
+    })
+}
+
 Manager.prototype.constructor = Manager;
 Manager.prototype.update = updateManager;
 Manager.prototype.refresh = refresh;
@@ -149,3 +164,4 @@ Manager.prototype.select_point = select_point;
 Manager.prototype.select_spec = select_spec;
 Manager.prototype.select_org = select_org;
 Manager.prototype.deselect_point = deselect_point;
+Manager.prototype.add_points_with_names = add_points_with_names;

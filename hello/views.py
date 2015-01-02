@@ -136,8 +136,10 @@ def add_items(request):
 	c = {}
 	c.update(csrf(request))
 	if request.POST:
-		names
-	return HttpResponse("")
+		spec = request.POST['specialties']
+		if spec:
+			print spec
+	return HttpResponse("success")
 
 def db(request):
 

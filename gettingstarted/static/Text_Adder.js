@@ -77,6 +77,24 @@ function getCSSClass(d) {
     }
 }
 
+function getColorFromName(name){
+    if (name == "specialty") { //if black not selected
+        return "rgb(255, 0, 0)";
+    } else if (name == "organ") { //if red:spec
+        return "rgb(0, 128, 0)";
+    } else if (name == "body_point") { //if green: organ
+        return "rgb(0, 0, 255)";
+    } else if (name == "") { 
+        return "rgb(255, 128, 0)";
+    } else if (name == "") {
+        return "rgb(128, 0, 128)";
+    } else if (name == "") {
+        return "rgb(255,105,180)";
+    } else {
+        return "";
+    }
+}
+
 function getNextColor(current_color) {
     if (current_color == "") { //if black not selected
         return "red";
@@ -99,7 +117,7 @@ function getNextColor(current_color) {
 
 function getType(ty){
 	var ret_type = [];
-	if (this.main_topic.c == ty)
+	if (this.mtt.style("fill") == getColorFromName(ty))
 	{
 		ret_type.push(this.mtt.main_topic);
 	}
