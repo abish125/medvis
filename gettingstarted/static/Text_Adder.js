@@ -33,6 +33,7 @@ var add_text = function(stuff_text, main_topic, m) {
         .text(function(d) {
             return d;
         })
+        .attr("id", "main_topic")
         .on("click", function(d) {
             this.style.fill = getNextColor(this.style.fill);
         });
@@ -117,9 +118,9 @@ function getNextColor(current_color) {
 
 function getType(ty){
 	var ret_type = [];
-	if (this.mtt.style("fill") == getColorFromName(ty))
+	if (d3.select("#main_topic").style("fill") == getColorFromName(ty))
 	{
-		ret_type.push(this.mtt.main_topic);
+		ret_type.push(this.main_topic);
 	}
 	this.words.forEach(function (word)
 	{
@@ -127,7 +128,7 @@ function getType(ty){
 		{
 			ret_type.push(word);
 		}
-	});
+	})
 	return ret_type;
 }
 

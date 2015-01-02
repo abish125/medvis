@@ -548,7 +548,7 @@ function add_stuff_function()
             url: 'add_items/',
             type: "POST",
             data: {
-                specialties: manager.text_adder.getType("specialty"),
+                specialties: manager.text_adder.getType("specialty").toString(),
                 organs: manager.text_adder.getType("organ"),
                 body_points: manager.text_adder.getType("body_point"),
 //                snomed: //get these with capserjs,

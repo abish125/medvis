@@ -136,9 +136,11 @@ def add_items(request):
 	c = {}
 	c.update(csrf(request))
 	if request.POST:
-		spec = request.POST['specialties']
+		spec = request.POST["specialties"]
 		if spec:
-			print spec
+			new_id = len(Specialty.objects.all())+1
+			bp = Specialty(new_id,spec)
+			bp.save()
 	return HttpResponse("success")
 
 def db(request):
