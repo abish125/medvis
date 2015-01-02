@@ -148,7 +148,12 @@ var Plot = function(p, which_plot) {
         .style("text-anchor", "end")
         .text("vertical axis");
 
+    this.circles = this.svg.selectAll("circle")
+        .data(body_part);
+    this.update(p)
+
     // draw dots
+    /**
     this.circles = this.svg.selectAll("circle")
         .data(body_part);
     this.circles
@@ -186,11 +191,11 @@ var Plot = function(p, which_plot) {
             tooltip.transition()
                 .duration(500)
                 .style("opacity", 0);
-        })
+        })**/
         //.call(drag);
 }
 
-var update = function(p) {
+var update = function() {
     var current_plot = this;
     this.circles
         .attr("r", 3.5)
@@ -211,15 +216,15 @@ var update = function(p) {
             var current_part = body_part[body_part.indexOf(d)]
             body_part[body_part.indexOf(d)].select = !d.select;
             d3.select(this).classed("selected", d.select);
-            p.plot1.update(p);
-            p.plot2.update(p);
-            p.plot3.update(p);
+            current_plot.manager.plot1.update();
+            current_plot.manager.plot2.update();
+            current_plot.manager.plot3.update();
             if (d.select) {
                 selected_parts.push(d);
-                p.select_point(d);
+                current_plot.manager.update(d);
             } else {
                 selected_parts.splice(selected_parts.indexOf(d), 1);
-                p.deselect_point(d);
+                current_plot.manager.update(d);
             }
         })
         //.call(drag);

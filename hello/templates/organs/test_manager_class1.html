@@ -140,7 +140,7 @@ body {
 {
     position: absolute;
     width: 400px;
-    height: 300px;
+    height: 3000px;
     margin-top: 600px;
     margin-left: 0px;
 }
@@ -151,6 +151,24 @@ body {
     height: 300px;
     margin-top: 600px;
     margin-left: 0px;
+}
+#text_details1
+{
+    position: absolute;
+    width: 420px;
+    height: 275px;
+    margin-top: 30px;
+    margin-left: 700px;
+    background-color:black;
+}
+#text_details2
+{
+    position: absolute;
+    width: 210px;
+    height: 275px;
+    margin-top: 305px;
+    margin-left: 910px;
+    background-color:green;
 }
 </style>
 
@@ -172,6 +190,8 @@ body {
     <script type="text/javascript" src="{{STATIC_URL}}wear_protection.js"></script>
     <script type="text/javascript">
     // Create a 3d scatter plot within d3 selection parent.
+
+    //can all of these be variables in manager
     var body_part;
     var selected_parts = [];
     var selected_specs = [];
@@ -219,19 +239,45 @@ body {
                     d.select = false;
                     d.dep_sel = false;
                 });
+                //spec=data2
                 data2.forEach(function(d) {
                     d.id = +d.id;
                     d.name = d.name;
-                    d.organs = d.organs;
+                    d.organ_ids = d.organs;
                     d.select = false;
                     d.dep_sel = false;
                 });
+                //organs=data3
                 data3.forEach(function(d) {
                     d.id = +d.id;
                     d.name = d.name;
+                    d.specialties = [];
+                    data2.forEach(function (sp)
+                    {
+                        sp.organs.forEach(function(o)
+                        {
+                            if(d.id == o)
+                            {
+                                d.specialties.push(sp);
+                            }
+                        });
+                    });
                     d.snomed_ct_code = d.snomed_ct_code;
                     d.select = false;
                     d.dep_sel = false;
+                });
+                data2.forEach(function(d){
+                    d.organs = [];
+                    d.organ_ids.forEach(function(o_id)
+                    {
+                        data3.forEach(function(o_d)
+                        {
+                            if(o_d.id == o_id)
+                            {
+                                d.organs.push(o_d)
+                            }
+                        });
+                    });
                 });
                 body_points = data1;
                 specialties = data2;
@@ -549,8 +595,8 @@ function add_stuff_function()
             type: "POST",
             data: {
                 specialties: manager.text_adder.getType("specialty").toString(),
-                organs: manager.text_adder.getType("organ"),
-                body_points: manager.text_adder.getType("body_point"),
+                organs: manager.text_adder.getType("organ").toString(),
+                body_points: manager.text_adder.getType("body_point").toString(),
 //                snomed: //get these with capserjs,
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
@@ -615,6 +661,10 @@ function go_back()
         <br>
         <textarea type="textarea" cols="40" rows="10" id="add_text"></textarea>
         <input type="submit" id="add_text_button" name="add_text_button" value="Add Text" onclick="add_text_function()">
+    </div>
+    <div id="text_details1" style="visibility: visible">
+    </div>
+    <div id="text_details2" style="visibility: visible">
     </div>
     <div style="display:none">
         <input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token" />

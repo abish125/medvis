@@ -16,6 +16,8 @@ var Org_list = function(m) {
     var current_object = this;
     this.org_text = org_svg.selectAll("text");
     this.org_text.data(organs).enter().append("text")
+    this.update();
+    /**
         .attr("x", 5)
         .attr("y", function(d, i) {
             return 20 * (i + 1);
@@ -36,6 +38,7 @@ var Org_list = function(m) {
             }
             current_object.manager.select_org();
         });
+**/
 }
 
 
@@ -61,7 +64,7 @@ var updateOrg_list = function() {
             } else {
                 selected_orgs.splice(selected_orgs.indexOf(d), 1);
             }
-            current_object.manager.select_org();
+            current_object.manager.update();
         });
 }
 

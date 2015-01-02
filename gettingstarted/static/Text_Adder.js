@@ -17,8 +17,8 @@ var add_text = function(stuff_text, main_topic, m) {
     var word_number_width = init_width / split_amount;
 
     this.main_topic = main_topic
-    
-    this.words = stuff_text.split(" ");
+    stuff_text = stuff_text.replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' ');
+    this.words = stuff_text.split(' ');
 
     text_box = d3.select("#selectingText").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -122,13 +122,13 @@ function getType(ty){
 	{
 		ret_type.push(this.main_topic);
 	}
-	this.words.forEach(function (word)
+	for(var i=0;i<this.words.length;i++)
 	{
-		if (word.c == ty)
+		if (d3.select("#word_label_" + i).style("fill") == getColorFromName(ty))
 		{
-			ret_type.push(word);
+			ret_type.push(this.words[i]);
 		}
-	})
+	}
 	return ret_type;
 }
 

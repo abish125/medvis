@@ -84,12 +84,19 @@ var plotData = function(duration) {
         // Does not work on Chrome; use transform instead
         //.attr("radius", sphereRadius)
 
+    //this is where you change the color
+    //would be nice to have a separate function like
+    //get css class etc. 
     datapoints.selectAll("shape appearance material")
         .attr("diffuseColor", function(d) {
             if (d.select) {
-                return 'red';
+                return "red";
             } else {
-                return 'steelblue';
+                if (d.dep_sel) {
+                    return "green"
+                } else {
+                    return "steelblue";
+                }
             }
         })
 

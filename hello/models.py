@@ -30,3 +30,11 @@ class Body_Point(models.Model):
     specialties = models.ManyToManyField(Specialty, blank=True)
     findings = models.ManyToManyField(Finding, blank=True)
     conditions = models.ManyToManyField(Condition, blank=True)
+
+class Secondary_Info(models.Model):
+    source = models.CharField(max_length=10000)
+    conditions = models.ManyToManyField(Condition, blank=True)
+    findings = models.ManyToManyField(Finding, blank=True)
+    organs = models.ManyToManyField(Organ, blank=True)
+    specialties = models.ManyToManyField(Specialty, blank=True)
+    body_points = models.ManyToManyField(Body_Point, blank=True)

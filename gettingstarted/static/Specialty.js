@@ -15,7 +15,10 @@ var Spec_list = function(m) {
     this.manager = m;
     var current_object = this;
     this.spec_text = spec_svg.selectAll("text");
-    this.spec_text.data(specialties).enter().append("text")
+    this.spec_text.data(specialties).enter().append("text");
+    this.update();
+
+    /**
         .attr("x", 5)
         .attr("y", function(d, i) {
             return 20 * (i + 1);
@@ -36,6 +39,7 @@ var Spec_list = function(m) {
             }
             current_object.manager.select_spec();
         });
+**/
 }
 
 var updateSpec_list = function() {
@@ -60,8 +64,7 @@ var updateSpec_list = function() {
             } else {
                 selected_specs.splice(selected_specs.indexOf(d), 1);
             }
-            current_object.manager.select_spec();
-
+            current_object.manager.update();
         });
 }
 
