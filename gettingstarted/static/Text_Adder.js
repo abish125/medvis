@@ -79,18 +79,18 @@ function getCSSClass(d) {
 }
 
 function getColorFromName(name){
-    if (name == "specialty") { //if black not selected
-        return "rgb(255, 0, 0)";
-    } else if (name == "organ") { //if red:spec
-        return "rgb(0, 128, 0)";
-    } else if (name == "body_point") { //if green: organ
-        return "rgb(0, 0, 255)";
+    if (name == "specialty") { 
+        return "rgb(255, 0, 0)"; //red
+    } else if (name == "organ") { 
+        return "rgb(0, 128, 0)"; //green
+    } else if (name == "body_point") { 
+        return "rgb(0, 0, 255)"; //blue
     } else if (name == "") { 
-        return "rgb(255, 128, 0)";
+        return "rgb(255, 128, 0)"; //orange
     } else if (name == "") {
-        return "rgb(128, 0, 128)";
+        return "rgb(128, 0, 128)"; //purple
     } else if (name == "") {
-        return "rgb(255,105,180)";
+        return "rgb(255,105,180)"; //pink
     } else {
         return "";
     }
@@ -142,16 +142,8 @@ function getType(ty){
 
 //I think you need clearer "modes" 
 
-var add_points = function ()
-{
-	var names = this.getType("body_point");
-	this.new_points = this.manager.add_points_with_names(names);
-	
-}
-
 Text_Adder.prototype.constructor = Text_Adder;
 Text_Adder.prototype.add_text = add_text;
 Text_Adder.prototype.clear = clear;
 Text_Adder.prototype.refresh = refresh;
 Text_Adder.prototype.getType = getType;
-Text_Adder.prototype.add_points = add_points

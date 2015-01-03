@@ -205,10 +205,11 @@ body {
     var organs;
     var body_points;
     var p3d;
+    var adding_many_points = false
+    var points_to_add = []
 
     function scatterPlot3d(parent) {
-
-        queue()
+            queue()
             .defer(d3.json, "{% url "send_data"  %}")
             .defer(d3.json, "{% url "send_sp"  %}")
             .defer(d3.json, "{% url "send_orgs"  %}")
@@ -588,8 +589,10 @@ function add_text_function()
 
 function add_stuff_function()
 {
-    //manager.text_adder.add_points();
-    //d3.select("#word_label_1").style("fill") this gets you what you need
+    manager.add_points_with_names(manager.text_adder.getType("body_point"))
+    
+    // you can't do the ajax here unless you don't have body_points
+
     $.ajax({
             url: 'add_items/',
             type: "POST",

@@ -217,29 +217,57 @@ var refresh = function() {
     //this.text_adder.refresh();
 }
 
+function getOpposite(VorH)
+{
+    if (VorH=="visible")
+    {
+        return "hidden";
+    }
+    else
+    {
+        return "visible";
+    }
+}
+
+function ToggleAddManyPoints()
+{
+    document.getElementById("divAdd").style.visibility = getOpposite(document.getElementById("divAdd").style.visibility);
+    document.getElementById("divSpec").style.visibility = getOpposite(document.getElementById("divSpec").style.visibility);
+    document.getElementById("divOrg").style.visibility = getOpposite(document.getElementById("divOrg").style.visibility);
+    //selectingText
+    //newText
+    //text_details1
+    //text_details2
+}
+
 var add_points_with_names = function (names) {
     add_mode =  true;
-    d3.select("#select_btn").classed("button", false);
-    document.getElementById("select_btn").disabled = false;
-    d3.select("#add_btn").classed("button", true);
-    document.getElementById("add_btn").disabled = true;
-    document.getElementById("save_btn").disabled = false;
-    document.getElementById("divAdd").style.visibility = "visible";
-    names.forEach(function (name)
-    {
-        alert("add point location for", name);
+    adding_many_points = true;
+    //need a way to turn everything off except this.
+    //
+    points_to_add = names;
+    document.getElementById(add_name).value = points_to_add[0]
 
-    })
+    ToggleAddManyPoints();
 }
+
+    //when done adding you remove from points_to_add and 
+    //if empty then you change adding_many_points to false
+    //
+
+    //can we go get the snomed code ourselves here? 
+    // you can do a background call to casperjs. 
+
+
 
 Manager.prototype.constructor = Manager;
 Manager.prototype.update = updateManager;
 Manager.prototype.refresh = refresh;
+Manager.prototype.add_points_with_names = add_points_with_names;
 
 /**
 Manager.prototype.select_point = select_point;
 Manager.prototype.select_spec = select_spec;
 Manager.prototype.select_org = select_org;
 Manager.prototype.deselect_point = deselect_point;
-Manager.prototype.add_points_with_names = add_points_with_names;
 **/

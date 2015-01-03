@@ -330,6 +330,18 @@ var add_point = function(c) {
                 }
             });
         add_mode = false;
+
+        if(points_to_add.length == 1)
+        {
+            ToggleAddManyPoints();
+            adding_many_points = false;
+            save_function();
+        }
+        if(adding_many_points)
+        {
+            add_mode = true;
+        }
+        points_to_add.splice(points_to_add.indexOf(document.getElementById(add_name).value), 1);
     }
     first_click = !first_click;
 
