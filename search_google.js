@@ -16,34 +16,56 @@ var x = require('casper').selectXPath;
 
 casper.start("http://www.google.com");
 
+casper.then(function() {
+    content = casper.cli.args.join(" ")
+    this.sendKeys(x("//*[@id='gbqfq']"), content)
+});
+
+casper.thenClick(x("//*[@id='gbqfsa']"), function() {
+    //console.log("clicking the accept button")
+});
+
+//*[@id="gbqfb"]/span
+
+casper.wait(2000, function() {
+    //console.log("taking a picture")
+    //casper.capture('google1.png');
+});
+
+
+casper.thenClick(x("//*[@id='rso']/div[2]/li[1]/div/h3/a"), function() {
+    //console.log("clicking the accept button")
+});
+
+
 casper.wait(1000, function() {
-    //console.log("waiting ")
+    //console.log("taking a picture")
+    //casper.capture('google2.png');
+    console.log(casper.evaluate(function(html) {
+            var tmp = document.createElement("DIV");
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || "";
+        },
+        this.getHTML(x("//*[@id='main-content']"))));
 });
 
-casper.thenClick(x("//*[@id='license-modal']/div/div/div[3]/button/span"), function() {
-	//console.log("clicking the accept button")
-});
 
-casper.wait(1000, function() {
-	//console.log("taking a picture")
-    //casper.capture('snomed1.png');
-});
 
-casper.thenClick(x("//*[@id='welcome-perspective']/div/p[4]/a[1]/span[1]"), function() {
-	//console.log("clicking the accept button")
-});
+/**
+casper.evaluate(function(username, password) {
+    document.querySelector('#username').value = username;
+    document.querySelector('#password').value = password;
+    document.querySelector('#submit').click();
+}, 'sheldon.cooper', 'b4z1ng4');
+**/
 
-casper.wait(1000, function() {
-	//console.log("taking a picture")
-    //casper.capture('snomed2.png');
-});
-
+/**
 casper.thenClick(x("//*[@id='fh-tabs']/li[2]/a/span"), function() {
-	//console.log("clicking the accept button")
+    //console.log("clicking the accept button")
 });
 
 casper.wait(1000, function() {
-	//console.log("taking a picture")
+    //console.log("taking a picture")
     //casper.capture('snomed3.png');
 });
 
@@ -51,11 +73,11 @@ casper.wait(1000, function() {
 casper.then(function()
 {
     content = casper.cli.args.join(" ")
-	this.sendKeys(x("//*[@id='fh-search_canvas-searchBox']"), content)
+    this.sendKeys(x("//*[@id='fh-search_canvas-searchBox']"), content)
 })
 
 casper.wait(1000, function() {
-    	//console.log("taking a picture")
+        //console.log("taking a picture")
         //casper.capture('snomed4.png');
 });
 
@@ -68,7 +90,7 @@ casper.wait(1000, function() {
         //casper.capture('snomed5.png');
         console.log(this.getHTML(x("//*[@id='home-attributes-fh-cd1_canvas']/h5")));
 });
-
+**/
 
 
 casper.run();
