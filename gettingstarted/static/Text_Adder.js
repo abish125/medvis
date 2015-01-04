@@ -22,7 +22,8 @@ var add_text = function(stuff_text, main_topic, m) {
 
     text_box = d3.select("#selectingText").append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.bottom);
+        .attr("height", height + margin.bottom)
+        .attr("id", "selectingTextSvg");
     this.group1 = text_box.append("g");
     this.group2 = text_box.append("g");
 
@@ -38,6 +39,8 @@ var add_text = function(stuff_text, main_topic, m) {
             this.style.fill = getNextColor(this.style.fill);
         });
 
+    document.getElementById("selectingText").style.height = ((Math.floor(this.words.length / word_number_width) + 3) * 15)+20
+    document.getElementById("selectingTextSvg").style.height = ((Math.floor(this.words.length / word_number_width) + 3) * 15)
 
     this.tb = this.group2.selectAll("text");
     this.tb.data(this.words).enter().append("text")

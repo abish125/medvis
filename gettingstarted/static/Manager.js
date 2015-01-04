@@ -281,7 +281,7 @@ var add_points_with_names = function (names) {
 Manager.prototype.constructor = Manager;
 Manager.prototype.update = updateManager;
 Manager.prototype.refresh = refresh;
-Manager.prototype.add_points_with_names = add_points_with_names;s
+Manager.prototype.add_points_with_names = add_points_with_names;
 
 /**
 Manager.prototype.select_point = select_point;
