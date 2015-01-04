@@ -219,7 +219,7 @@ var refresh = function() {
 
 function getOpposite(VorH)
 {
-    if (VorH=="visible")
+    if (VorH=="visible" || VorH == "")
     {
         return "hidden";
     }
@@ -234,21 +234,39 @@ function ToggleAddManyPoints()
     document.getElementById("divAdd").style.visibility = getOpposite(document.getElementById("divAdd").style.visibility);
     document.getElementById("divSpec").style.visibility = getOpposite(document.getElementById("divSpec").style.visibility);
     document.getElementById("divOrg").style.visibility = getOpposite(document.getElementById("divOrg").style.visibility);
-    //selectingText
-    //newText
-    //text_details1
-    //text_details2
+    //document.getElementById("selectingText").style.visibility = getOpposite(document.getElementById("selectingText").style.visibility);
+    //document.getElementById("newText").style.visibility = getOpposite(document.getElementById("newText").style.visibility);
+    document.getElementById("text_details1").style.visibility = getOpposite(document.getElementById("text_details1").style.visibility);
+    document.getElementById("text_details2").style.visibility = getOpposite(document.getElementById("text_details2").style.visibility);
+    document.getElementById("divSearch").style.visibility = getOpposite(document.getElementById("divSearch").style.visibility);
+    
 }
 
 var add_points_with_names = function (names) {
     add_mode =  true;
     adding_many_points = true;
     //need a way to turn everything off except this.
-    //
-    points_to_add = names;
-    document.getElementById(add_name).value = points_to_add[0]
 
     ToggleAddManyPoints();
+
+    points_to_add = names.toString().split(',');
+    document.getElementById("add_name").value = points_to_add[points_to_add.length-1];
+
+    /**
+    $.ajax({
+            url: 'find_snomed/',
+            type: "POST",
+            data: {
+                name: document.getElementById("add_name").value,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                document.getElementById("add_snomed").value = response;
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {}
+        });\
+    **/
 }
 
     //when done adding you remove from points_to_add and 

@@ -12,6 +12,7 @@ import json
 import csv
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
+import subprocess
 
 
 # Create your views here.
@@ -149,6 +150,27 @@ def add_items(request):
 		if body_points:
 			print body_points
 	return HttpResponse("success")
+
+def find_snomed(request):
+	c = {}
+	c.update(csrf(request))
+	search = ""
+	results = ""
+	if request.POST:
+		search = request.POST["name"]
+		cmd = ['casperjs snomed_scrape.js \'' + search + '\''] #, 'args']
+		results = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+		results_list = results.split(" ")
+		results = results_list[1]
+	else:
+		results = "error"
+
+    #subprocess.call(['cd', '/app/hellodjango'],
+            #shell=True,
+            #stderr=subprocess.STDOUT)
+    #cmd = ['cd', 'casperjs']
+    #cmd = ['ln', '-sf', '`pwd`/bin/casperjs', '../venv/bin']
+	return HttpResponse(results)
 
 def db(request):
 

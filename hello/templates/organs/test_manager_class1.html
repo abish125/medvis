@@ -589,10 +589,29 @@ function add_text_function()
 
 function add_stuff_function()
 {
-    manager.add_points_with_names(manager.text_adder.getType("body_point"))
+    var names = manager.text_adder.getType("body_point");
+    manager.add_points_with_names(names);
+
+    points_to_add = names.toString().split(',');
+    document.getElementById("add_name").value = points_to_add[points_to_add.length-1];
+
+    $.ajax({
+            url: 'find_snomed/',
+            type: "POST",
+            data: {
+                name: document.getElementById("add_name").value,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                document.getElementById("add_snomed").value = response;
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {}
+        });
+
     
     // you can't do the ajax here unless you don't have body_points
-
+    /**
     $.ajax({
             url: 'add_items/',
             type: "POST",
@@ -610,8 +629,9 @@ function add_stuff_function()
             complete: function() {},
             error: function(xhr, textStatus, thrownError) {}
         });
+    **/
     document.getElementById("selectingText").style.visibility = "hidden";
-    document.getElementById("newText").style.visibility = "visible";
+    document.getElementById("newText").style.visibility = "hidden";
 }
 
 function go_back()
@@ -621,8 +641,8 @@ function go_back()
     manager.text_adder.clear();
 }
 
-    </script>
-    <link rel="stylesheet" type="text/css" href="http://www.x3dom.org/download/dev/x3dom.css" />
+</script>
+<link rel="stylesheet" type="text/css" href="http://www.x3dom.org/download/dev/x3dom.css" />
 </head>
 
 <body>

@@ -341,8 +341,9 @@ var add_point = function(c) {
         {
             add_mode = true;
         }
-        points_to_add.splice(points_to_add.indexOf(document.getElementById(add_name).value), 1);
-    }
+        points_to_add.splice(points_to_add.indexOf(document.getElementById("add_name").value), 1);
+        document.getElementById("add_name").value = points_to_add[points_to_add.length-1]
+        }
     first_click = !first_click;
 
 }
