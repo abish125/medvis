@@ -128,10 +128,15 @@ def delete(request):
 def search(request):
 	c = {}
 	c.update(csrf(request))
+	search = ""
+	results = ""
 	if request.POST:
-		id = request.POST['id']
-	
-	return HttpResponse("hello")
+		search = request.POST["search_box"]
+		cmd = ['casperjs search_uptodate.js \'' + search + '\''] #, 'args']
+		results = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+	else:
+		results = "error"
+	return HttpResponse(results)
 
 def add_items(request):
 	c = {}

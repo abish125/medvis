@@ -209,6 +209,8 @@ body {
     var points_to_add = []
 
     function scatterPlot3d(parent) {
+        //need a way to send all the data with first render
+
             queue()
             .defer(d3.json, "{% url "send_data"  %}")
             .defer(d3.json, "{% url "send_sp"  %}")
@@ -641,6 +643,25 @@ function go_back()
     manager.text_adder.clear();
 }
 
+function search_function()
+{
+    $.ajax({
+            url: 'search/',
+            type: "POST",
+            data: {
+                search_box: document.getElementById("search_textbox").value,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                document.getElementById("add_main_topic").value = document.getElementById("search_textbox").value;
+                document.getElementById("add_text").value = response;
+                add_text_function();
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {}
+        });
+}
+
 </script>
 <link rel="stylesheet" type="text/css" href="http://www.x3dom.org/download/dev/x3dom.css" />
 </head>
@@ -648,7 +669,7 @@ function go_back()
 <body>
     <div id="divSearch" align="right">
         <input type="text" id="search_textbox" name="search_textbox" value="search">
-        <input type="submit" id="search_button" name="search_button" value="Search">
+        <input type="submit" id="search_button" name="search_button" value="Search" onclick="search_function()">
     </div>
     <div id="divSpec"></div>
     <div id="divOrg"></div>

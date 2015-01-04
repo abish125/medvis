@@ -16,9 +16,10 @@ var x = require('casper').selectXPath;
 
 casper.start("http://www.google.com");
 
+var search = casper.cli.args.join(" ");
+
 casper.then(function() {
-    content = casper.cli.args.join(" ")
-    this.sendKeys(x("//*[@id='gbqfq']"), content)
+    this.sendKeys(x("//*[@id='gbqfq']"), search)
 });
 
 casper.thenClick(x("//*[@id='gbqfsa']"), function() {
@@ -29,7 +30,7 @@ casper.thenClick(x("//*[@id='gbqfsa']"), function() {
 
 casper.wait(2000, function() {
     //console.log("taking a picture")
-    //casper.capture('google1.png');
+    casper.capture('google1.png');
 });
 
 
@@ -41,12 +42,14 @@ casper.thenClick(x("//*[@id='rso']/div[2]/li[1]/div/h3/a"), function() {
 casper.wait(1000, function() {
     //console.log("taking a picture")
     //casper.capture('google2.png');
-    console.log(casper.evaluate(function(html) {
+    var body = casper.evaluate(function(html) {
             var tmp = document.createElement("DIV");
             tmp.innerHTML = html;
             return tmp.textContent || tmp.innerText || "";
         },
-        this.getHTML(x("//*[@id='main-content']"))));
+        this.getHTML(x("/html/body")));
+    var clean_body = body.substring(body.search(search))
+    console.log(clean_body); ////*[@id='main-content']
 });
 
 
