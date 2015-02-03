@@ -88,11 +88,11 @@ function getColorFromName(name){
         return "rgb(0, 128, 0)"; //green
     } else if (name == "body_point") { 
         return "rgb(0, 0, 255)"; //blue
-    } else if (name == "") { 
+    } else if (name == "finding") { 
         return "rgb(255, 128, 0)"; //orange
-    } else if (name == "") {
+    } else if (name == "condition") {
         return "rgb(128, 0, 128)"; //purple
-    } else if (name == "") {
+    } else if (name == "join") {
         return "rgb(255,105,180)"; //pink
     } else {
         return "";
@@ -129,7 +129,14 @@ function getType(ty){
 	{
 		if (d3.select("#word_label_" + i).style("fill") == getColorFromName(ty))
 		{
-			ret_type.push(this.words[i]);
+            if(d3.select("#word_label_" + (i-1)).style("fill") == getColorFromName("join"))
+            {
+                ret_type.push(this.words[i-1] + " " this.words[i])
+            }
+            else
+            {
+                ret_type.push(this.words[i]);
+            }
 		}
 	}
 	return ret_type;

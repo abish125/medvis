@@ -265,7 +265,7 @@ var add_points_with_names = function (names) {
             },
             complete: function() {},
             error: function(xhr, textStatus, thrownError) {}
-        });\
+        });
     **/
 }
 
