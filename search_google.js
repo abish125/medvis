@@ -34,7 +34,7 @@ casper.wait(2000, function() {
 });
 
 
-casper.thenClick(x("//*[@id='rso']/div[2]/li[1]/div/h3/a"), function() {
+/**casper.thenClick(x("//*[@id='rso']/div[2]/li[1]/div/h3/a"), function() {
     //console.log("clicking the accept button")
 });
 
@@ -50,7 +50,7 @@ casper.wait(1000, function() {
         this.getHTML(x("/html/body")));
     var clean_body = body.substring(body.search(search))
     console.log(clean_body); ////*[@id='main-content']
-});
+});**/
 
 
 
