@@ -121,24 +121,27 @@ function getNextColor(current_color) {
 
 function getType(ty){
 	var ret_type = [];
+    var ta = this;
 	if (d3.select("#main_topic").style("fill") == getColorFromName(ty))
 	{
-		ret_type.push(this.main_topic);
+		ret_type.push(ta.main_topic);
 	}
-	for(var i=0;i<this.words.length;i++)
+    /**
+	for(var i=0;i<ta.words.length;i++)
 	{
 		if (d3.select("#word_label_" + i).style("fill") == getColorFromName(ty))
 		{
             if(d3.select("#word_label_" + (i-1)).style("fill") == getColorFromName("join"))
             {
-                ret_type.push(this.words[i-1] + " " this.words[i])
+                ret_type.push(ta.words[i-1] + " " ta.words[i])
             }
             else
             {
-                ret_type.push(this.words[i]);
+                ret_type.push(ta.words[i]);
             }
 		}
 	}
+    **/
 	return ret_type;
 }
 

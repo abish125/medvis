@@ -192,7 +192,7 @@ body {
     // Create a 3d scatter plot within d3 selection parent.
 
     //can all of these be variables in manager
-    var body_part;
+    var body_part = [];
     var selected_parts = [];
     var selected_specs = [];
     var selected_orgs = [];
@@ -201,9 +201,9 @@ body {
     var manager;
     var add_mode = false;
     var spec_svg;
-    var specialties;
-    var organs;
-    var body_points;
+    var specialties = [];
+    var organs = [];
+    var body_points = [];
     var p3d;
     var adding_many_points = false
     var points_to_add = []
@@ -216,78 +216,81 @@ body {
             .defer(d3.json, "{% url "send_sp"  %}")
             .defer(d3.json, "{% url "send_orgs"  %}")
             .await(function(error, data1, data2, data3) {
-                data1.forEach(function(d) {
-                    d.id = +d.id;
-                    d.x = +d.cp_x;
-                    d.y = +d.cp_y;
-                    d.z = +d.cp_z;
-                    d.organ_ids = d.organs;
-                    d.organ_names = [];
-                    d.organ_ids.forEach(function(o_id) {
-                        data3.forEach(function(organ) {
-                            if (o_id == organ.id) {
-                                d.organ_names.push(organ.name)
-                            }
+                if(data1!=undefined)
+                {
+                    data1.forEach(function(d) {
+                        d.id = +d.id;
+                        d.x = +d.cp_x;
+                        d.y = +d.cp_y;
+                        d.z = +d.cp_z;
+                        d.organ_ids = d.organs;
+                        d.organ_names = [];
+                        d.organ_ids.forEach(function(o_id) {
+                            data3.forEach(function(organ) {
+                                if (o_id == organ.id) {
+                                    d.organ_names.push(organ.name)
+                                }
+                            });
                         });
-                    });
-                    d.specialty_ids = d.specialties;
-                    d.specialty_names = [];
-                    d.specialty_ids.forEach(function(sp_id) {
-                        data2.forEach(function(spec) {
-                            if (sp_id == spec.id) {
-                                d.specialty_names.push(spec.name)
-                            }
+                        d.specialty_ids = d.specialties;
+                        d.specialty_names = [];
+                        d.specialty_ids.forEach(function(sp_id) {
+                            data2.forEach(function(spec) {
+                                if (sp_id == spec.id) {
+                                    d.specialty_names.push(spec.name)
+                                }
+                            });
                         });
+                        d.select = false;
+                        d.dep_sel = false;
                     });
-                    d.select = false;
-                    d.dep_sel = false;
-                });
-                //spec=data2
-                data2.forEach(function(d) {
-                    d.id = +d.id;
-                    d.name = d.name;
-                    d.organ_ids = d.organs;
-                    d.select = false;
-                    d.dep_sel = false;
-                });
-                //organs=data3
-                data3.forEach(function(d) {
-                    d.id = +d.id;
-                    d.name = d.name;
-                    d.specialties = [];
-                    data2.forEach(function (sp)
-                    {
-                        sp.organs.forEach(function(o)
+                    //spec=data2
+                    data2.forEach(function(d) {
+                        d.id = +d.id;
+                        d.name = d.name;
+                        d.organ_ids = d.organs;
+                        d.select = false;
+                        d.dep_sel = false;
+                    });
+                    //organs=data3
+                    data3.forEach(function(d) {
+                        d.id = +d.id;
+                        d.name = d.name;
+                        d.specialties = [];
+                        data2.forEach(function (sp)
                         {
-                            if(d.id == o)
+                            sp.organs.forEach(function(o)
                             {
-                                d.specialties.push(sp);
-                            }
+                                if(d.id == o)
+                                {
+                                    d.specialties.push(sp);
+                                }
+                            });
                         });
+                        d.snomed_ct_code = d.snomed_ct_code;
+                        d.select = false;
+                        d.dep_sel = false;
                     });
-                    d.snomed_ct_code = d.snomed_ct_code;
-                    d.select = false;
-                    d.dep_sel = false;
-                });
-                data2.forEach(function(d){
-                    d.organs = [];
-                    d.organ_ids.forEach(function(o_id)
-                    {
-                        data3.forEach(function(o_d)
+                    data2.forEach(function(d){
+                        d.organs = [];
+                        d.organ_ids.forEach(function(o_id)
                         {
-                            if(o_d.id == o_id)
+                            data3.forEach(function(o_d)
                             {
-                                d.organs.push(o_d)
-                            }
+                                if(o_d.id == o_id)
+                                {
+                                    d.organs.push(o_d)
+                                }
+                            });
                         });
                     });
-                });
-                body_points = data1;
-                specialties = data2;
-                organs = data3;
-                body_part = body_points;
-                manager = new Manager();
-                p3d.initializePlot();
+                    body_points = data1;
+                    specialties = data2;
+                    organs = data3;
+                    body_part = body_points;
+                    manager = new Manager();
+                    p3d.initializePlot();
+                }
             })
             //this happens before the part above
             p3d = new Plot3d(parent, body_part);

@@ -177,6 +177,25 @@ def find_snomed(request):
     #cmd = ['ln', '-sf', '`pwd`/bin/casperjs', '../venv/bin']
 	return HttpResponse(results)
 
+def get_object_from_name(word):
+	for s in Specialty.objects.all():
+		if word == s.name:
+			return s
+	for o in Organ.objects.all():
+		if word == o.name:
+			return o
+	for bp in Body_Point.objects.all():
+		if word == bp.name:
+			return bp
+	for f in Finding.objects.all():
+		if word == f.name:
+			return f
+	for c in Condition.objects.all():
+		if word == c.name:
+			return c
+	return False
+
+
 def db(request):
 
     body_point = Body_Point()
