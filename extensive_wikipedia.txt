@@ -1,0 +1,1 @@
+Physical properties of materials and systems are often described as intensive and extensive properties. This classification relates to the dependency of the properties upon the size or extent of the system or object in question.

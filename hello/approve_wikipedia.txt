@@ -1,0 +1,1 @@
+Approval voting is a single-winner voting method used for elections. Each voter may 'approve' of (i.e., select) any number of candidates. The winner is the most-approved candidate.

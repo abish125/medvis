@@ -1,0 +1,1 @@
+A leg is a weight bearing and locomotive structure, usually having a columnar shape. During locomotion, legs function as "extensible struts".[1] The combination of movements at all joints can be modeled as a single, linear element capable of changing length and rotating about an omnidirectional "hip" joint.

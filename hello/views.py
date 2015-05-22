@@ -13,10 +13,13 @@ import csv
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 import subprocess
+from classify_class import Classifier
 
 
 # Create your views here.
 def index(request):
+	#c = Classifier("med_targets.txt", "med_words.txt","wikipedia", "med_conf.txt", ["yes","no"])
+	#c.already_started()
 	return render(request, 'organs/test_manager_class1.html')
 
 def send_data(request):
@@ -134,6 +137,23 @@ def search(request):
 		search = request.POST["search_box"]
 		cmd = ['casperjs search_uptodate.js \'' + search + '\''] #, 'args']
 		results = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+	else:
+		results = "error"
+	return HttpResponse(results)
+
+def guess(request):
+	c = {}
+	c.update(csrf(request))
+	guess_words = ""
+	results = ""
+	if request.POST:
+		guess_words = request.POST["words"]
+		guess_words = guess_words.split(" ")
+		c = Classifier("med_targets.txt", "med_words.txt","wikipedia", "med_conf.txt", ["yes","no"])
+		c.already_started()
+		for w in guess_words:
+			#print w
+			results = results + " " + c.classify(w)
 	else:
 		results = "error"
 	return HttpResponse(results)

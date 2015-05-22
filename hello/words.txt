@@ -1,0 +1,153 @@
+sepsis
+pain
+nitroglycerine
+heart
+cardiology
+managed
+managed
+takotsubo
+embolism
+arrhythmias
+nitroglycerin
+smoking
+hyperoxia
+sulfate
+intensive
+REVASCULARIZATION
+urinary
+influenza
+systematic
+embolism
+pneumoniae
+dermatology
+pulmonary embolism
+cardiology
+rheumatology
+pulmonology
+hematology
+surgery
+neurosurgery
+gastroenterology
+ophthalmology
+radiology
+pain
+chest pain
+dyspnea
+murmur
+myocardial infarction
+metoprolol
+prednisone
+omeprazole
+abdominal pain
+numbness
+diarrhea
+constipation
+vomiting
+otorhinolaryngology
+nose bleed
+anesthesiology
+oncology
+pneumonia
+migraine
+head
+neck
+shoulder
+chest
+humerus
+radius
+ulna
+femur
+tibia
+fibula
+pancreas
+heart
+urology
+nausea
+headache
+tingling
+Clopidogrel
+aspirin
+jaundice
+jugular venous distension
+wheezing
+asthma
+COPD
+CABG
+Coronary artery disease
+statin
+liver
+Tuberculosis
+Gastroenteritis
+Aortic dissection
+beta blocker
+amlodipine
+Tissue plasminogen activator
+weight loss
+trazadone
+tramadol
+morphine
+Hydromorphone
+Codeine
+pneumothorax
+cardiac tamponade
+propofol
+adenosine
+epinephrine
+phenylephrine
+Endocrinology
+diabetes
+neurology
+pathology
+nephrology
+cancer
+foot
+hand
+finger
+hypertension
+hyperlipidemia
+kidney
+crackles
+rhonchi
+rales
+Crepitus
+congestive heart failure
+ACE inhibitor
+lisinopril
+losartan
+ear
+atenolol
+vascular surgery
+Tamsulosin
+alpha blockers
+Knee pain
+Patellofemoral pain syndrome
+NSAIDs
+gout
+swollen
+Inflammation
+Hypernatremia
+blurry vision
+glaucoma
+Diplopia
+Lymphadenopathy
+rash
+lupus
+papule
+macule
+macule
+patch
+Rosuvastatin
+lisinopril
+bosentan
+mitral valve
+mitral regurgitation
+sle
+digoxin
+iritis
+tears
+ventricular tachycardia
+coronary sinus
+AV node
+ingrown toenail
+syncope
+amiodarone

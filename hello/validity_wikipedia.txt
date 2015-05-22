@@ -1,0 +1,1 @@
+In logic, an argument is valid if and only if its conclusion is logically entailed by its premises. A formula is valid if and only if it is true under every interpretation, and an argument form (or schema) is valid if and only if every argument of that logical form is valid.

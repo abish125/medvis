@@ -26,4 +26,5 @@ urlpatterns = patterns('',
     url(r'^add_items/', hello.views.add_items, name='add_items'),
     url(r'^find_snomed/', hello.views.find_snomed, name='find_snomed'),
     url(r'^search/', hello.views.search, name='search'),
+    url(r'^guess/', hello.views.guess, name='guess'),
 )

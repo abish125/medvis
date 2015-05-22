@@ -1,0 +1,1 @@
+In finance, the underlying of a derivative is an asset, basket of assets, index, or even another derivative, such that the cash flows of the (former) derivative depend on the value of this underlying. There must be an independent way to observe this value to avoid conflicts of interest.

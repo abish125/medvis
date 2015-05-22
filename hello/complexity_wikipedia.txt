@@ -1,0 +1,1 @@
+Complexity is generally used to characterize something with many parts where those parts interact with each other in multiple ways. The study of these complex linkages is the main goal of complex systems theory.

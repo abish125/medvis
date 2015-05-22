@@ -1,0 +1,1 @@
+In physics, a fluid is a substance that continually deforms (flows) under an applied shear stress. Fluids are a subset of the phases of matter and include liquids, gases, plasmas and, to some extent, plastic solids. Fluids can be defined as substances that have zero shear modulus or in simpler terms a fluid is a substance which cannot resist any shear force applied to it.

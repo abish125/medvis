@@ -1,0 +1,1 @@
+In mathematics, a monotonic function (or monotone function) is a function between ordered sets that preserves the given order. This concept first arose in calculus, and was later generalized to the more abstract setting of order theory.

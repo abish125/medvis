@@ -1,0 +1,1 @@
+Position refers to the spatial location (rather than orientation) of an entity. The term may also refer to:

@@ -669,6 +669,28 @@ function search_function()
         });
 }
 
+function guess_function()
+{
+    guess_text_function();
+}
+
+function guess_text_function()
+{
+    $.ajax({
+            url: 'guess/',
+            type: "POST",
+            data: {
+                words: manager.text_adder.words.join(" "),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                console.log(response);
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
+        });
+}
+
 </script>
 <link rel="stylesheet" type="text/css" href="http://www.x3dom.org/download/dev/x3dom.css" />
 </head>
@@ -704,6 +726,7 @@ function search_function()
         <input type="submit" id="add_organ_button" name="add_organ_button" value="Add Organ"> -->
     </div>
     <div id="selectingText" style="visibility: hidden">
+        <input type="submit" id="guess_button" name="guess_button" value="Guess" onclick="guess_function()">
         <input type="submit" id="go_back" name="go_back_button" value="Go Back" onclick="go_back()">
         <input type="submit" id="add_stuff" name="add_stuff_button" value="Add Stuff" onclick="add_stuff_function()">
     </div>

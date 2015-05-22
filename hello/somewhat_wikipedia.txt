@@ -1,0 +1,1 @@
+In linguistics, a polarity item is a lexical item that can appear only in environments associated with a particular grammatical polarity – affirmative or negative. A polarity item that appears in affirmative (positive) contexts is called a positive polarity item (PPI), and one that appears in negative contexts is a negative polarity item (NPI).
