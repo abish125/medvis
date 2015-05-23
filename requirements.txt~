@@ -29,6 +29,9 @@ sqlparse==0.1.14
 static3==0.5.1
 wsgiref==0.1.2
 
+scipy==0.15.1
+numpy==1.9.2
+pyzmq==14.4.1
 Jinja2==2.7.3
 MarkupSafe==0.23
 backports.ssl-match-hostname==3.4.0.2
@@ -37,5 +40,6 @@ gunicorn==19.1.1
 ipython==2.3.1
 psycopg2==2.5.4
 tornado==4.0.2
+scikit-learn==0.16.1
 
 
