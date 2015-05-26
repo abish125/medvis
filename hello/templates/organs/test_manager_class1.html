@@ -685,6 +685,21 @@ function guess_text_function()
             },
             success: function(response) {
                 console.log(response);
+                debugger;
+                re = response.split(" ");
+                counter = 0;
+                re.forEach(function (r)
+                {
+                    if(r == "yes")
+                    {
+                        manager.text_adder.tb[counter].style.fill = "red";
+                    }
+                    else
+                    {
+                        manager.text_adder.tb[counter].style.fill = "blue";
+                    }
+                    counter = counter + 1;
+                });
             },
             complete: function() {},
             error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
