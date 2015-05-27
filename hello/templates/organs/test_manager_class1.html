@@ -685,18 +685,18 @@ function guess_text_function()
             },
             success: function(response) {
                 console.log(response);
-                debugger;
                 re = response.split(" ");
+                re.splice(0,1);
                 counter = 0;
                 re.forEach(function (r)
                 {
                     if(r == "yes")
                     {
-                        manager.text_adder.tb[counter].style.fill = "red";
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "red"
                     }
                     else
                     {
-                        manager.text_adder.tb[counter].style.fill = "blue";
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "blue"
                     }
                     counter = counter + 1;
                 });
