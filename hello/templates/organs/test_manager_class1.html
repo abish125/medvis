@@ -708,29 +708,29 @@ function guess_text_function()
 
 function teach_function()
 {
+    tt = ""
+    counter=1;
+    manager.text_adder.words.forEach(function (r)
+    {
+        if (document.getElementById("word_label_" + counter.toString()).style.fill == "red")
+        {
+            tt = tt + " " + "yes";
+        }
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "blue")
+        {
+            tt = tt + " " +  "no";
+        }
+        counter = counter + 1;
+    });
     $.ajax({
             url: 'teach/',
             type: "POST",
             data: {
-                words: manager.text_adder.words.join(" "),
+                teach_words: manager.text_adder.words.join(" "),
+                teach_targets: tt,
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(response) {
-                console.log(response);
-                re = response.split(" ");
-                re.splice(0,1);
-                counter = 0;
-                re.forEach(function (r)
-                {
-                    if(r == "yes")
-                    {
-                        document.getElementById("word_label_" + counter.toString()).style.fill = "red"
-                    }
-                    else
-                    {
-                        document.getElementById("word_label_" + counter.toString()).style.fill = "blue"
-                    }
-                    counter = counter + 1;
                 });
             },
             complete: function() {},
@@ -773,6 +773,7 @@ function teach_function()
     </div>
     <div id="selectingText" style="visibility: hidden">
         <input type="submit" id="guess_button" name="guess_button" value="Guess" onclick="guess_function()">
+        <input type="submit" id="teach_button" name="teach_button" value="Teach" onclick="teach_function()">
         <input type="submit" id="go_back" name="go_back_button" value="Go Back" onclick="go_back()">
         <input type="submit" id="add_stuff" name="add_stuff_button" value="Add Stuff" onclick="add_stuff_function()">
     </div>

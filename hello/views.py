@@ -152,29 +152,28 @@ def guess(request):
 		c = Classifier("med_targets.txt", "med_words.txt","wikipedia", "med_conf.txt", ["yes","no"])
 		c.already_started()
 		for w in guess_words:
-			#print w
 			results = results + " " + c.classify(w)
 	else:
 		results = "error"
 	return HttpResponse(results)
 
-def guess(request):
+def teach(request):
 	c = {}
 	c.update(csrf(request))
 	teach_words = ""
 	teach_targets = ""
 	results=""
 	if request.POST:
-		guess_words = request.POST["words"]
-		guess_words = guess_words.split(" ")
+		teach_words = request.POST["teach_words"]
+		teach_words = teach_words.split(" ")
+		teach_targets = request.POST["teach_targets"]
+		teach_targets = teach_targets.split(" ")
 		c = Classifier("med_targets.txt", "med_words.txt","wikipedia", "med_conf.txt", ["yes","no"])
 		c.already_started()
-		for w in guess_words:
-			#print w
-			results = results + " " + c.classify(w)
+		c.change_terms(teach_words, teach_targets)
 	else:
 		results = "error"
-	return HttpResponse(results)
+	return HttpResponse("success")
 
 def add_items(request):
 	c = {}

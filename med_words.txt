@@ -5167,3 +5167,4 @@ rapture
 cholangitis
 pruritis
 pruritus
+petechiae

@@ -125,6 +125,26 @@ class Classifier:
         self.word_g.close()
 
         self.text_clf = self.text_clf.fit(self.results, self.targets)
+        
+    def change_terms(self, words, targets):
+        found = False
+        for c in range(len(self.searches)):
+            for c2 in range(len(words)):
+                if words[c2] == self.searches[c]:
+                    found = True
+                    self.targets[c] = targets[c2]
+            if not found:
+                self.searches = self.searches + [words[c2]]
+                self.targets = self.targets + [targets[c2]]
+            found = False
+
+        self.targ_g = open(self.target_source, "w")
+        self.targ_g.write("\n".join(self.targets))
+        self.targ_g.close()
+        self.word_g = open(self.word_source, "w")
+        self.word_g.write("\n".join(self.searches))
+        self.word_g.close()
+
                 
     def already_started(self):
         self.targ_f = open(self.target_source, "r")
@@ -199,8 +219,9 @@ class Classifier:
                 self.word_g.write("\n".join(self.searches))
                 self.word_g.close()
             else:
-                answer = input('Is that right? "y"/"n"  ')
-                if answer == "y":
+                return self.predicted[0]
+                #answer = input('Is that right? "y"/"n"  ')
+                '''if answer == "y":
                     got_it_right = True
                     print "you answered yes"
                     self.searches = self.searches + [self.new_search]
@@ -213,7 +234,7 @@ class Classifier:
                     self.word_g.close()
                 else:
                     print "you ansered no"
-                    answer = input("what's the correct answer?  ")
+                    #answer = input("what's the correct answer?  ")
                     #need to change this to include self.possible_targets
                     #also need to include figuring out the confidence rate that it should be
                     if answer in self.possible_targets:
@@ -228,7 +249,7 @@ class Classifier:
                     else:
                         print "you did not answer"
                 
-                self.right_wrongs = self.right_wrongs + [str(self.got_it_right)]
+                self.right_wrongs = self.right_wrongs + [str(self.got_it_right)]'''
                 
                 '''conf_file_list = []
                 for i in range(len(self.confidences)):
