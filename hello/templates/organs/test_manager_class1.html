@@ -706,6 +706,37 @@ function guess_text_function()
         });
 }
 
+function teach_function()
+{
+    $.ajax({
+            url: 'teach/',
+            type: "POST",
+            data: {
+                words: manager.text_adder.words.join(" "),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                console.log(response);
+                re = response.split(" ");
+                re.splice(0,1);
+                counter = 0;
+                re.forEach(function (r)
+                {
+                    if(r == "yes")
+                    {
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "red"
+                    }
+                    else
+                    {
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "blue"
+                    }
+                    counter = counter + 1;
+                });
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
+        });
+}
 </script>
 <link rel="stylesheet" type="text/css" href="http://www.x3dom.org/download/dev/x3dom.css" />
 </head>

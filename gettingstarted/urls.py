@@ -27,4 +27,5 @@ urlpatterns = patterns('',
     url(r'^find_snomed/', hello.views.find_snomed, name='find_snomed'),
     url(r'^search/', hello.views.search, name='search'),
     url(r'^guess/', hello.views.guess, name='guess'),
+    url(r'^teach/', hello.views.teach, name='teach'),
 )

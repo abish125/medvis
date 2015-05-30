@@ -158,6 +158,24 @@ def guess(request):
 		results = "error"
 	return HttpResponse(results)
 
+def guess(request):
+	c = {}
+	c.update(csrf(request))
+	teach_words = ""
+	teach_targets = ""
+	results=""
+	if request.POST:
+		guess_words = request.POST["words"]
+		guess_words = guess_words.split(" ")
+		c = Classifier("med_targets.txt", "med_words.txt","wikipedia", "med_conf.txt", ["yes","no"])
+		c.already_started()
+		for w in guess_words:
+			#print w
+			results = results + " " + c.classify(w)
+	else:
+		results = "error"
+	return HttpResponse(results)
+
 def add_items(request):
 	c = {}
 	c.update(csrf(request))
