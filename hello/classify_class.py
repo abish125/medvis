@@ -133,10 +133,9 @@ class Classifier:
                 if words[c2] == self.searches[c]:
                     found = True
                     self.targets[c] = targets[c2]
-            if not found:
-                self.searches = self.searches + [words[c2]]
-                self.targets = self.targets + [targets[c2]]
-            found = False
+        if not found:
+            self.searches = self.searches + [words[c2]]
+            self.targets = self.targets + [targets[c2]]
 
         self.targ_g = open(self.target_source, "w")
         self.targ_g.write("\n".join(self.targets))

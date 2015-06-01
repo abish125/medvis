@@ -142,16 +142,23 @@ def search(request):
 	return HttpResponse(results)
 
 def guess(request):
+	import string
 	c = {}
 	c.update(csrf(request))
 	guess_words = ""
 	results = ""
 	if request.POST:
-		guess_words = request.POST["words"]
+		guess_words = request.POST["words"]#.decode('utf-8', 'ignore')
 		guess_words = guess_words.split(" ")
+		gw_cleaned = []
+		for gw in guess_words:
+			gw = ''.join(e for e in gw if e.isalnum())
+			if gw != "":
+				gw_cleaned = gw_cleaned + [''.join(e for e in gw if e.isalnum())]
 		c = Classifier("med_targets.txt", "med_words.txt","wikipedia", "med_conf.txt", ["yes","no"])
 		c.already_started()
-		for w in guess_words:
+		print gw_cleaned
+		for w in gw_cleaned:
 			results = results + " " + c.classify(w)
 	else:
 		results = "error"
@@ -167,7 +174,8 @@ def teach(request):
 		teach_words = request.POST["teach_words"]
 		teach_words = teach_words.split(" ")
 		teach_targets = request.POST["teach_targets"]
-		teach_targets = teach_targets.split(" ")
+		teach_targets = teach_targets.split(" ")[1:]
+		print teach_targets
 		c = Classifier("med_targets.txt", "med_words.txt","wikipedia", "med_conf.txt", ["yes","no"])
 		c.already_started()
 		c.change_terms(teach_words, teach_targets)

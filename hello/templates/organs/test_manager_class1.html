@@ -680,7 +680,7 @@ function guess_text_function()
             url: 'guess/',
             type: "POST",
             data: {
-                words: manager.text_adder.words.join(" "),
+                words: manager.text_adder.words.join(" ").replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' '),
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(response) {
@@ -709,14 +709,14 @@ function guess_text_function()
 function teach_function()
 {
     tt = ""
-    counter=1;
+    counter=0;
     manager.text_adder.words.forEach(function (r)
     {
-        if (document.getElementById("word_label_" + counter.toString()).style.fill == "red")
+        if (document.getElementById("word_label_" + counter.toString()).style.fill == "rgb(255, 0, 0)")
         {
             tt = tt + " " + "yes";
         }
-        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "blue")
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "rgb(0, 0, 255)")
         {
             tt = tt + " " +  "no";
         }
@@ -731,7 +731,7 @@ function teach_function()
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(response) {
-                });
+                alert("it worked");
             },
             complete: function() {},
             error: function(xhr, textStatus, thrownError) {console.log(thrownError);}

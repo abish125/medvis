@@ -5168,3 +5168,5 @@ cholangitis
 pruritis
 pruritus
 petechiae
+petechia
+pharynx
