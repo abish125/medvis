@@ -28,4 +28,5 @@ urlpatterns = patterns('',
     url(r'^search/', hello.views.search, name='search'),
     url(r'^guess/', hello.views.guess, name='guess'),
     url(r'^teach/', hello.views.teach, name='teach'),
+    url(r'^planning/', hello.views.planning, name='planning'),
 )

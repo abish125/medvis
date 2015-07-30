@@ -250,3 +250,6 @@ def db(request):
 
     return render(request, 'db.html', {'body_points': body_points})
 
+def planning(request):
+
+	return render(request, 'organs/planning.html')
