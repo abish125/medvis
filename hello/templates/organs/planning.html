@@ -13,35 +13,29 @@
   <section class="container">
     <div class="planning">
       <h1>enter information</h1>
-      <form method="post" action="index.html">
-        <p><input type="text" name="time" value="" placeholder="time available"></p>
-        <p><input type="text" name="place" value="" placeholder="place"></p>
+        {% csrf_token %}
+        <p><input type="text" id="time_available" name="time" value="" placeholder="time available"></p>
+        <p><input type="text" id="place" name="place" value="" placeholder="place"></p>
         <p class="submit"><input type="submit" id="submit" name="commit" value="submit" onclick="return_task()">
+        <br>
+        <br>
+        <textarea type="textarea" cols="40" rows="10" id="answer"></textarea>
         </p>
-      </form>
     </div>
   </section>
   <script type="text/javascript">
 
   function return_task() {
-        var new_id = body_part.length+1;
         $.ajax({
-            url: 'save',
+            url: 'return_task',
             type: "POST",
             data: {
-                id: new_id,
-                name: document.getElementById("add_name").value,
-                snomed: document.getElementById("add_snomed").value,
-                x: new_point.x,
-                y: new_point.y,
-                z: new_point.z,
-                //sp: list_of_sp,
-                //or: list_of_or,
+                time: document.getElementById("time_available").value,
+                place: document.getElementById("place").value,
                 csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
+            }, 
             success: function(response) {
-                document.getElementById("organ_add_textbox").value = response;
-
+                document.getElementById("answer").value = response;
             },
             complete: function() {},
             error: function(xhr, textStatus, thrownError) {}

@@ -251,5 +251,17 @@ def db(request):
     return render(request, 'db.html', {'body_points': body_points})
 
 def planning(request):
-
 	return render(request, 'organs/planning.html')
+
+def return_task(request):
+	c = {}
+	time= ""
+	place= ""
+	c.update(csrf(request))
+	if request.POST:
+		time = request.POST["time"]
+		place = request.POST["place"]
+		cmd = ['casperjs get_note_from_evernote.js'] #, 'args']
+		results = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+	else:
+		results = "error"
