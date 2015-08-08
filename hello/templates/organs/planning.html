@@ -7,20 +7,6 @@
     <script type="text/javascript" src="http://x3dom.org/x3dom/dist/x3dom-full.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://d3js.org/queue.v1.min.js"></script>
-</head>
-<body>
-  <section class="container">
-    <div class="planning">
-      <h1>enter information</h1>
-        <p><input type="text" id="time_available" name="time" value="" placeholder="time available"></p>
-        <p><input type="text" id="place" name="place" value="" placeholder="place"></p>
-        <p class="submit"><input type="submit" id="submit" name="commit" value="submit" onclick="return_task()">
-        <br>
-        <br>
-        <textarea type="textarea" cols="40" rows="10" id="answer"></textarea>
-        </p>
-    </div>
-  </section>
   <script type="text/javascript">
 
   function return_task() {
@@ -40,5 +26,19 @@
         });
     }
     </script>
+</head>
+<body>
+  <section class="container">
+    <div class="planning">
+      <h1>enter information</h1>
+        <p><input type="text" id="time_available" name="time" value="" placeholder="time available"></p>
+        <p><input type="text" id="place" name="place" value="" placeholder="place"></p>
+        <p class="submit"><input type="submit" id="submit" name="commit" value="submit" onclick="return_task()">
+        <br>
+        <br>
+        <textarea type="textarea" cols="40" rows="10" id="answer"></textarea>
+        </p>
+    </div>
+  </section>
 </body>
 </html>
