@@ -14,6 +14,8 @@ from django.http import JsonResponse
 from django.forms.models import model_to_dict
 import subprocess
 from classify_class import Classifier
+from datetime import datetime,timedelta
+import time
 
 
 # Create your views here.
@@ -253,15 +255,76 @@ def db(request):
 def planning(request):
 	return render(request, 'organs/planning.html')
 
-def return_task(request):
+def tasks(request):
 	c = {}
-	time= ""
-	place= ""
+	timeAvail= ""
+	placeAt= ""
+	results = ""
+	cmd = ""
 	c.update(csrf(request))
 	if request.POST:
-		time = request.POST["time"]
-		place = request.POST["place"]
+		timeAvail = request.POST["time"]
+		placeAt = request.POST["place"]
 		cmd = ['casperjs get_note_from_evernote.js'] #, 'args']
 		results = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+		tasks = []
+		dailys = []
+		dates = []
+		times = [] 
+		places = []
+		items = []
+		rows = results.split("\n")
+		for r in rows:
+			if r != "":
+				items = r.split(",")
+				tasks = tasks + [items[0]]
+				if items[3] != "daily": 
+					dates = dates + [datetime.strptime(items[3], "%m/%d/%y")]
+				else:
+					dailys = dailys + [items[0]]
+					dates = dates + [items[3]]				
+				times = times + [items[1]]
+				places = places + [items[2]]
+		current =  time.strftime("%m/%d/%y")
+		b_d = datetime.strptime(current, "%m/%d/%y")
+		def func(x):
+			if x == "daily":
+				delta = b_d-b_d
+			else:
+				d =  datetime.strptime(x.strftime("%m/%d/%y"), "%m/%d/%y")
+				delta =  d - b_d
+			return delta.days
+		lis2 = dates
+		#min(lis2, key = func)
+		#setting the score
+		#timeAvail
+		#placeAt
+		score = []
+		for c in range(len(tasks)):
+			timeS=0
+			placeS=0
+			dateS=0
+			if placeAt == places[c]:
+				placeS = 5
+			else:
+				placeS =0
+			if timeAvail > times[c]:
+				timeS=2
+			elif timeAvail == times[c]:
+				timeS=3
+			else:
+				timeS = 1
+			deltD = func(dates[c])
+			if deltD <=5:
+				f = [0,1,2,3,4,5]
+				h = list(reversed(f))
+				dateS = h[f.index(deltD)]
+			score = score + [timeS*placeS*dateS]
+		highestS = max(score)
+		bestTasks = ""
+		for c in range(len(score)):
+			if (highestS-3) <= score[c]:
+				bestTasks = bestTasks + tasks[c] + "," + times[c] + "," + places[c] + "," + dates[c].strftime('%m/%d/%Y') + "\n" 
 	else:
 		results = "error"
+	return HttpResponse(bestTasks)

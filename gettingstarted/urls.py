@@ -29,5 +29,5 @@ urlpatterns = patterns('',
     url(r'^guess/', hello.views.guess, name='guess'),
     url(r'^teach/', hello.views.teach, name='teach'),
     url(r'^planning/', hello.views.planning, name='planning'),
-    url(r'^return_task/', hello.views.return_task, name='return_task'),
+    url(r'^tasks/', hello.views.tasks, name='tasks'),
 )
