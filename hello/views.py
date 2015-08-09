@@ -285,8 +285,10 @@ def tasks(request):
 					dates = dates + [items[3]]				
 				times = times + [items[1]]
 				places = places + [items[2]]
-		current =  time.strftime("%m/%d/%y")
+		current = time.strftime("%m/%d/%y")
+		print current
 		b_d = datetime.strptime(current, "%m/%d/%y")
+		print b_d
 		def func(x):
 			if x == "daily":
 				delta = b_d-b_d
@@ -304,13 +306,13 @@ def tasks(request):
 			timeS=0
 			placeS=0
 			dateS=0
-			if placeAt == places[c]:
+			if places[c].find(placeAt) != -1:
 				placeS = 5
 			else:
-				placeS =0
-			if timeAvail > times[c]:
+				placeS = 0
+			if int(timeAvail) > int(times[c]):
 				timeS=2
-			elif timeAvail == times[c]:
+			elif int(timeAvail) == int(times[c]):
 				timeS=3
 			else:
 				timeS = 1
@@ -319,12 +321,21 @@ def tasks(request):
 				f = [0,1,2,3,4,5]
 				h = list(reversed(f))
 				dateS = h[f.index(deltD)]
+				if dateS == 0:
+					dateS=1
 			score = score + [timeS*placeS*dateS]
+			#print tasks[c]
+			#print score[c]
+			#print "place" + str(placeS)
+			#print "time" + str(timeS)
+			#print "date" + str(dateS)
 		highestS = max(score)
 		bestTasks = ""
 		for c in range(len(score)):
-			if (highestS-3) <= score[c]:
-				bestTasks = bestTasks + tasks[c] + "," + times[c] + "," + places[c] + "," + dates[c].strftime('%m/%d/%Y') + "\n" 
+			if (highestS-10) <= score[c]:
+				if dates[c] == "daily":
+					dates[c] = datetime.strptime(time.strftime("%m/%d/%y"), "%m/%d/%y")
+				bestTasks = bestTasks + tasks[c] + "," + times[c] + "," + places[c] + "," + dates[c].strftime('%m/%d/%Y') + "," + str(score[c]) + "\n"
 	else:
 		results = "error"
 	return HttpResponse(bestTasks)
