@@ -339,9 +339,6 @@ def tasks(request):
 
 
 def finances(request):
-	return render(request, 'organs/finances.html')
-
-def tasks(request):
 	c = {}
 	timeAvail= ""
 	placeAt= ""
@@ -359,66 +356,121 @@ def tasks(request):
 		times = [] 
 		places = []
 		items = []
-		rows = results.split("\n")
-		for r in rows:
-			if r != "":
-				items = r.split(",")
-				tasks = tasks + [items[0]]
-				if items[3] != "daily": 
-					dates = dates + [datetime.strptime(items[3], "%m/%d/%y")]
-				else:
-					dailys = dailys + [items[0]]
-					dates = dates + [items[3]]				
-				times = times + [items[1]]
-				places = places + [items[2]]
-		current = time.strftime("%m/%d/%y")
-		print current
-		b_d = datetime.strptime(current, "%m/%d/%y")
-		print b_d
-		def func(x):
-			if x == "daily":
-				delta = b_d-b_d
-			else:
-				d =  datetime.strptime(x.strftime("%m/%d/%y"), "%m/%d/%y")
-				delta =  d - b_d
-			return delta.days
-		lis2 = dates
-		
-		score = []
-		for c in range(len(tasks)):
-			timeS=0
-			placeS=0
-			dateS=0
-			if places[c].find(placeAt) != -1:
-				placeS = 5
-			else:
-				placeS = 0
-			if int(timeAvail) > int(times[c]):
-				timeS=2
-			elif int(timeAvail) == int(times[c]):
-				timeS=3
-			else:
-				timeS = 1
-			deltD = func(dates[c])
-			if deltD <=5:
-				f = [0,1,2,3,4,5]
-				h = list(reversed(f))
-				dateS = h[f.index(deltD)]
-				if dateS == 0:
-					dateS=1
-			score = score + [timeS*placeS*dateS]
-			#print tasks[c]
-			#print score[c]
-			#print "place" + str(placeS)
-			#print "time" + str(timeS)
-			#print "date" + str(dateS)
-		highestS = max(score)
-		bestTasks = ""
-		for c in range(len(score)):
-			if (highestS-10) <= score[c]:
-				if dates[c] == "daily":
-					dates[c] = datetime.strptime(time.strftime("%m/%d/%y"), "%m/%d/%y")
-				bestTasks = bestTasks + tasks[c] + "," + times[c] + "," + places[c] + "," + dates[c].strftime('%m/%d/%Y') + "," + str(score[c]) + "\n"
-	else:
-		results = "error"
-	return HttpResponse(bestTasks)
+	return render(request, 'organs/finances.html')
+	
+'''Code I will need later
+
+
+#this is from aggregate and organize
+
+from sklearn.pipeline import Pipeline
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import SGDClassifier
+from os import listdir
+from os.path import isfile, join
+import string
+import schedule
+import time
+import csv
+from datetime import datetime,timedelta,date
+import time
+import os
+import subprocess
+import sys
+ 
+current = time.strftime("%m-%d-%y")
+#print current
+b_d = datetime.strptime(current, "%m-%d-%y")- timedelta(days=1)
+#print b_d.strftime("%m-%d-%y")
+ 
+directory = "/Users/andrewbishara/Dropbox/ipyNotebook/finances"
+dates = next(os.walk('.'))[1]
+ 
+targs_file = "targets.txt"
+counter = 0
+ 
+targets = []
+news = []
+text = ""
+ 
+rows = []
+with open('comp_symbols.csv', 'rb') as csvfile:
+    spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+    for row in spamreader:
+        rows = rows + [row]
+ 
+dates.remove('.ipynb_checkpoints')
+for d in dates:
+    onlyfiles = [ f for f in listdir(d) if isfile(join(d,f)) ]
+    if '.DS_Store' in onlyfiles:
+        onlyfiles.remove('.DS_Store')
+    day_after  = datetime.strptime(d,"%m-%d-%y")+timedelta(days=1)
+    if day_after.strftime("%m-%d-%y") in dates:
+        f = open(day_after.strftime("%m-%d-%y")+"/"+targs_file,"r")
+        for r in f.readlines():
+            targets = targets + [r]
+            counter = counter + 1
+        f.close()
+        min_final = min(len(onlyfiles)-2, len(targets))
+        if counter > min_final and min_final>140:
+            counter = 140
+        counter = min(counter,min_final)
+        for r in rows[1:counter]:
+            g = open(d+"/"+r[0] + "_google_fin.txt","r")
+            #print r[0]
+            #print rows.index(r)
+            for s in g.readlines():
+                text = text + s
+            news = news + [text]
+            text = ""
+    #if counter != 0:
+        #print counter
+        #print d
+        #print day_after
+        #print "|||||||||||||"
+    counter  = 0
+ 
+print len(news)
+print len(targets)
+ 
+min_final = min(len(news), len(targets))
+number_right = 0
+number_wrong = 0
+good_and_right = 0
+good_and_wrong = 0
+#do a loop where you run analysis and see if the computer gets smarter...
+for c in range(min_final)[2100:min_final-1]:
+    text_clf = Pipeline([('vect', CountVectorizer()),('tfidf', TfidfTransformer()),('clf', SGDClassifier(loss='hinge', penalty='l2' ,alpha=1e-3, n_iter=5)),])
+    text_clf = text_clf.fit(news[:c], targets[:c])
+    d = text_clf.decision_function([news[c+1]])
+    p = text_clf.predict([news[c+1]])
+    print d
+    e = d[0][-1]
+    print e
+    if e > 1.3:
+        if p == targets[c+1]:
+            number_right = number_right + 1
+            print "right"
+        else:
+            number_wrong = number_wrong + 1
+            print "wrong"
+        if ['good\n'] == p and p == targets[c+1]:
+            good_and_right = good_and_right + 1
+        elif ['good\n'] == p and p != targets[c+1]:
+            good_and_wrong = good_and_wrong + 1
+        print p
+        print targets[c+1]
+        print e
+        print news[c+1]
+        print "|||||||||"
+print number_right
+print number_wrong
+print float(number_right)/float(number_right+number_wrong)
+print good_and_right
+print good_and_wrong
+print float(good_and_right)/float(good_and_right+good_and_wrong)
+
+
+'''
