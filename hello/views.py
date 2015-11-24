@@ -297,10 +297,93 @@ def tasks(request):
 				delta =  d - b_d
 			return delta.days
 		lis2 = dates
-		#min(lis2, key = func)
-		#setting the score
-		#timeAvail
-		#placeAt
+		
+		score = []
+		for c in range(len(tasks)):
+			timeS=0
+			placeS=0
+			dateS=0
+			if places[c].find(placeAt) != -1:
+				placeS = 5
+			else:
+				placeS = 0
+			if int(timeAvail) > int(times[c]):
+				timeS=2
+			elif int(timeAvail) == int(times[c]):
+				timeS=3
+			else:
+				timeS = 1
+			deltD = func(dates[c])
+			if deltD <=5:
+				f = [0,1,2,3,4,5]
+				h = list(reversed(f))
+				dateS = h[f.index(deltD)]
+				if dateS == 0:
+					dateS=1
+			score = score + [timeS*placeS*dateS]
+			#print tasks[c]
+			#print score[c]
+			#print "place" + str(placeS)
+			#print "time" + str(timeS)
+			#print "date" + str(dateS)
+		highestS = max(score)
+		bestTasks = ""
+		for c in range(len(score)):
+			if (highestS-10) <= score[c]:
+				if dates[c] == "daily":
+					dates[c] = datetime.strptime(time.strftime("%m/%d/%y"), "%m/%d/%y")
+				bestTasks = bestTasks + tasks[c] + "," + times[c] + "," + places[c] + "," + dates[c].strftime('%m/%d/%Y') + "," + str(score[c]) + "\n"
+	else:
+		results = "error"
+	return HttpResponse(bestTasks)
+
+
+def finances(request):
+	return render(request, 'organs/finances.html')
+
+def tasks(request):
+	c = {}
+	timeAvail= ""
+	placeAt= ""
+	results = ""
+	cmd = ""
+	c.update(csrf(request))
+	if request.POST:
+		timeAvail = request.POST["time"]
+		placeAt = request.POST["place"]
+		cmd = ['casperjs get_note_from_evernote.js'] #, 'args']
+		results = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+		tasks = []
+		dailys = []
+		dates = []
+		times = [] 
+		places = []
+		items = []
+		rows = results.split("\n")
+		for r in rows:
+			if r != "":
+				items = r.split(",")
+				tasks = tasks + [items[0]]
+				if items[3] != "daily": 
+					dates = dates + [datetime.strptime(items[3], "%m/%d/%y")]
+				else:
+					dailys = dailys + [items[0]]
+					dates = dates + [items[3]]				
+				times = times + [items[1]]
+				places = places + [items[2]]
+		current = time.strftime("%m/%d/%y")
+		print current
+		b_d = datetime.strptime(current, "%m/%d/%y")
+		print b_d
+		def func(x):
+			if x == "daily":
+				delta = b_d-b_d
+			else:
+				d =  datetime.strptime(x.strftime("%m/%d/%y"), "%m/%d/%y")
+				delta =  d - b_d
+			return delta.days
+		lis2 = dates
+		
 		score = []
 		for c in range(len(tasks)):
 			timeS=0

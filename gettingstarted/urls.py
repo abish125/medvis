@@ -30,4 +30,6 @@ urlpatterns = patterns('',
     url(r'^teach/', hello.views.teach, name='teach'),
     url(r'^planning/', hello.views.planning, name='planning'),
     url(r'^tasks/', hello.views.tasks, name='tasks'),
+    url(r'^finances/', hello.views.finances, name='finances'),
+    #url(r'^display_data/', hello.views.display_data, name='pl'),
 )
