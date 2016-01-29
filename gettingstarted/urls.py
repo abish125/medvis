@@ -31,5 +31,6 @@ urlpatterns = patterns('',
     url(r'^planning/', hello.views.planning, name='planning'),
     url(r'^tasks/', hello.views.tasks, name='tasks'),
     url(r'^finances/', hello.views.finances, name='finances'),
+    url(r'^ekg/', hello.views.ekg, name='ekg'),
     #url(r'^display_data/', hello.views.display_data, name='pl'),
 )
