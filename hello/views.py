@@ -573,7 +573,7 @@ def ekg(request):
 	print pixels'''
 	import numpy as np
 	#import matplotlib.pyplot as plt
-	from skimage.data import camera
+	#from skimage.data import camera
 	from skimage.filters import roberts, sobel, scharr, prewitt
 	from scipy import misc
 	import skimage.io as io
