@@ -34,8 +34,261 @@ circle {
             var data = {{pixels}};
         </script>
         <script type="text/javascript" src="{{STATIC_URL}}scatterchart.js"></script>
-        {% for p in pixels %}
-            {{p}}
-        {% endfor %}
+        <script src="{{MEDIA_URL}}three.min2.js"></script>
+
+		<script src="{{MEDIA_URL}}protector.js"></script>
+		<script src="{{MEDIA_URL}}CanvasRenderer.js"></script>
+
+		<script src="{{MEDIA_URL}}stats.min.js"></script>
+
+		<script>
+
+			var container, stats;
+			var camera, scene, renderer, group,count1,count2;
+			var atria_growth, ventr_growth;
+			var ra, la, rv, lv;
+			var mouseX = 0, mouseY = 0;
+
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+
+			init();
+			animate();
+
+			function init() {
+				count1 = 0;
+				count2 = 0;
+				atria_growth = 0;
+				ventr_growth = 0;
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 3000 );
+				camera.position.z = 1000;
+
+				scene = new THREE.Scene();
+
+				var PI2 = Math.PI * 2;
+				var program = function ( context ) {
+
+					context.beginPath();
+					context.arc( 0, 0, 0.5, 0, PI2, true );
+					context.fill();
+
+				};
+
+				group = new THREE.Group();
+				scene.add( group );
+
+
+				var material = new THREE.SpriteCanvasMaterial( {
+					color: 0xFF0000,
+					program: program
+				} );
+
+				var light = new THREE.PointLight( 0xff0000, 1, 100 );
+				light.position.set( 5000, 50, 50 );
+				scene.add( light );
+				
+				var geometry = new THREE.SphereGeometry( 5, 5, 5 );
+				geometry.applyMatrix( new THREE.Matrix4().makeScale( 1.0, 1.0, 1.0 ) );
+
+				ra = new THREE.Mesh(geometry, material );
+				ra.position.x = 0;
+				ra.position.y = 0;
+				ra.position.z = 0;
+				ra.scale.x = ra.scale.y = 50;
+				group.add( ra );
+				
+				la = new THREE.Mesh(geometry, material );
+				la.position.x = 300;
+				la.position.y = 0;
+				la.position.z = 0;
+				la.scale.x = la.scale.y = 50;
+				group.add( la );
+				
+				//lvsoid
+				geometry = new THREE.SphereGeometry( 5, 16, 12 );
+				geometry.applyMatrix( new THREE.Matrix4().makeScale( 1.0, 1.2, 1.5 ) );
+				
+				lv = new THREE.Mesh( geometry, material );
+				
+				lv.position.x = 0;
+				lv.position.y = -300;
+				lv.position.z = 0;
+				lv.scale.x = lv.scale.y = 50;
+				group.add(lv)
+				
+				rv = new THREE.Mesh( geometry, material );
+				
+				rv.position.x = 300;
+				rv.position.y = -300;
+				rv.position.z = 0;
+				rv.scale.x = rv.scale.y = 50;
+				group.add(rv)
+
+				renderer = new THREE.CanvasRenderer();
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
+
+				stats = new Stats();
+				stats.domElement.style.position = 'absolute';
+				stats.domElement.style.top = '0px';
+				container.appendChild( stats.domElement );
+
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+				document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize() {
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			//
+
+			function onDocumentMouseMove( event ) {
+
+				//mouseX = event.clientX - windowHalfX;
+				//mouseY = event.clientY - windowHalfY;
+			}
+
+			function onDocumentTouchStart( event ) {
+
+				if ( event.touches.length === 1 ) {
+
+					event.preventDefault();
+
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+				}
+
+			}
+
+			function onDocumentTouchMove( event ) {
+
+				if ( event.touches.length === 1 ) {
+
+					event.preventDefault();
+
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+				}
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				render();
+				stats.update();
+
+			}
+			
+			function contract_atria(time)
+			{
+				if (count1 < time/2){
+		            ra.scale.x += 1;
+		            ra.scale.y += 1
+		            ra.scale.z += 1
+		            atria_growth += 1;
+		            count1 += 1
+		            }
+		        if ((count1 >= time/2) && (atria_growth > 0)) {
+		            ra.scale.x -= 1;
+		            ra.scale.y -= 1;
+		            ra.scale.z -= 1;
+		            atria_growth -= 1;
+		            count1 += 1
+		            } else if (atria_growth==0){ count1 = 0}
+				
+				if (count1 < time/2){
+		            la.scale.x += 1;
+		            la.scale.y += 1
+		            la.scale.z += 1
+		            atria_growth += 1;
+		            count1 += 1
+		            }
+		        if ((count1 >= time/2) && (atria_growth > 0)) {
+		            la.scale.x -= 1;
+		            la.scale.y -= 1;
+		            la.scale.z -= 1;
+		            atria_growth -= 1;
+		            count1 += 1
+		            } else if (atria_growth==0){ count1 = 0}
+			}
+			
+			function contract_ventricles(time)
+			{
+				if (count2 < time/2){
+		            lv.scale.x += 1;
+		            lv.scale.y += 1
+		            lv.scale.z += 1
+		            ventr_growth += 1;
+		            count2 += 1
+		            }
+		        if ((count2 >= time/2) && (ventr_growth > 0)) {
+		            lv.scale.x -= 1;
+		            lv.scale.y -= 1;
+		            lv.scale.z -= 1;
+		            ventr_growth -= 1;
+		            count2 += 1
+		            } else if (ventr_growth==0){ count2 = 0}
+				
+				if (count2 < time/2){
+		            rv.scale.x += 1;
+		            rv.scale.y += 1
+		            rv.scale.z += 1
+		            ventr_growth += 1;
+		            count2 += 1
+		            }
+		        if ((count2 >= time/2) && (ventr_growth > 0)) {
+		            rv.scale.x -= 1;
+		            rv.scale.y -= 1;
+		            rv.scale.z -= 1;
+		            ventr_growth -= 1;
+		            count2 += 1
+		            } else if (ventr_growth==0){ count2 = 0}
+			}
+			
+			function render() {
+
+				//camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+				//camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+				camera.lookAt( scene.position );
+
+				//group.rotation.x += 0.01;
+				//group.rotation.y += 0.02;
+				
+				//contract_atria(42)
+				
+				contract_atria(40)
+		            
+		       	contract_ventricles(150)
+		            
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
     </body>
 </html>
