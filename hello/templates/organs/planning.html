@@ -1,44 +1,52 @@
 <!DOCTYPE html>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Task Form</title>
   <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
-    <script type="text/javascript" src="http://x3dom.org/x3dom/dist/x3dom-full.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://d3js.org/queue.v1.min.js"></script>
+  <script type="text/javascript" src="http://x3dom.org/x3dom/dist/x3dom-full.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://d3js.org/queue.v1.min.js"></script>
   <script type="text/javascript">
-
-  function return_task() {
-        $.ajax({
-            url: '../tasks/',
-            type: "POST",
-            data: {
-                time: document.getElementById("time_available").value,
-                place: document.getElementById("place").value,
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            }, 
-            success: function(response) {
-                document.getElementById("answer").value = response;document.getElementById("answer").value = response;
-            },
-            //complete: function(response) {document.getElementById("answer").value = response;},
-            error: function(xhr, textStatus, thrownError) {}
-        });
+    function return_task() {
+      $.ajax({
+        url: '../tasks/',
+        type: "POST",
+        data: {
+          time: document.getElementById("time_available").value,
+          place: document.getElementById("place").value,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(response) {
+          document.getElementById("answer").value = response;
+          document.getElementById("answer").value = response;
+        },
+        //complete: function(response) {document.getElementById("answer").value = response;},
+        error: function(xhr, textStatus, thrownError) {}
+      });
     }
-    </script>
+  </script>
 </head>
+
 <body>
   <section class="container">
     <div class="planning">
       <h1>enter information</h1>
-        <p><input type="text" id="time_available" name="time" value="" placeholder="time available"></p>
-        <p><input type="text" id="place" name="place" value="" placeholder="place"></p>
-        <p class="submit"><input type="submit" id="submit" name="commit" value="submit" onclick="return_task()">
+      <p>
+        <input type="text" id="time_available" name="time" value="" placeholder="time available">
+      </p>
+      <p>
+        <input type="text" id="place" name="place" value="" placeholder="place">
+      </p>
+      <p class="submit">
+        <input type="submit" id="submit" name="commit" value="submit" onclick="return_task()">
         <br>
         <br>
         <textarea type="textarea" cols="60" rows="30" id="answer"></textarea>
-        </p>
+      </p>
     </div>
   </section>
 </body>
+
 </html>

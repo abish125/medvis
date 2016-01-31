@@ -33,7 +33,7 @@ circle {
         <script type="text/javascript"> 
             var data = {{pixels}};
         </script>
-        <script type="text/javascript" src="{{STATIC_URL}}scatterchart.js"></script>
+        <script type="text/javascript" src="{{STATIC_URL}}ekg2.js"></script>
         <script src="{{STATIC_URL}}three.min2.js"></script>
 
 		<script src="{{STATIC_URL}}protector.js"></script>
@@ -42,7 +42,7 @@ circle {
 		<script src="{{STATIC_URL}}stats.min.js"></script>
 
 		<script>
-
+			var e = new ekg();
 			var container, stats;
 			var camera, scene, renderer, group,count1,count2;
 			var atria_growth, ventr_growth;
@@ -288,6 +288,7 @@ circle {
 				renderer.render( scene, camera );
 
 			}
+			console.log(data)
 		</script>
     </body>
 </html>

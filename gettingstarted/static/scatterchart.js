@@ -1,5 +1,5 @@
 //var data = {{pixels}};
-console.log(mode(data))
+//console.log(mode(data))
     var margin = {top: 20, right: 15, bottom: 60, left: 60}
       , width = 960 - margin.left - margin.right
       , height = 500 - margin.top - margin.bottom;
@@ -51,7 +51,7 @@ console.log(mode(data))
       .enter().append("svg:circle")
           .attr("cx", function (d,i) { return x(i); } )
           .attr("cy", function (d) { return y(d); } )
-          .attr("r", 8);
+          .attr("r", 1);
           
 function mode(array)
 {
