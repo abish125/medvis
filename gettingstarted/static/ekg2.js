@@ -11,16 +11,35 @@ var ekg = function()
     this.current_state_options = ["initial_calibration", "atrium contracting", "ventricle contracting"];
     this.z_scores = arr.zScores(data);
 	this.current_point = data[0];
-	this.current_i = 0;
+	this.current_i = 0; //this means where are in data
+	this.current_time = 0;
 	this.types_of_ekgs = ["12 lead", "anesthesia five lead", "three leed"]
+	this.current_type_of_ekg = "12 lead"
 }
 
 var which_state = function()
 {
+	if (this.z_scores[this.current_i]> 0.2)
+	{
+		if(this.total_points-this.current_i>10)
+		{
+			if(this.z_scores.slice(this.current_i, this.current_i+10).every(function isBigEnough(element, index, array) {
+  					return element >= 0.2; //this says if the current time plus 10 are all a z-score >= .2 then print "YES"
+					}))
+			{
+				console.log("YES");
+				console.log(d3.max(this.z_scores.slice(this.current_i,this.current_i+100)));
+			}
+		}
+		else
+		{
+			console.log("have reached end of points");
+		}
+	}/**
 	if(this.z_scores[this.current_i] > 2.8)	
 	{
-		
-	}
+		//for x amount of time? 	
+	}**/
 }
 
 var type_of_ekg = function()
@@ -30,9 +49,20 @@ var type_of_ekg = function()
 	//check to see if the first 
 }
 
+var increment_time = function()
+{
+	this.current_time += 1;
+	if (this.current_time/this.each_point_time > this.current_i)
+	{
+		this.current_i += 1;
+	}
+	console.log(this.current_i)
+}
+
 ekg.prototype.constructor = ekg;
 ekg.prototype.which_state = which_state;
 ekg.prototype.type_of_ekg = type_of_ekg;
+ekg.prototype.increment_time = increment_time;
 
 function mode(array)
 {

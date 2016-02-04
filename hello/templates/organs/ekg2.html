@@ -35,6 +35,7 @@ circle {
         </script>
         <script type="text/javascript" src="{{STATIC_URL}}ekg2.js"></script>
         <script src="{{STATIC_URL}}three.min2.js"></script>
+        <script src="{{STATIC_URL}}d3.js"></script>
 
 		<script src="{{STATIC_URL}}protector.js"></script>
 		<script src="{{STATIC_URL}}CanvasRenderer.js"></script>
@@ -281,9 +282,12 @@ circle {
 				
 				//contract_atria(42)
 				
-				contract_atria(40)
+				e.increment_time();
+				e.which_state()
+				
+				contract_atria(40);
 		            
-		       	contract_ventricles(150)
+		       	contract_ventricles(150);
 		            
 				renderer.render( scene, camera );
 

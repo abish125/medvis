@@ -82,6 +82,19 @@ casper.wait(1000, function() {
     }
 });
 
+casper.wait(1000, function() {
+    //This is where you put the next set of code
+    // see note in evernote
+    //You should use similar code as finding the dates up above to get the link
+    //when you have the link you can use the code from evernote+ your infoSAGE project to get the 
+    //html from each of those links
+    //then you can figure out which one has the longest text within the link and get that text for 
+    //your machine learning
+    
+    //above when you find out a date is recent you should save the link
+    //then here you can go get the link html
+}
+
 /**
 casper.wait(1000, function() {
     ////console.log("taking a picture")
