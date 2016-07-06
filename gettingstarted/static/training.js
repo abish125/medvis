@@ -1,6 +1,6 @@
 function return_target() {
       $.ajax({
-          url: '../training/',
+          url: '../train/',
           type: "POST",
           data: {
               target: document.getElementById("target").value,
