@@ -677,3 +677,12 @@ def ekg2(request):
 	print img.size[0]
 	print img.size[1]
 	return render(request, 'organs/ekg2.html',{'pixels':pixels})
+	
+def training(request):
+	c = {}
+	target = ""
+	cmd = ""
+	c.update(csrf(request))
+	if request.POST:
+		timeAvail = request.POST["target"]
+	return render(request, 'organs/training.html')

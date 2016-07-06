@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <style>
+.chart {
+
+}
+
+.main text {
+    font: 10px sans-serif;	
+}
+
+.axis line, .axis path {
+    shape-rendering: crispEdges;
+    stroke: black;
+    fill: none;
+}
+
+circle {
+    fill: steelblue;
+}
+
+</style>
+ <script type="text/javascript" src="{{STATIC_URL}}d3.js"></script>
+ <script type="text/javascript">
+ function return_target() {
+      $.ajax({
+        url: '../tasks/', 
+        type: "POST",
+        data: {
+          time: document.getElementById("time_available").value,
+          place: document.getElementById("place").value,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(response) {
+          document.getElementById("target").value = response;
+        },
+        //complete: function(response) {document.getElementById("answer").value = response;},
+        error: function(xhr, textStatus, thrownError) {}
+      });
+    }
+  </script>
+    </head>
+    <body>
+        
+        <script type="text/javascript" src="{{STATIC_URL}}training.js"></script>
+        <script src="{{STATIC_URL}}three.min2.js"></script>
+        <script src="{{STATIC_URL}}d3.js"></script>
+
+		<script src="{{STATIC_URL}}protector.js"></script>
+		<script src="{{STATIC_URL}}CanvasRenderer.js"></script>
+
+		<script src="{{STATIC_URL}}stats.min.js"></script>
+		<section class="container">
+    <div class="training">
+      <h1>enter information</h1>
+        <p><input type="text" id="target" name="target" value="" placeholder="target"></p>
+        <p class="submit"><input type="submit" id="submit" name="commit" value="submit" onclick="return_target()">
+        <br>
+        <br>
+        <textarea type="textarea" cols="60" rows="30" id="answer"></textarea>
+        </p>
+    </div>
+  </section>
+    </body>
+</html>
