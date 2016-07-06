@@ -684,5 +684,5 @@ def training(request):
 	cmd = ""
 	c.update(csrf(request))
 	if request.POST:
-		timeAvail = request.POST["target"]
-	return render(request, 'organs/training.html')
+		target = request.POST["target"]
+	return render(request, 'organs/training.html', {'answer':target})
