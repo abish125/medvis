@@ -20,37 +20,24 @@ circle {
 }
 
 </style>
- <script type="text/javascript" src="{{STATIC_URL}}d3.js"></script>
- <script type="text/javascript">
- function return_target() {
-      $.ajax({
-        url: '../training/', 
-        type: "POST",
-        data: {
-          time: document.getElementById("time_available").value,
-          place: document.getElementById("place").value,
-          csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        success: function(response) {
-          document.getElementById("target").value = response;
-        },
-        //complete: function(response) {document.getElementById("answer").value = response;},
-        error: function(xhr, textStatus, thrownError) {}
-      });
-    }
-  </script>
-    </head>
-    <body>
+<script type="text/javascript" src="{{STATIC_URL}}d3.js"></script>
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="http://x3dom.org/x3dom/dist/x3dom-full.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+<script src="{{STATIC_URL}}three.min2.js"></script>
+<script src="{{STATIC_URL}}d3.js"></script>
+
+<script src="{{STATIC_URL}}protector.js"></script>
+<script src="{{STATIC_URL}}CanvasRenderer.js"></script>
+
+<script src="{{STATIC_URL}}stats.min.js"></script>
+</head>
+    
+<body>
+<script type="text/javascript" src="{{STATIC_URL}}training.js"></script>
         
-        <script type="text/javascript" src="{{STATIC_URL}}training.js"></script>
-        <script src="{{STATIC_URL}}three.min2.js"></script>
-        <script src="{{STATIC_URL}}d3.js"></script>
-
-		<script src="{{STATIC_URL}}protector.js"></script>
-		<script src="{{STATIC_URL}}CanvasRenderer.js"></script>
-
-		<script src="{{STATIC_URL}}stats.min.js"></script>
-		<section class="container">
+<section class="container">
     <div class="training">
       <h1>enter information</h1>
         <p><input type="text" id="target" name="target" value="" placeholder="target"></p>
