@@ -35,7 +35,23 @@ circle {
 </head>
     
 <body>
-<script type="text/javascript" src="{{STATIC_URL}}training.js"></script>
+<script type="text/javascript">
+	function return_target() {
+      $.ajax({
+          url: '../train/',
+          type: "POST",
+          data: {
+              target: document.getElementById("target").value,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          }, 
+          success: function(response) {
+              document.getElementById("answer").value = response;
+          },
+          //complete: function(response) {document.getElementById("answer").value = response;},
+          error: function(xhr, textStatus, thrownError) {}
+      });
+  }
+</script>
 <div style="display:none">
 <input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token" />
 </div>
