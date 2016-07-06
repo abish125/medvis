@@ -679,7 +679,7 @@ def ekg2(request):
 	return render(request, 'organs/ekg2.html',{'pixels':pixels})
 	
 def training(request):
-	render(request, 'organs/training.html')
+	return render(request, 'organs/training.html')
 
 def train(request):
 	c = {}
