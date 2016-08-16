@@ -689,3 +689,15 @@ def train(request):
 	if request.POST:
 		target = request.POST["target"]
 	return HttpResponse(target)
+	
+def save_organ(request):
+	c = {}
+	points = ""
+	cmd = ""
+	c.update(csrf(request))
+	if request.POST:
+		points = request.POST["points"]
+	return HttpResponse(points)
+	
+def create_organ(request):
+	return render(request, 'organs/create_organ.html')

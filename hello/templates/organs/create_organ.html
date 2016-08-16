@@ -1,0 +1,268 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+    <title>Create Organ</title>
+    <!-- link to the last version of babylon -->
+    <script src="{{STATIC_URL}}babylon.js"></script>
+<style>
+html, body {
+        overflow: hidden;
+        width   : 100%;
+        height  : 100%;
+        margin  : 0;
+        padding : 0;
+    }
+
+    #renderCanvas {
+        width   : 100%;
+        height  : 100%;
+        touch-action: none;
+    }
+</style>
+    </head>
+    <body>
+         <script> 
+         window.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('renderCanvas');
+            var engine = new BABYLON.Engine(canvas, true);
+            
+            var createScene = function () {
+
+    // This creates a basic Babylon Scene object (non-mesh)
+    var scene = new BABYLON.Scene(engine);
+    
+	scene.enablePhysics();
+
+    var camera = new BABYLON.ArcRotateCamera("Camera", 3 * Math.PI / 2, Math.PI / 2, 30, BABYLON.Vector3.Zero(), scene);
+
+	camera.attachControl(canvas, true);
+
+    // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+
+    // Default intensity is 1. Let's dim the light a small amount
+    light.intensity = 0.7;
+
+    var subdivisions = 10
+	var groundWidth = 10;
+	
+	var sunsSize = 5;
+	var sunsRadius = sunsSize / 2;
+
+    // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
+    var sun = BABYLON.Mesh.CreateSphere("sphere1", 3, sunsSize, scene);
+	sun.on = false;
+	
+	sun.actionManager = new BABYLON.ActionManager(scene);
+	sun.actionManager.registerAction(
+			new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, sun, "on")
+		);
+	
+	var distanceBetweenPoints = groundWidth / subdivisions;	
+	
+	var clothMat = new BABYLON.StandardMaterial("texture3", scene);
+    clothMat.diffuseTexture = new BABYLON.Texture("http://i.imgur.com/2HklR1L.jpg", scene);
+	clothMat.zOffset = -20;
+	clothMat.backFaceCulling = false;
+
+    // Our built-in 'ground' shape. Params: name, width, depth, subdivs, scene
+    var ground = BABYLON.Mesh.CreateGround("ground1", groundWidth, groundWidth, subdivisions - 1, scene, true);
+		
+	ground.material = clothMat;
+		
+	var positions = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+	var spheres = [];
+	var joints = [];
+	for (var i = 0; i < positions.length; i = i + 3) {
+		var v = BABYLON.Vector3.FromArray(positions, i);
+		
+		var s = BABYLON.MeshBuilder.CreateSphere("s" + i, { diameter: 0.1 }, scene);
+		
+		s.position.copyFrom(v);
+		spheres.push(s);
+	}
+	
+	function createDistanceJoint(imp1, imp2) {
+		var joint = new BABYLON.DistanceJoint({
+			maxDistance: distanceBetweenPoints
+		})
+		imp1.addJoint(imp2, joint);
+	}
+	
+	function createSpringJoint(imp1, imp2) {
+		var joint = new BABYLON.PhysicsJoint(BABYLON.PhysicsJoint.SpringJoint, {
+		length: 1,
+		stiffness: 20,
+		damping: 0.1
+	});
+		imp1.addJoint(imp2, joint);
+	}
+	
+	function createSpring2Joint(imp1, imp2) {
+		var joint = new BABYLON.PhysicsJoint(BABYLON.PhysicsJoint.SpringJoint, {
+		length: .1,
+		stiffness: 200,
+		damping: 0.1
+	});
+		imp1.addJoint(imp2, joint);
+	}
+	
+	//create the impostors
+	spheres.forEach(function (point, idx) {
+		
+var mass = idx < subdivisions ? 0 : 1;
+		point.physicsImpostor = new BABYLON.PhysicsImpostor(point, BABYLON.PhysicsImpostor.ParticleImpostor, { mass: mass }, scene);
+		
+		if (idx >= subdivisions) {
+			if (idx > 49 && idx < 60) {
+
+				createSpringJoint(point.physicsImpostor, spheres[idx - subdivisions].physicsImpostor);
+				if (idx % subdivisions) {
+					createDistanceJoint(point.physicsImpostor, spheres[idx - 1].physicsImpostor);
+				}
+			}
+			else {
+				createDistanceJoint(point.physicsImpostor, spheres[idx - subdivisions].physicsImpostor);
+				if (idx % subdivisions) {
+					createDistanceJoint(point.physicsImpostor, spheres[idx - 1].physicsImpostor);
+				}
+			}
+		}
+		
+	});
+	
+	
+		if (scene.activeCameras.length === 0){
+		    scene.activeCameras.push(scene.activeCamera);
+		}              
+
+		var secondCamera = new BABYLON.FreeCamera("GunSightCamera", new BABYLON.Vector3(0, 0, -50), scene);                
+		secondCamera.mode = BABYLON.Camera.ORTHOGRAPHIC_CAMERA;
+		secondCamera.layerMask = 0x20000000;
+		scene.activeCameras.push(secondCamera);
+		
+		var meshes = [];
+		var h = window.innerHeight;
+		var w = window.innerWidth;
+		
+		var x_less = BABYLON.Mesh.CreateBox("y", 10, scene);
+		x_less.scaling = new BABYLON.Vector3(1, 1, 1);
+		x_less.position = new BABYLON.Vector3(150, 220, 0);
+		x_less.rotation = new BABYLON.Vector3(0,0,0)
+		//meshes.push(x_less);
+		
+		var x_more = BABYLON.Mesh.CreateBox("y", 10, scene);
+		x_more.scaling = new BABYLON.Vector3(1, 1, 1);
+		x_more.position = new BABYLON.Vector3(190, 220, 0);
+		x_more.rotation = new BABYLON.Vector3(0, 0, 0)
+		x_more.on = false;
+
+		//meshes.push(x_more);
+		
+		
+		var x_1 = BABYLON.Mesh.CreateBox("y", 15, scene);
+		x_1.scaling = new BABYLON.Vector3(1,0.1, 1);
+		x_1.position = new BABYLON.Vector3(170, 220, 0);
+		x_1.rotation = new BABYLON.Vector3(0,0,45)
+		meshes.push(x_1);
+		
+		var x_2 = BABYLON.Mesh.CreateBox("y", 15, scene);
+		x_2.scaling = new BABYLON.Vector3(1,0.1, 1);
+		x_2.position = new BABYLON.Vector3(170, 220, 0);
+		x_2.rotation = new BABYLON.Vector3(0,0,90)
+		meshes.push(x_2);
+		
+		var x = BABYLON.Mesh.CreateBox("x", h * .2, scene);
+		x.scaling = new BABYLON.Vector3(1, 0.05, 1);
+		x.position = new BABYLON.Vector3(150, 300, 0);
+		meshes.push(x);
+		
+		var gunSight = x_less;
+		gunSight.name = "gunSight";
+		gunSight.layerMask = 0x20000000;
+		gunSight.freezeWorldMatrix();
+		
+		var gunSight2 = x_more;
+		gunSight2.name = "gunSight2";
+		gunSight2.layerMask = 0x20000000;
+		gunSight2.freezeWorldMatrix();
+		
+		var gunSight3 = BABYLON.Mesh.MergeMeshes(meshes);
+		gunSight3.name = "gunSight3";
+		gunSight3.layerMask = 0x20000000;
+		gunSight3.freezeWorldMatrix();
+		
+		gunSight.actionManager = new BABYLON.ActionManager(scene);
+		gunSight.actionManager.registerAction(
+			new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, sun, "on")
+		);
+		
+		gunSight2.actionManager = new BABYLON.ActionManager(scene);
+		gunSight2.actionManager.registerAction(
+			new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, x_more, "on")
+		);
+		
+		var mat = new BABYLON.StandardMaterial("emissive mat",scene);
+		mat.checkReadyOnlyOnce = true;
+		mat.emissiveColor = new BABYLON.Color3(0,1,0);
+		
+		gunSight.material = mat;
+		gunSight2.material = mat;
+		gunSight3.material = mat;
+	
+	ground.registerBeforeRender(function () {
+		if (sun.on) {
+			spheres.forEach(function (point, idx) {
+		if (idx >= subdivisions) {
+			if (idx > 49 && idx < 60) {
+
+				createSpring2Joint(point.physicsImpostor, spheres[idx - subdivisions].physicsImpostor);
+				if (idx % subdivisions) {
+					createDistanceJoint(point.physicsImpostor, spheres[idx - 1].physicsImpostor);
+				}
+			}
+			else {
+				createDistanceJoint(point.physicsImpostor, spheres[idx - subdivisions].physicsImpostor);
+				if (idx % subdivisions) {
+					createDistanceJoint(point.physicsImpostor, spheres[idx - 1].physicsImpostor);
+				}
+			}
+			
+		}
+			});
+		sun.position.x = sun.position.x + 1;
+		sun.on = false;
+		}
+		if (x_more.on)
+		{
+			sun.position.x = sun.position.x - 1;
+			x_more.on = false;
+		}
+		
+		var positions = [];
+		spheres.forEach(function (s,x) {
+			positions.push(s.position.x, s.position.y, s.position.z);
+		});
+		ground.updateVerticesData(BABYLON.VertexBuffer.PositionKind, positions);
+		ground.refreshBoundingInfo();
+		
+	});
+	
+    return scene;
+
+};
+
+    var scene = createScene();
+    engine.runRenderLoop(function() {
+    scene.render();
+});
+window.addEventListener('resize', function() {
+    engine.resize();
+});
+         });
+         
+         </script>
+
+		<script src="{{STATIC_URL}}babylon-playground.js"></script>
+    </body>
+</html>

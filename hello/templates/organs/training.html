@@ -21,10 +21,7 @@ circle {
 
 </style>
 <script type="text/javascript" src="{{STATIC_URL}}d3.js"></script>
-<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
-<script type="text/javascript" src="http://x3dom.org/x3dom/dist/x3dom-full.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://d3js.org/queue.v1.min.js"></script>
+<script src="{{STATIC_URL}}jquery.js"></script>
 <script src="{{STATIC_URL}}three.min2.js"></script>
 <script src="{{STATIC_URL}}d3.js"></script>
 
@@ -51,6 +48,94 @@ circle {
           error: function(xhr, textStatus, thrownError) {}
       });
   }
+  
+  function search_function()
+{
+    $.ajax({
+            url: 'search/',
+            type: "POST",
+            data: {
+                search_box: document.getElementById("search_textbox").value,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                document.getElementById("add_main_topic").value = document.getElementById("search_textbox").value;
+                document.getElementById("add_text").value = response;
+                add_text_function();
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {}
+        });
+}
+
+function guess_function()
+{
+    guess_text_function();
+}
+
+function guess_text_function()
+{
+    $.ajax({
+            url: 'guess/',
+            type: "POST",
+            data: {
+                words: manager.text_adder.words.join(" ").replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' '),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                console.log(response);
+                re = response.split(" ");
+                re.splice(0,1);
+                counter = 0;
+                re.forEach(function (r)
+                {
+                    if(r == "yes")
+                    {
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "red"
+                    }
+                    else
+                    {
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "blue"
+                    }
+                    counter = counter + 1;
+                });
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
+        });
+}
+
+function teach_function()
+{
+    tt = ""
+    counter=0;
+    manager.text_adder.words.forEach(function (r)
+    {
+        if (document.getElementById("word_label_" + counter.toString()).style.fill == "rgb(255, 0, 0)")
+        {
+            tt = tt + " " + "yes";
+        }
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "rgb(0, 0, 255)")
+        {
+            tt = tt + " " +  "no";
+        }
+        counter = counter + 1;
+    });
+    $.ajax({
+            url: 'teach/',
+            type: "POST",
+            data: {
+                teach_words: manager.text_adder.words.join(" "),
+                teach_targets: tt,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                alert("it worked");
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
+        });
+}
 </script>
 <div style="display:none">
 <input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token" />
@@ -68,3 +153,5 @@ circle {
   </section>
     </body>
 </html>
+
+
