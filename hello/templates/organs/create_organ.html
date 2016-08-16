@@ -4,6 +4,7 @@
     <title>Create Organ</title>
     <!-- link to the last version of babylon -->
     <script src="{{STATIC_URL}}babylon.js"></script>
+    <script src="{{STATIC_URL}}cannon.js"></script>
 <style>
 html, body {
         overflow: hidden;
@@ -21,6 +22,7 @@ html, body {
 </style>
     </head>
     <body>
+    	<canvas id="renderCanvas"></canvas>
          <script> 
          window.addEventListener('DOMContentLoaded', function() {
             var canvas = document.getElementById('renderCanvas');
