@@ -1,4 +1,41 @@
-var createScene = function () {
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+    <title>Create Organ</title>
+    <!-- link to the last version of babylon -->
+    <script src="{{STATIC_URL}}babylon.js"></script>
+    <script src="{{STATIC_URL}}cannon.js"></script>
+<style>
+html, body {
+        overflow: hidden;
+        width   : 100%;
+        height  : 100%;
+        margin  : 0;
+        padding : 0;
+    }
+
+    #renderCanvas {
+        width   : 100%;
+        height  : 100%;
+        touch-action: none;
+    }
+</style>
+    </head>
+    <body>
+    	<canvas id="renderCanvas"></canvas>
+         <script> 
+         window.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('renderCanvas');
+            var engine = new BABYLON.Engine(canvas, true);
+            
+/////////////////////////////////////////////////////////////////////////////////////////////////
+          ///////////////////////////////////////////////////////////////////
+            //Below is where you change code
+          ///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+           
+           
+           var createScene = function () {
 
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
@@ -7,6 +44,7 @@ var createScene = function () {
     var camera = new BABYLON.ArcRotateCamera("Camera", 3 * Math.PI / 2, Math.PI / 2, 30, BABYLON.Vector3.Zero(), scene);
 
 	camera.attachControl(canvas, true);
+	
 
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
     var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
@@ -17,22 +55,18 @@ var createScene = function () {
     var subdivisions = 10
 	var groundWidth = 10;
 	
-	var sunsSize = 5;
+	var sunsSize = 100;
 	var sunsRadius = sunsSize / 2;
-
-    // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
-    var sun = BABYLON.Mesh.CreateSphere("sphere1", 3, sunsSize, scene);
-	sun.on = false;
 	
-	sun.actionManager = new BABYLON.ActionManager(scene);
-	sun.actionManager.registerAction(
-			new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, sun, "on")
-		);
+    // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
+    var sun = BABYLON.Mesh.CreateSphere("sphere1", 0.5, sunsSize, scene);
+	sun.on = false;
+	sun.layerMask = 0x20000000;
 	
 	var distanceBetweenPoints = groundWidth / subdivisions;	
 	
 	var clothMat = new BABYLON.StandardMaterial("texture3", scene);
-    clothMat.diffuseTexture = new BABYLON.Texture("http://i.imgur.com/2HklR1L.jpg", scene);
+    clothMat.diffuseTexture = new BABYLON.Texture("https://i.imgur.com/2HklR1L.jpg", scene);
 	clothMat.zOffset = -20;
 	clothMat.backFaceCulling = false;
 
@@ -52,7 +86,7 @@ var createScene = function () {
 		s.position.copyFrom(v);
 		spheres.push(s);
 	}
-	
+		
 	function createDistanceJoint(imp1, imp2) {
 		var joint = new BABYLON.DistanceJoint({
 			maxDistance: distanceBetweenPoints
@@ -102,9 +136,8 @@ var mass = idx < subdivisions ? 0 : 1;
 		
 	});
 	
-	
 		if (scene.activeCameras.length === 0){
-		    scene.activeCameras.push(scene.activeCamera);
+		   scene.activeCameras.push(scene.activeCamera);
 		}              
 
 		var secondCamera = new BABYLON.FreeCamera("GunSightCamera", new BABYLON.Vector3(0, 0, -50), scene);                
@@ -192,62 +225,62 @@ var mass = idx < subdivisions ? 0 : 1;
 		
 		var add = BABYLON.Mesh.CreateBox("y", 10, scene);
 		add.scaling = new BABYLON.Vector3(1, 1, 1);
-		add.position = new BABYLON.Vector3(150, 150, 0);
+		add.position = new BABYLON.Vector3(150, 280, 0);
 		add.rotation = new BABYLON.Vector3(0, 0, 0);
 		add.on = false;
 		
 		var a_1 = BABYLON.Mesh.CreateBox("y", 15, scene);
 		a_1.scaling = new BABYLON.Vector3(1,0.1, 1);
-		a_1.position = new BABYLON.Vector3(170, 150, 0);
+		a_1.position = new BABYLON.Vector3(165, 280, 0);
 		a_1.rotation = new BABYLON.Vector3(0, 0, 45);
 		meshes.push(a_1);
 		
-		var a_2 = BABYLON.Mesh.CreateBox("y", 8, scene);
+		var a_2 = BABYLON.Mesh.CreateBox("y", 15, scene);
 		a_2.scaling = new BABYLON.Vector3(1,0.1, 1);
-		a_2.position = new BABYLON.Vector3(169, 156, 0);
-		a_2.rotation = new BABYLON.Vector3(0, 0, .09);
+		a_2.position = new BABYLON.Vector3(170, 280, 0);
+		a_2.rotation = new BABYLON.Vector3(0, 0, 90);
 		meshes.push(a_2);
 		
-		var a_3 = BABYLON.Mesh.CreateBox("y", 8, scene);
+		var a_3 = BABYLON.Mesh.CreateBox("y", 7, scene);
 		a_3.scaling = new BABYLON.Vector3(1,0.1, 1);
-		a_3.position = new BABYLON.Vector3(169, 154, 0);
+		a_3.position = new BABYLON.Vector3(169, 278, 0);
 		a_3.rotation = new BABYLON.Vector3(0, 0, .09);
 		meshes.push(a_3);
 		
 		var save = BABYLON.Mesh.CreateBox("y", 10, scene);
 		save.scaling = new BABYLON.Vector3(1, 1, 1);
-		save.position = new BABYLON.Vector3(150, 130, 0);
+		save.position = new BABYLON.Vector3(150, 260, 0);
 		save.rotation = new BABYLON.Vector3(0, 0, 0);
 		save.on = false;
 		
-		var s_1 = BABYLON.Mesh.CreateBox("y", 15, scene);
+		var s_1 = BABYLON.Mesh.CreateBox("y", 8, scene);
 		s_1.scaling = new BABYLON.Vector3(1,0.1, 1);
-		s_1.position = new BABYLON.Vector3(170, 180, 0);
-		s_1.rotation = new BABYLON.Vector3(0, 0, 45);
+		s_1.position = new BABYLON.Vector3(170, 266, 0);
+		s_1.rotation = new BABYLON.Vector3(0, 0, 0);
 		meshes.push(s_1);
 		
 		var s_2 = BABYLON.Mesh.CreateBox("y", 8, scene);
 		s_2.scaling = new BABYLON.Vector3(1,0.1, 1);
-		s_2.position = new BABYLON.Vector3(169, 186, 0);
-		s_2.rotation = new BABYLON.Vector3(0, 0, .09);
+		s_2.position = new BABYLON.Vector3(166, 263, 0);
+		s_2.rotation = new BABYLON.Vector3(0, 0, 1.5708);
 		meshes.push(s_2);
 		
 		var s_3 = BABYLON.Mesh.CreateBox("y", 8, scene);
 		s_3.scaling = new BABYLON.Vector3(1,0.1, 1);
-		s_3.position = new BABYLON.Vector3(169, 174, 0);
-		s_3.rotation = new BABYLON.Vector3(0, 0, .09);
+		s_3.position = new BABYLON.Vector3(170, 260, 0);
+		s_3.rotation = new BABYLON.Vector3(0, 0, 0);
 		meshes.push(s_3);
 		
-		var s_4 = BABYLON.Mesh.CreateBox("y", 15, scene);
+		var s_4 = BABYLON.Mesh.CreateBox("y", 8, scene);
 		s_4.scaling = new BABYLON.Vector3(1,0.1, 1);
-		s_4.position = new BABYLON.Vector3(170, 180, 0);
-		s_4.rotation = new BABYLON.Vector3(0, 0, 45);
+		s_4.position = new BABYLON.Vector3(174, 257, 0);
+		s_4.rotation = new BABYLON.Vector3(0, 0, 1.5708);
 		meshes.push(s_4);
 		
 		var s_5 = BABYLON.Mesh.CreateBox("y", 8, scene);
 		s_5.scaling = new BABYLON.Vector3(1,0.1, 1);
-		s_5.position = new BABYLON.Vector3(169, 186, 0);
-		s_5.rotation = new BABYLON.Vector3(0, 0, .09);
+		s_5.position = new BABYLON.Vector3(170, 254, 0);
+		s_5.rotation = new BABYLON.Vector3(0, 0, 0);
 		meshes.push(s_5);
 		
 		var gunSight1 = x_less;
@@ -325,6 +358,16 @@ var mass = idx < subdivisions ? 0 : 1;
 			new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, z_more, "on")
 		);
 		
+		gunSight7.actionManager = new BABYLON.ActionManager(scene);
+		gunSight7.actionManager.registerAction(
+			new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, save, "on")
+		);
+		
+		gunSight8.actionManager = new BABYLON.ActionManager(scene);
+		gunSight8.actionManager.registerAction(
+			new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, add, "on")
+		);
+		
 		var mat = new BABYLON.StandardMaterial("emissive mat",scene);
 		mat.checkReadyOnlyOnce = true;
 		mat.emissiveColor = new BABYLON.Color3(0,1,0);
@@ -337,7 +380,6 @@ var mass = idx < subdivisions ? 0 : 1;
 		gunSight6.material = mat;
 		gunSight7.material = mat;
 		gunSight8.material = mat;
-		
 		gunSight.material = mat;
 	
 	ground.registerBeforeRender(function () {
@@ -360,6 +402,7 @@ var mass = idx < subdivisions ? 0 : 1;
 			
 		}
 			});
+			sun.material = mat;
 		//sun.position.x = sun.position.x + 1;
 		sun.on = false;
 		}
@@ -393,6 +436,16 @@ var mass = idx < subdivisions ? 0 : 1;
 			sun.position.z = sun.position.z - 1;
 			z_less.on = false;
 		}
+		if (save.on)
+		{
+			//stuff needs to be done here...
+			save.on = false;
+		}
+		if (add.on)
+		{
+			//stuff needs to be done here to add a new objeck
+			add.on = false;
+		}
 		
 		var positions = [];
 		spheres.forEach(function (s,x) {
@@ -401,8 +454,40 @@ var mass = idx < subdivisions ? 0 : 1;
 		ground.updateVerticesData(BABYLON.VertexBuffer.PositionKind, positions);
 		ground.refreshBoundingInfo();
 		
+		sun.actionManager = new BABYLON.ActionManager(scene);
+		sun.actionManager.registerAction(
+			new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, sun, "on")
+		);
+		
+		scene.actionManager = new BABYLON.ActionManager(scene);
+		scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
+			if (evt.sourceEvent.key == "x") {
+             sun.position.x = sun.position.x - 1;
+		   }
+		}));
+
+		
 	});
 	
     return scene;
 
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+          ///////////////////////////////////////////////////////////////////
+            //above is where you change code
+          ///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+    var scene = createScene();
+    engine.runRenderLoop(function() {
+    scene.render();
+});
+window.addEventListener('resize', function() {
+    engine.resize();
+});
+         });
+         
+         </script>
+    </body>
+</html>
