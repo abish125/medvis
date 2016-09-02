@@ -22,6 +22,8 @@ html, body {
 </style>
     </head>
     <body>
+        <input type="text" name="textbox1" id="textbox1" />
+            <input type="submit" name="button" id="button1" onclick="myfunction()" value="Save Name" />
     	<canvas id="renderCanvas"></canvas>
          <script> 
          window.addEventListener('DOMContentLoaded', function() {
@@ -39,7 +41,7 @@ html, body {
            ///////
 
 
-           
+     /**      
 var Point = function(x,y,z) 
 {
     this.x = x;
@@ -48,19 +50,29 @@ var Point = function(x,y,z)
     this.on = false;
 }
 
-var update = function()
+var update = function(x,y,z,material,on)
 {
-    console.log("this updates points")
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.on = on;
+    this.material = material;
 }
 
 var getLocation = function() {
-   return [this.x,this.y,this.z, this.on]; 
+   return [this.x,this.y,this.z ]; 
 }
+
+var isOn = function() {
+    return this.on;
+} 
 
 Point.prototype.constructor = Point;
 Point.prototype.update = update;
 Point.prototype.getLocation = getLocation;
+Point.prototype.isOn = isOn;
 
+**/
 
 var Organ = function(points) 
 {
@@ -80,7 +92,6 @@ var get_points = function()
 Organ.prototype.constructor = Organ;
 Organ.prototype.add_point = add_point;
 Organ.prototype.get_points = get_points;
-           
            
            ///////
            //put class code above
@@ -110,10 +121,13 @@ Organ.prototype.get_points = get_points;
 	var sun = BABYLON.Mesh.CreateSphere("sphere1", 10, sunsSize, scene);
 	sun.on =false;
 	
+	var sun2;
 	
 	var points = [];
-	points.push(new Point(sun.position.x, sun.position.y, sun.position.z, sun.on))
+	points.push(sun)
 	var thisOrgan = new Organ(points);
+	
+	var selected_points = []
 	
 	var mat = new BABYLON.StandardMaterial("emissive mat",scene);
 	mat.checkReadyOnlyOnce = true;
@@ -132,51 +146,80 @@ Organ.prototype.get_points = get_points;
 	scene.actionManager = new BABYLON.ActionManager(scene);
 	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
 		if (evt.sourceEvent.key == "x") {
-            sun.position.x = sun.position.x - 1;
+		    points.forEach(function(p) {
+    		if (p.on) {
+    		   p.position.x = p.position.x - 1;
+    		}
+    		});
 	      }
 	}));
 	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
 		if (evt.sourceEvent.key == ".") {
-            sun.position.x = sun.position.x + 1;
+            points.forEach(function(p) {
+    		if (p.on) {
+    		   p.position.x = p.position.x + 1;
+    		}
+    		});
 	      }
 	}));
 	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
 		if (evt.sourceEvent.key == "t") {
-            sun.position.y = sun.position.y - 1;
+            points.forEach(function(p) {
+    		if (p.on) {
+    		   p.position.y = p.position.y - 1;
+    		}
+    		});
 	      }
 	}));
 	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
 		if (evt.sourceEvent.key == "y") {
-            sun.position.y = sun.position.y + 1;
+            points.forEach(function(p) {
+    		if (p.on) {
+    		   p.position.y = p.position.y + 1;
+    		}
+    		});
 	      }
 	}));
 	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
 		if (evt.sourceEvent.key == "z") {
-            sun.position.z = sun.position.z + 1;
+            points.forEach(function(p) {
+    		if (p.on) {
+    		   p.position.z = p.position.z - 1;
+    		}
+    		});
 	      }
 	}));
 	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
 		if (evt.sourceEvent.key == "/") {
-            sun.position.z = sun.position.z - 1;
+            points.forEach(function(p) {
+    		if (p.on) {
+    		   p.position.z = p.position.z + 1;
+    		}
+    		});
 	      }
 	}));
 	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
 		if (evt.sourceEvent.key == "a") {
-		    var sun2 = BABYLON.Mesh.CreateSphere("sphere2", 10, sunsSize, scene);
+		    sun2 = BABYLON.Mesh.CreateSphere("sphere2", 10, sunsSize, scene);
 	        sun2.on =false;
-		    thisOrgan.add_point()
+	        sun2.actionManager = new BABYLON.ActionManager(scene);
+		    sun2.actionManager.registerAction(
+		    new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, sun2, "on"))
+	        points.push(sun2);
 	      }
 	}));
 		
 	scene.registerBeforeRender(function () {
-		if (sun.on) {
-			sun.material = mat;
-		}
-	    else
-	    {
-	        sun.material = mat2;
-	    }
-		});
+    	    points.forEach(function(p) {
+    		if (p.on) {
+    		   p.material = mat; 
+    		}
+    	    else
+    	    {
+    	        p.material = mat2;
+    	    }
+    		});
+	});
 	
     return scene;
 
