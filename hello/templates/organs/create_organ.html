@@ -38,11 +38,48 @@ html, body {
            //put class code below
            ///////
 
-Organ.prototype.constructor = Organ;
-Organ.prototype.update = update;
-Organ.prototype.add_point = add_point;
+
            
-var Organ = function() {}
+var Point = function(x,y,z) 
+{
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.on = false;
+}
+
+var update = function()
+{
+    console.log("this updates points")
+}
+
+var getLocation = function() {
+   return [this.x,this.y,this.z, this.on]; 
+}
+
+Point.prototype.constructor = Point;
+Point.prototype.update = update;
+Point.prototype.getLocation = getLocation;
+
+
+var Organ = function(points) 
+{
+   this.points = points 
+}
+
+var add_point = function(point)
+{
+   this.points.push(point)
+} 
+
+var get_points = function()
+{
+   return this.points
+}
+
+Organ.prototype.constructor = Organ;
+Organ.prototype.add_point = add_point;
+Organ.prototype.get_points = get_points;
            
            
            ///////
@@ -68,10 +105,15 @@ var Organ = function() {}
 
     var subdivisions = 10
 	
-	var sun = BABYLON.Mesh.CreateSphere("sphere1", 10, sunsSize, scene);
-	var sunsSize = 100;
+	var sunsSize = 1;
 	var sunsRadius = sunsSize / 2;
+	var sun = BABYLON.Mesh.CreateSphere("sphere1", 10, sunsSize, scene);
 	sun.on =false;
+	
+	
+	var points = [];
+	points.push(new Point(sun.position.x, sun.position.y, sun.position.z, sun.on))
+	var thisOrgan = new Organ(points);
 	
 	var mat = new BABYLON.StandardMaterial("emissive mat",scene);
 	mat.checkReadyOnlyOnce = true;
@@ -120,10 +162,13 @@ var Organ = function() {}
 	}));
 	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
 		if (evt.sourceEvent.key == "a") {
+		    var sun2 = BABYLON.Mesh.CreateSphere("sphere2", 10, sunsSize, scene);
+	        sun2.on =false;
+		    thisOrgan.add_point()
 	      }
 	}));
 		
-	sun.registerBeforeRender(function () {
+	scene.registerBeforeRender(function () {
 		if (sun.on) {
 			sun.material = mat;
 		}
@@ -155,3 +200,8 @@ window.addEventListener('resize', function() {
          </script>
     </body>
 </html>
+
+
+
+
+///Next is to move only the selected objects. 
