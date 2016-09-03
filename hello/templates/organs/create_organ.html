@@ -5,6 +5,7 @@
     <!-- link to the last version of bablon -->
     <script src="{{STATIC_URL}}babylon.js"></script>
     <script src="{{STATIC_URL}}cannon.js"></script>
+    
 <style>
 html, body {
         overflow: hidden;
@@ -23,9 +24,13 @@ html, body {
     </head>
     <body>
         <input type="text" name="textbox1" id="textbox1" />
-            <input type="submit" name="button" id="button1" onclick="myfunction()" value="Save Name" />
+            <input type="submit" name="button" id="button1" onclick="mySearch()" value="Search" />
     	<canvas id="renderCanvas"></canvas>
          <script> 
+         function mySearch()
+        {
+            alert(document.getElementById('textbox1').value);
+        }
          window.addEventListener('DOMContentLoaded', function() {
             var canvas = document.getElementById('renderCanvas');
             var engine = new BABYLON.Engine(canvas, true);
@@ -76,17 +81,17 @@ Point.prototype.isOn = isOn;
 
 var Organ = function(points) 
 {
-   this.points = points 
+   this.points = points;
 }
 
 var add_point = function(point)
 {
-   this.points.push(point)
+   this.points.push(point);
 } 
 
 var get_points = function()
 {
-   return this.points
+   return this.points;
 }
 
 Organ.prototype.constructor = Organ;
@@ -119,7 +124,7 @@ Organ.prototype.get_points = get_points;
 	var sunsSize = 1;
 	var sunsRadius = sunsSize / 2;
 	var sun = BABYLON.Mesh.CreateSphere("sphere1", 10, sunsSize, scene);
-	sun.on =false;
+	sun.on = true;
 	
 	var sun2;
 	
@@ -136,8 +141,20 @@ Organ.prototype.get_points = get_points;
 	var mat2 = new BABYLON.StandardMaterial("emissive mat",scene);
 	mat2.checkReadyOnlyOnce = true;
 	mat2.emissiveColor = new BABYLON.Color3(0,0,1);
-		
 	
+	// Debug layer
+	scene.debugLayer.show(false);
+	
+	scene.debugLayer.axisRatio = 0.04; // 4% of canvas width
+	
+	scene.debugLayer.shouldDisplayLabel = function(node) {
+		return node.name.indexOf("*") === -1;
+	}
+	
+	scene.debugLayer.shouldDisplayAxis = function(mesh) {
+		return mesh.name === "sphere1";
+	}
+		
 	sun.actionManager = new BABYLON.ActionManager(scene);
 		sun.actionManager.registerAction(
 		    new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, sun, "on"))
@@ -200,12 +217,38 @@ Organ.prototype.get_points = get_points;
 	}));
 	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
 		if (evt.sourceEvent.key == "a") {
-		    sun2 = BABYLON.Mesh.CreateSphere("sphere2", 10, sunsSize, scene);
-	        sun2.on =false;
+		    points.forEach(function(p) {
+    		if (p.on) {
+    		   p.on = false;
+    		}
+    		});
+		    var person = prompt("Please name the location", "eg coronary sinus");
+            while (person == null) {
+                    person = prompt("Please name the location", "eg coronary sinus");
+                }
+		    sun2 = BABYLON.Mesh.CreateSphere(person, 10, sunsSize, scene);
+	        sun2.on =true;
 	        sun2.actionManager = new BABYLON.ActionManager(scene);
 		    sun2.actionManager.registerAction(
 		    new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, sun2, "on"))
 	        points.push(sun2);
+	      }
+	}));
+	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
+		if (evt.sourceEvent.key == "d") {
+            points.forEach(function(p) {
+    		if (p.on) {
+    		    if (p.name == "sphere1")
+    		    {
+    		        alert("you cannot delete sphere1")
+    		    }
+    		    else
+    		    {
+    		        points.splice(points.indexOf(p), 1);
+    		        p.dispose();
+    		    }
+    		}
+    		});
 	      }
 	}));
 		
