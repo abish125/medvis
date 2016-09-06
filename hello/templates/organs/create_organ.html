@@ -5,6 +5,7 @@
     <!-- link to the last version of bablon -->
     <script src="{{STATIC_URL}}babylon.js"></script>
     <script src="{{STATIC_URL}}cannon.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}jquery.js"></script>
     
 <style>
 html, body {
@@ -25,7 +26,10 @@ html, body {
     <body>
         <input type="text" name="textbox1" id="textbox1" />
             <input type="submit" name="button" id="button1" onclick="mySearch()" value="Search" />
-    	<canvas id="renderCanvas"></canvas>
+    	<div style="display:none">
+        <input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token" />
+    </div>
+    	 <canvas id="renderCanvas"></canvas>
          <script> 
          function mySearch()
         {
@@ -251,6 +255,24 @@ Organ.prototype.get_points = get_points;
     		});
 	      }
 	}));
+	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
+		if (evt.sourceEvent.key == "s") {
+                $.ajax({
+                    url: '../save_organ/',
+                    type: "POST",
+                    data: {
+                        p: points[0].name,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        document.getElementById("textbox1").value = response;
+
+                    },
+                    complete: function() {},
+                    error: function(xhr, textStatus, thrownError) {}
+                    });
+                }  
+	}));
 		
 	scene.registerBeforeRender(function () {
     	    points.forEach(function(p) {
@@ -287,7 +309,3 @@ window.addEventListener('resize', function() {
     </body>
 </html>
 
-
-
-
-///Next is to move only the selected objects. 

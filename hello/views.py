@@ -696,8 +696,8 @@ def save_organ(request):
 	cmd = ""
 	c.update(csrf(request))
 	if request.POST:
-		points = request.POST["points"]
-	return HttpResponse(points)
+		points = request.POST["p"]
+	return HttpResponse("it worked")
 	
 def create_organ(request):
 	return render(request, 'organs/create_organ.html')
