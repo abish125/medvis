@@ -5,11 +5,7 @@
     <!-- link to the last version of bablon -->
     <script src="{{STATIC_URL}}babylon.js"></script>
     <script src="{{STATIC_URL}}cannon.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}jquery.js"></script>
-    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
-    <script type="text/javascript" src="http://x3dom.org/x3dom/dist/x3dom-full.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script src="{{STATIC_URL}}jquery.js"></script>
      
 <style>
 html, body {
@@ -28,11 +24,13 @@ html, body {
 </style>
     </head>
     <body>
+        
+       <div style="display:none">
+    <input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token"/>
+</div>
         <input type="text" name="textbox1" id="textbox1" />
             <input type="submit" name="button" id="button1" onclick="mySearch()" value="Search" />
-    	<div style="display:none">
-        <input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token" />
-    </div>
+            
     	 <canvas id="renderCanvas"></canvas>
          <script> 
          function mySearch()
@@ -265,17 +263,16 @@ Organ.prototype.get_points = get_points;
                     url: '../save_organ/',
                     type: "POST",
                     data: {
-                        p: points[0].name,
                         csrfmiddlewaretoken: '{{ csrf_token }}'
                     },
                     success: function(response) {
-                        document.getElementById("textbox1").value = response;
-
+                        alert(response)
                     },
                     complete: function() {},
                     error: function(xhr, textStatus, thrownError) {}
                     });
                 }  
+     
 	}));
 		
 	scene.registerBeforeRender(function () {
