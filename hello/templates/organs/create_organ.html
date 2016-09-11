@@ -259,20 +259,33 @@ Organ.prototype.get_points = get_points;
 	}));
 	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
 		if (evt.sourceEvent.key == "s") {
-                $.ajax({
-                    url: '../save_organ/',
-                    type: "POST",
-                    data: {
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
-                    },
-                    success: function(response) {
-                        alert(response)
-                    },
-                    complete: function() {},
-                    error: function(xhr, textStatus, thrownError) {}
-                    });
+		    var names =  "";
+		    var positions = "";
+		    var selected = "";
+		    
+		    points.forEach(function(p) {
+		        names = names.concat(String(p.name)).concat("||");
+		        positions = positions.concat(String(p.position)).concat("||");
+		        selected = selected.concat(String(p.on)).concat("||");
+		    });
+		    
+		 $.ajax({
+          url: '../save2/',
+          type: "POST",
+          data: {
+              names: names,
+              positions: positions,
+              selected: selected,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          }, 
+          success: function(response) {
+               alert(response);
+          },
+          //complete: function(response) {document.getElementById("answer").value = response;},
+          error: function(xhr, textStatus, thrownError) {}
+      });
+               
                 }  
-     
 	}));
 		
 	scene.registerBeforeRender(function () {

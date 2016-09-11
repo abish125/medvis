@@ -690,14 +690,25 @@ def train(request):
 		target = request.POST["target"]
 	return HttpResponse(target)
 	
-def save_organ(request):
+def save2(request):
 	c = {}
-	points = ""
+	target = ""
 	cmd = ""
 	c.update(csrf(request))
 	if request.POST:
-		points = request.POST["p"]
-	return HttpResponse("it worked")
+		target = request.POST["names"]+request.POST["positions"]+request.POST["selected"]
+		id = request.POST['id']
+		name = request.POST['name']
+		snomedct_code = request.POST['snomed']
+		cp_x = request.POST['x']
+		cp_y = request.POST['y']
+		cp_z = request.POST['z']
+		#sp = request.POST['sp']
+		#org = request.POST['or']
+		bp = Body_Point(int(id), name, snomedct_code, float(cp_x), float(cp_y), float(cp_z))
+    	#bp.save()
+    	print target
+	return HttpResponse(target)
 	
 def create_organ(request):
 	return render(request, 'organs/create_organ.html')
