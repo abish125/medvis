@@ -690,24 +690,47 @@ def train(request):
 		target = request.POST["target"]
 	return HttpResponse(target)
 	
-def save2(request):
+def s(request):
 	c = {}
 	target = ""
 	cmd = ""
+	current = 0
+	last = 0
+	n=""
+	x=""
+	y=""
+	z=""
+	s=""
+	names = []
+	xs = []
+	ys = []
+	zs = []
+	selected = []
+	organ_name = ""
 	c.update(csrf(request))
 	if request.POST:
-		target = request.POST["names"]+request.POST["positions"]+request.POST["selected"]
-		id = request.POST['id']
-		name = request.POST['name']
-		snomedct_code = request.POST['snomed']
-		cp_x = request.POST['x']
-		cp_y = request.POST['y']
-		cp_z = request.POST['z']
-		#sp = request.POST['sp']
-		#org = request.POST['or']
-		bp = Body_Point(int(id), name, snomedct_code, float(cp_x), float(cp_y), float(cp_z))
-    	#bp.save()
-    	print target
+		n = request.POST["names"]
+		x = request.POST["xs"]
+		y = request.POST["ys"]
+		z = request.POST["zs"]
+		s = request.POST["selected"]
+		organ_name = request.POST["organ_name"]
+		names = n.split("|")
+		xs = x.split("|")
+		ys = y.split("|")
+		zs = z.split("|")
+		selected = s.split("|")
+		print "hello"
+		for i in range(len(names)):
+			id = len(Body_Point.objects.all())+1;
+			name = names[i]
+			cp_x = xs[i]
+			cp_y = ys[i]
+			cp_z = zs[i] 
+			org_name = organ_name
+			select = selected[i]
+			bp = Body_Point(id, name, float(cp_x), float(cp_y), float(cp_z), org_name,select)
+	    	bp.save()
 	return HttpResponse(target)
 	
 def create_organ(request):

@@ -22,14 +22,16 @@ class Specialty(models.Model):
 
 class Body_Point(models.Model):
     name = models.CharField(max_length=1000)
-    snomed_ct_code = models.CharField(max_length=1000)
+    #snomed_ct_code = models.CharField(max_length=1000)
     cp_x = models.FloatField()
     cp_y = models.FloatField()
     cp_z = models.FloatField()
-    organs = models.ManyToManyField(Organ, blank=True)
-    specialties = models.ManyToManyField(Specialty, blank=True)
-    findings = models.ManyToManyField(Finding, blank=True)
-    conditions = models.ManyToManyField(Condition, blank=True)
+    organ_name = models.CharField(max_length=1000, blank=True)
+    selected = models.BooleanField()
+    #organs = models.ManyToManyField(Organ, blank=True)
+    #specialties = models.ManyToManyField(Specialty, blank=True)
+    #findings = models.ManyToManyField(Finding, blank=True)
+    #conditions = models.ManyToManyField(Condition, blank=True)
 
 class Secondary_Info(models.Model):
     source = models.CharField(max_length=10000)

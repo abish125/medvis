@@ -6,6 +6,11 @@
     <script src="{{STATIC_URL}}babylon.js"></script>
     <script src="{{STATIC_URL}}cannon.js"></script>
     <script src="{{STATIC_URL}}jquery.js"></script>
+    <script src="{{STATIC_URL}}queue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/2.4.1/babylon.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script> 
      
 <style>
 html, body {
@@ -33,6 +38,18 @@ html, body {
             
     	 <canvas id="renderCanvas"></canvas>
          <script> 
+var bp_names = []
+
+queue()
+.defer(d3.json, "{% url "send_data"  %}")
+.await(function(error, data1) {
+if(data1!=undefined)
+{
+data1.forEach(function(d) {
+    
+    
+}
+    
          function mySearch()
         {
             alert(document.getElementById('textbox1').value);
@@ -133,6 +150,8 @@ Organ.prototype.get_points = get_points;
 	sun.on = true;
 	
 	var sun2;
+	
+	var organ_name = "";
 	
 	var points = [];
 	points.push(sun)
@@ -259,23 +278,31 @@ Organ.prototype.get_points = get_points;
 	}));
 	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
 		if (evt.sourceEvent.key == "s") {
+		    organ_name = prompt("Please name the organ", organ_name);
 		    var names =  "";
-		    var positions = "";
+		    var xs = "";
+		    var ys = "";
+		    var zs = "";
 		    var selected = "";
 		    
 		    points.forEach(function(p) {
-		        names = names.concat(String(p.name)).concat("||");
-		        positions = positions.concat(String(p.position)).concat("||");
-		        selected = selected.concat(String(p.on)).concat("||");
+		        names = names.concat(String(p.name)).concat("|");
+		        xs = xs.concat(String(p.position.x)).concat("|");
+		        ys = ys.concat(String(p.position.y)).concat("|");
+		        zs = zs.concat(String(p.position.z)).concat("|");
+		        selected = selected.concat(String(p.on)).concat("|");
 		    });
 		    
 		 $.ajax({
-          url: '../save2/',
+          url: '../s',
           type: "POST",
           data: {
               names: names,
-              positions: positions,
+              xs: xs,
+              ys: ys,
+              zs: zs,
               selected: selected,
+              organ_name: organ_name,
               csrfmiddlewaretoken: '{{ csrf_token }}'
           }, 
           success: function(response) {
@@ -318,6 +345,9 @@ window.addEventListener('resize', function() {
     engine.resize();
    });
 });
+
+}
+}
          
          </script>
     </body>

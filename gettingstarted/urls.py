@@ -36,6 +36,6 @@ urlpatterns = patterns('',
     #url(r'^display_data/', hello.views.display_data, name='pl'),
     url(r'training/', hello.views.training, name='training'),
     url(r'^train/', hello.views.train, name='train'),
-    url(r'^save2/', hello.views.save2, name='save2'),
+    url(r'^s', hello.views.s, name='s'),
     url(r'^create_organ/', hello.views.create_organ, name='create_organ')
 )
