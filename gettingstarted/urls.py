@@ -37,5 +37,6 @@ urlpatterns = patterns('',
     url(r'training/', hello.views.training, name='training'),
     url(r'^train/', hello.views.train, name='train'),
     url(r'^s', hello.views.s, name='s'),
+    url(r'^create_organ/send_data', hello.views.send_data, name='send_data'),
     url(r'^create_organ/', hello.views.create_organ, name='create_organ')
 )

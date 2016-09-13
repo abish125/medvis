@@ -6,11 +6,13 @@
     <script src="{{STATIC_URL}}babylon.js"></script>
     <script src="{{STATIC_URL}}cannon.js"></script>
     <script src="{{STATIC_URL}}jquery.js"></script>
+    <script src="{{STATIC_URL}}d3.js"></script>
     <script src="{{STATIC_URL}}queue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/2.4.1/babylon.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
-    <script src="http://d3js.org/queue.v1.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.js"></script>
+    <script src="https://d3js.org/d3-queue.v3.min.js"></script> 
      
 <style>
 html, body {
@@ -38,17 +40,9 @@ html, body {
             
     	 <canvas id="renderCanvas"></canvas>
          <script> 
-var bp_names = []
+var body_points=[];
 
-queue()
-.defer(d3.json, "{% url "send_data"  %}")
-.await(function(error, data1) {
-if(data1!=undefined)
-{
-data1.forEach(function(d) {
-    
-    
-}
+
     
          function mySearch()
         {
@@ -150,6 +144,8 @@ Organ.prototype.get_points = get_points;
 	sun.on = true;
 	
 	var sun2;
+	
+	var loaded_data = null;
 	
 	var organ_name = "";
 	
@@ -311,8 +307,13 @@ Organ.prototype.get_points = get_points;
           //complete: function(response) {document.getElementById("answer").value = response;},
           error: function(xhr, textStatus, thrownError) {}
       });
-               
-                }  
+		}
+	}));
+      scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
+		if (evt.sourceEvent.key == "l") {
+            $.get( "{% url "send_data"  %}", function(data ) {
+                loaded_data = data;});
+		}
 	}));
 		
 	scene.registerBeforeRender(function () {
@@ -325,6 +326,40 @@ Organ.prototype.get_points = get_points;
     	        p.material = mat2;
     	    }
     		});
+    		
+    		if(loaded_data != null)
+    		{
+                		var json = eval(loaded_data);
+                            points.forEach(function(p) {
+                		    if (p.on) {
+                		        p.on = false;
+                		        }
+                		        });
+                            var which_organ = prompt("Please name the organ", organ_name);
+                                json.forEach(function(d) {
+                                    d.id = +d.id;
+                                    d.name = d.name
+                                    d.x = +d.cp_x;
+                                    d.y = +d.cp_y;
+                                    d.z = +d.cp_z;
+                                    d.organ_name = d.organ_name;
+                                    d.selected = d.selected;
+                                if(which_organ == d.organ_name)
+                                {
+                                    sun2 = BABYLON.Mesh.CreateSphere(d.name, 10, sunsSize, scene);
+            	                    sun2.on = d.selected;
+            	                    sun2.position.x = d.x;
+            	                    sun2.position.y = d.y;
+            	                    sun2.position.z = d.z;
+            	                    organ_name = d.organ_name;
+                        	        sun2.actionManager = new BABYLON.ActionManager(scene);
+                        		    sun2.actionManager.registerAction(
+                        		        new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, sun2, "on"));
+                        	        points.push(sun2);
+                                }
+                        });
+                    loaded_data = null;    
+	        }
 	});
 	
     return scene;
@@ -345,11 +380,6 @@ window.addEventListener('resize', function() {
     engine.resize();
    });
 });
-
-}
-}
-         
          </script>
     </body>
 </html>
-

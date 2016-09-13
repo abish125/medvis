@@ -715,21 +715,20 @@ def s(request):
 		z = request.POST["zs"]
 		s = request.POST["selected"]
 		organ_name = request.POST["organ_name"]
-		names = n.split("|")
-		xs = x.split("|")
-		ys = y.split("|")
-		zs = z.split("|")
-		selected = s.split("|")
-		print "hello"
+		names = n.split("|")[0:-1]
+		xs = x.split("|")[0:-1]
+		ys = y.split("|")[0:-1]
+		zs = z.split("|")[0:-1]
+		selected = s.split("|")[0:-1]
 		for i in range(len(names)):
-			id = len(Body_Point.objects.all())+1;
+			it = len(Body_Point.objects.all())+1;
 			name = names[i]
-			cp_x = xs[i]
-			cp_y = ys[i]
-			cp_z = zs[i] 
+			cp_x = str(xs[i])
+			cp_y = str(ys[i])
+			cp_z = str(zs[i])
 			org_name = organ_name
-			select = selected[i]
-			bp = Body_Point(id, name, float(cp_x), float(cp_y), float(cp_z), org_name,select)
+			select = bool(selected[i])
+			bp = Body_Point(it, name,float(cp_x), float(cp_y), float(cp_z),org_name,select)
 	    	bp.save()
 	return HttpResponse(target)
 	
