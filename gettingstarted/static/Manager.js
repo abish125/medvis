@@ -38,6 +38,8 @@ var updateManager = function() {
     //go through all the specs and orgs and highlight the points
     //then update everthing.
 
+/**
+
     selected_parts.forEach(function(selected_part)
     {
         selected_part.organ_names.forEach(function(selected_part_organ_name)
@@ -110,6 +112,11 @@ var updateManager = function() {
             });
         });
     });
+**/
+
+
+
+
 
     this.plot1.update();
     this.plot2.update();

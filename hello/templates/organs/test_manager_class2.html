@@ -179,8 +179,11 @@ body {
     <title>3D Scatter Plot</title>
     <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
     <script type="text/javascript" src="http://x3dom.org/x3dom/dist/x3dom-full.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/x3dom/dist/master/x3dom.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}jquery.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}d3.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}Plot.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}Plot3d.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}Specialty.js"></script>
@@ -188,6 +191,8 @@ body {
     <script type="text/javascript" src="{{STATIC_URL}}Text_Adder.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}wear_protection.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}Manager.js"></script>
+    <script src="https://d3js.org/d3-queue.v3.min.js"></script> 
+    <script type="text/javascript" src="{{STATIC_URL}}queue.js"></script>
     <script type="text/javascript">
     // Create a 3d scatter plot within d3 selection parent.
 
@@ -224,26 +229,27 @@ body {
                         d.x = +d.cp_x;
                         d.y = +d.cp_y;
                         d.z = +d.cp_z;
-                        d.organ_ids = d.organs;
-                        d.organ_names = [];
-                        d.organ_ids.forEach(function(o_id) {
-                            data3.forEach(function(organ) {
-                                if (o_id == organ.id) {
-                                    d.organ_names.push(organ.name)
-                                }
-                            });
-                        });
-                        d.specialty_ids = d.specialties;
-                        d.specialty_names = [];
-                        d.specialty_ids.forEach(function(sp_id) {
-                            data2.forEach(function(spec) {
-                                if (sp_id == spec.id) {
-                                    d.specialty_names.push(spec.name)
-                                }
-                            });
-                        });
-                        d.select = false;
-                        d.dep_sel = false;
+                        //d.organ_ids = d.organs;
+                        //d.organ_names = [];
+                        //d.organ_ids.forEach(function(o_id) {
+                        //    data3.forEach(function(organ) {
+                        //        if (o_id == organ.id) {
+                        //            d.organ_names.push(organ.name)
+                        //        }
+                        //    });
+                        //});
+                        //d.specialty_ids = d.specialties;
+                        //d.specialty_names = [];
+                        //d.specialty_ids.forEach(function(sp_id) {
+                        //   data2.forEach(function(spec) {
+                        //        if (sp_id == spec.id) {
+                        //            d.specialty_names.push(spec.name)
+                        //        }
+                        //    });
+                        //});
+                        d.selected = d.selected;
+                        d.organ_name = d.organ_name;
+                        //d.dep_sel = false;
                     });
                     //spec=data2
                     data2.forEach(function(d) {
@@ -739,7 +745,7 @@ function teach_function()
         });
 }
 </script>
-<link rel="stylesheet" type="text/css" href="http://www.x3dom.org/download/dev/x3dom.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/x3dom/dist/master/x3dom.css" />
 </head>
 
 <body>
