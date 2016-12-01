@@ -22,6 +22,9 @@ import time
 def index(request):
 	#c = Classifier("med_targets.txt", "med_words.txt","wikipedia", "med_conf.txt", ["yes","no"])
 	#c.already_started()
+	return render(request, 'organs/main.html')
+	
+def manager(request):
 	return render(request, 'organs/test_manager_class2.html')
 
 def send_data(request):

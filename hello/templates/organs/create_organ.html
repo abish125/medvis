@@ -10,6 +10,7 @@
     <script src="{{STATIC_URL}}queue.js"></script>
     <script src="{{STATIC_URL}}hand.js"></script>
     <script src="{{STATIC_URL}}pep.js"></script>
+    <script src="{{STATIC_URL}}babylon_obj_loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/2.4.1/babylon.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
@@ -130,9 +131,10 @@ Organ.prototype.get_points = get_points;
     var scene = new BABYLON.Scene(engine);
 	scene.enablePhysics();
 
-	var camera = new BABYLON.ArcRotateCamera("Camera", 3 * Math.PI / 2, Math.PI / 2, 30, BABYLON.Vector3.Zero(), scene);
+	//var camera = new BABYLON.ArcRotateCamera("Camera", 3 * Math.PI / 2, Math.PI / 2, 30, BABYLON.Vector3.Zero(), scene);
+	var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), scene);
     //var camera = new BABYLON.VirtualJoysticksCamera("VJC",new BABYLON.Vector3(0, 4, -30) , scene);
-    //var camera = new BABYLON.TouchCamera("TouchCamera", new BABYLON.Vector3(0, 1, -15), scene);
+    //var camera = new BABYLON.TouchCamera("TouchCamera", new BABYLON.Vector3(0, 1, -5), scene);
     //var camera = new BABYLON.FollowCamera("FollowCam", new BABYLON.Vector3(0,15,-45), scene)
     //var camera = new BABYLON.FreeCamera("VJC",new BABYLON.Vector3(0, 1, -15) , scene);
 
@@ -266,7 +268,7 @@ Organ.prototype.get_points = get_points;
     		});
 	        }));
 	        
-	    Add.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnLongPressTrigger, function (evt) {
+	     Add.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnLongPressTrigger, function (evt) {
     		    points.forEach(function(p) {
         		if (p.on) {
         		   p.on = false;
@@ -326,6 +328,28 @@ Organ.prototype.get_points = get_points;
 	mat2.checkReadyOnlyOnce = true;
 	mat2.emissiveColor = new BABYLON.Color3(0,0,1);
 	
+	//import the obj
+	 var loader = new BABYLON.AssetsManager(scene);
+
+    var position = -5;
+    var pos = function(t) {
+        t.loadedMeshes.forEach(function(m) {
+            m.position.x -= position;
+        });
+        position += 5;
+    };
+
+    var bane = loader.addMeshTask("bane", "", "{{STATIC_URL}}", "zygote_male_w_repro.obj");
+    bane.onSuccess = pos;
+    
+    loader.onFinish = function() {
+        engine.runRenderLoop(function () {
+            scene.render();
+        });
+    };
+
+    loader.load();
+	
 	// Debug layer
 	scene.debugLayer.show(false, camera);
 	
@@ -341,8 +365,46 @@ Organ.prototype.get_points = get_points;
 		
 	sun.actionManager = new BABYLON.ActionManager(scene);
 		sun.actionManager.registerAction(
-		    new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnLongPressTrigger, sun, "on"))
+		    new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, sun, "on"))
 			 //.then(new BABYLON.SwitchBooleanAction(BABYLON.ActionManager.OnPickTrigger, sun, "on"));
+			 
+			 
+			 ///adding a button outside of canvas that controls canvas
+	/**
+	var myspan = document.createElement("span");
+	myspan.id = "ms123";
+	myspan.style.position = "absolute";
+	myspan.style.left = "30%";
+	myspan.style.top = "20%";
+	myspan.style.width = "8%";
+	myspan.style.height = "4%";
+	myspan.style.border = "4pt outset blue"
+	myspan.style.backgroundColor = "firebrick";
+	myspan.style.color = "gold";
+	myspan.style.font = "18pt verdana bold";
+	myspan.textContent = "MySpanButton";
+	myspan.style.padding = "4pt";
+	myspan.style.cursor = "pointer";
+
+	document.body.appendChild(myspan);	
+	
+	document.getElementById('ms123').addEventListener("click", function () {
+		points.forEach(function(p) {
+    		if (p.on) {
+    		   p.position.x = p.position.x - 1;
+    		}
+    		});
+	}, false);
+	
+	scene.onDispose = () => {
+		while (document.getElementById("ms123")) {
+			document.getElementById("ms123").parentNode.removeChild(document.getElementById("ms123"));
+		}
+	}
+	
+	**/
+	///above I add a button outside of canvas that can control canvas
+	
 		
 	scene.actionManager = new BABYLON.ActionManager(scene);
 	scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {

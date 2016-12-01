@@ -1,3 +1,9 @@
 python manage.py runserver_plus $IP:$PORT
 
-https://medvis-abish125.c9users.io/create_organ
+https://medvis-abish125.c9users.io/
+
+to run ipython notebook
+ipython notebook --ip=0.0.0.0 --port=8080 --no-browser
+
+then go to the link above
+
