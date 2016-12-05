@@ -36,6 +36,7 @@ var add_text = function(stuff_text, main_topic, m) {
         })
         .attr("id", "main_topic")
         .on("click", function(d) {
+            //console.log(this.style.fill);
             this.style.fill = getNextColor(this.style.fill);
         });
 
@@ -55,6 +56,7 @@ var add_text = function(stuff_text, main_topic, m) {
         })
         .attr("id", function(d, i) { return ("word_label_" + i)})
         .on("click", function(d) {
+            //console.log(this.style.fill);
             this.style.fill = getNextColor(this.style.fill);
         });
 }
@@ -102,15 +104,15 @@ function getColorFromName(name){
 function getNextColor(current_color) {
     if (current_color == "") { //if black not selected
         return "red";
-    } else if (current_color == "rgb(255, 0, 0)") { //if red:spec
+    } else if (current_color == "red") { //if red:spec  rgb(255, 0, 0)
         return "green";
-    } else if (current_color == "rgb(0, 128, 0)") { //if green: organ
+    } else if (current_color == "green") { //if green: organ rgb(0, 128, 0)
         return "blue";
-    } else if (current_color == "rgb(0, 0, 255)") { //which leaves blue
+    } else if (current_color == "blue") { //which leaves blue  rgb(0, 0, 255)
         return "rgb(255, 128, 0)";
-    } else if (current_color == "rgb(255, 128, 0)") {
+    } else if (current_color == "rgb(255, 128, 0)") { //
         return "purple";
-    } else if (current_color == "rgb(128, 0, 128)") {
+    } else if (current_color == "purple") { // purple rgb(128, 0, 128)
         return "rgb(255,105,180)";
     } else {
         return "";

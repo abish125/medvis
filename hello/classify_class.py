@@ -3,6 +3,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import SGDClassifier
+from django.core.files import File
 
 import subprocess
 import os.path
@@ -53,7 +54,7 @@ class Classifier:
         self.targets = self.targets + ["no"]
             
         for s in self.searches:
-            fname  = s + "_" + self.web + ".txt"
+            fname  ="wikipedia/" + s + "_" + self.web + ".txt"
             if os.path.isfile(fname):
                 f = open(fname, 'r')
                 for r in f.readlines():
@@ -61,7 +62,7 @@ class Classifier:
                 f.close()
             else:
                 f = open(fname, 'w')
-                self.cmd = ['casperjs search_' + self.web + '.js \'' + s + '\''] #, 'args']
+                self.cmd = ['casperjs gettingstarted/search_' + self.web + '.js \'' + s + '\''] #, 'args']
                 self.text = subprocess.check_output(self.cmd, shell=True, stderr=subprocess.STDOUT)
                 f.write(self.text)
                 f.close()
@@ -88,7 +89,7 @@ class Classifier:
             
         print self.searches
         for s in self.searches:
-            fname  = s + "_" + self.web + ".txt"
+            fname  ="wikipedia/" + s + "_" + self.web + ".txt"
             if os.path.isfile(fname):
                 f = open(fname, 'r')
                 for r in f.readlines():
@@ -96,7 +97,7 @@ class Classifier:
                 f.close()
             else:
                 f = open(fname, 'w')
-                self.cmd = ['casperjs search_' + self.web + '.js \'' + s + '\''] #, 'args']
+                self.cmd = ['casperjs gettingstarted/search_' + self.web + '.js \'' + s + '\''] #, 'args']
                 self.text = subprocess.check_output(self.cmd, shell=True, stderr=subprocess.STDOUT)
                 f.write(self.text)
                 f.close()
@@ -127,20 +128,22 @@ class Classifier:
         self.text_clf = self.text_clf.fit(self.results, self.targets)
         
     def change_terms(self, words, targets):
-        found = False
-        for c in range(len(self.searches)):
-            for c2 in range(len(words)):
+        for c2 in range(len(words)):
+            found = False
+            for c in range(len(self.searches)):
                 if words[c2] == self.searches[c]:
                     found = True
                     self.targets[c] = targets[c2]
-        if not found:
-            self.searches = self.searches + [words[c2]]
-            self.targets = self.targets + [targets[c2]]
+            if not found:
+                self.searches = self.searches + [words[c2]]
+                self.targets = self.targets + [targets[c2]]
 
         self.targ_g = open(self.target_source, "w")
+        print self.targ_g
         self.targ_g.write("\n".join(self.targets))
         self.targ_g.close()
         self.word_g = open(self.word_source, "w")
+        print self.word_g
         self.word_g.write("\n".join(self.searches))
         self.word_g.close()
 
@@ -157,18 +160,20 @@ class Classifier:
         self.words_f.close()
         
         for s in self.searches:
-            fname  = s + "_" + self.web + ".txt"
+            fname  ="wikipedia/" + s + "_" + self.web + ".txt"
             if os.path.isfile(fname):
-                f = open(fname, 'r')
-                for r in f.readlines():
-                    self.text = self.text + r
-                f.close()
+                with open(fname, 'r') as myFile:
+                    f = File(myFile)
+                    for r in f.readlines():
+                        self.text = self.text + r
+                #f.close()
             else:
-                f = open(fname, 'w')
-                self.cmd = ['casperjs search_' + self.web + '.js \'' + s + '\''] #, 'args']
-                self.text = subprocess.check_output(self.cmd, shell=True, stderr=subprocess.STDOUT)
-                f.write(self.text)
-                f.close()
+                with open(fname, 'w') as myFile:
+                    f = File(myFile)
+                    self.cmd = ['casperjs gettingstarted/search_' + self.web + '.js \'' + s + '\''] #, 'args']
+                    self.text = subprocess.check_output(self.cmd, shell=True, stderr=subprocess.STDOUT)
+                    f.write(self.text)
+                    #f.close()
             self.results =  self.results + [self.text]
             self.text=""
 
@@ -185,9 +190,13 @@ class Classifier:
             true_target = self.targets[get_target]
             return true_target
         else:
-            self.cmd = ['casperjs search_' + self.web + '.js \'' + self.new_search + '\'']
+            self.cmd = ['casperjs gettingstarted/search_' + self.web + '.js \'' + self.new_search + '\'']
             self.new  = [subprocess.check_output(self.cmd, shell=True, stderr=subprocess.STDOUT)]
-
+            
+            fname  ="wikipedia/" + self.new_search + "_" + self.web + ".txt"
+            f = open(fname, 'w')
+            f.write(self.new[0])
+            
             self.confidence = self.text_clf.decision_function(self.new)
             self.predicted = self.text_clf.predict(self.new)
 

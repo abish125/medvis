@@ -160,7 +160,7 @@ def guess(request):
 			gw = ''.join(e for e in gw if e.isalnum())
 			if gw != "":
 				gw_cleaned = gw_cleaned + [''.join(e for e in gw if e.isalnum())]
-		c = Classifier("med_targets.txt", "med_words.txt","wikipedia", "med_conf.txt", ["yes","no"])
+		c = Classifier("gettingstarted/med_targets.txt", "gettingstarted/med_words.txt","wikipedia", "gettingstarted/med_conf.txt", ["yes","no"])
 		c.already_started()
 		print gw_cleaned
 		for w in gw_cleaned:
@@ -180,8 +180,7 @@ def teach(request):
 		teach_words = teach_words.split(" ")
 		teach_targets = request.POST["teach_targets"]
 		teach_targets = teach_targets.split(" ")[1:]
-		print teach_targets
-		c = Classifier("med_targets.txt", "med_words.txt","wikipedia", "med_conf.txt", ["yes","no"])
+		c = Classifier("gettingstarted/med_targets.txt", "gettingstarted/med_words.txt","wikipedia", "gettingstarted/med_conf.txt", ["yes","no"])
 		c.already_started()
 		c.change_terms(teach_words, teach_targets)
 	else:

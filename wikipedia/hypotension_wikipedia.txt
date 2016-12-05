@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Hypotension is low blood pressure, especially in the arteries of the systemic circulation.[1] Blood pressure is the force of blood pushing against the walls of the arteries as the heart pumps out blood. Hypotension is generally considered if systolic blood pressure less than 90 millimeters of mercury (mm Hg) or diastolic less than 60 mm Hg.[2][3] However, in practice, blood pressure is considered too low only if noticeable symptoms are present.[4]

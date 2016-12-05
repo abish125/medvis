@@ -24,11 +24,16 @@ circle {
 <script src="{{STATIC_URL}}jquery.js"></script>
 <script src="{{STATIC_URL}}three.min2.js"></script>
 <script src="{{STATIC_URL}}d3.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}Text_Adder.js"></script>
 
 <script src="{{STATIC_URL}}protector.js"></script>
 <script src="{{STATIC_URL}}CanvasRenderer.js"></script>
 
 <script src="{{STATIC_URL}}stats.min.js"></script>
+<script>
+    var text_adder = new Text_Adder();
+</script>
+
 </head>
     
 <body>
@@ -52,7 +57,7 @@ circle {
   function search_function()
 {
     $.ajax({
-            url: 'search/',
+            url: '../search/',
             type: "POST",
             data: {
                 search_box: document.getElementById("search_textbox").value,
@@ -76,10 +81,10 @@ function guess_function()
 function guess_text_function()
 {
     $.ajax({
-            url: 'guess/',
+            url: '../guess',
             type: "POST",
             data: {
-                words: manager.text_adder.words.join(" ").replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' '),
+                words: text_adder.words.join(" ").replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' '),
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(response) {
@@ -91,11 +96,11 @@ function guess_text_function()
                 {
                     if(r == "yes")
                     {
-                        document.getElementById("word_label_" + counter.toString()).style.fill = "red"
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "red";
                     }
                     else
                     {
-                        document.getElementById("word_label_" + counter.toString()).style.fill = "blue"
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "blue";
                     }
                     counter = counter + 1;
                 });
@@ -109,32 +114,37 @@ function teach_function()
 {
     tt = ""
     counter=0;
-    manager.text_adder.words.forEach(function (r)
+    text_adder.words.forEach(function (r)
     {
-        if (document.getElementById("word_label_" + counter.toString()).style.fill == "rgb(255, 0, 0)")
+        if (document.getElementById("word_label_" + counter.toString()).style.fill == "red")
         {
             tt = tt + " " + "yes";
         }
-        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "rgb(0, 0, 255)")
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "blue")
         {
             tt = tt + " " +  "no";
         }
         counter = counter + 1;
     });
     $.ajax({
-            url: 'teach/',
+            url: '../teach/',
             type: "POST",
             data: {
-                teach_words: manager.text_adder.words.join(" "),
+                teach_words: text_adder.words.join(" "),
                 teach_targets: tt,
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(response) {
-                alert("it worked");
+                //alert("it worked");
             },
             complete: function() {},
             error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
         });
+}
+
+function add_text_function()
+{
+    text_adder.add_text(document.getElementById("target").value, ["text"]);
 }
 </script>
 <div style="display:none">
@@ -143,11 +153,15 @@ function teach_function()
 <section class="container">
     <div class="training">
       <h1>enter information</h1>
-        <p><input type="text" id="target" name="target" value="" placeholder="target"></p>
-        <p class="submit"><input type="submit" id="submit" name="commit" value="submit" onclick="return_target()">
+        <textarea type="textarea" cols="60" rows="30" id="target"></textarea>
         <br>
+        <input type="submit" id="btn_display" name="btn_display" value="display" onclick="add_text_function()">
+        <input type="submit" id="btn_guess" name="btn_guess" value="guess" onclick="guess_text_function()">
         <br>
-        <textarea type="textarea" cols="60" rows="30" id="answer"></textarea>
+        <div id="selectingText"> </div>
+        <br>
+        <input type="submit" id="btn_train" name="btn_train" value="train" onclick="teach_function()">
+        </div>
         </p>
     </div>
   </section>

@@ -7,3 +7,6 @@ ipython notebook --ip=0.0.0.0 --port=8080 --no-browser
 
 then go to the link above
 
+if it says the port is taken
+lsof -i tcp:$PORT
+kill -9 $(lsof -i:$PORT -t)
