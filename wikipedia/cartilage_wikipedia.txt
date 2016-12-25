@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Cartilage is a resilient and smooth elastic tissue, rubber-like padding that covers and protects the ends of long bones at the joints, and is a structural component of the rib cage, the ear, the nose, the bronchial tubes, the intervertebral discs, and many other body components. It is not as hard and rigid as bone, but it is stiffer and less flexible than muscle.

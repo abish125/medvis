@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+In vertebrates the gallbladder (also gall bladder, biliary vesicle or cholecyst) is a small organ where bile (a fluid produced by the liver) is stored and concentrated before it is released into the small intestine. Humans can live without a gallbladder. The surgical removal of the gallbladder is called a cholecystectomy.

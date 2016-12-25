@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Spondylolysis (spon-dee-low-lye-sis) is defined as a defect or stress fracture in the pars interarticularis of the vertebral arch.[1] The vast majority of cases occur in the lower lumbar vertebrae (L5), but spondylolysis may also occur in the cervical vertebrae.[2]

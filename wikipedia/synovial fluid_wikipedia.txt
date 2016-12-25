@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Synovia, more often called synovial fluid,[help 1] is a viscous, non-Newtonian fluid found in the cavities of synovial joints. With its egg white–like consistency,[1] the principal role of synovial fluid is to reduce friction between the articular cartilage of synovial joints during movement.

@@ -32,6 +32,7 @@ circle {
 <script src="{{STATIC_URL}}stats.min.js"></script>
 <script>
     var text_adder = new Text_Adder();
+    var text_adder2 = new Text_Adder();
 </script>
 
 </head>
@@ -110,6 +111,62 @@ function guess_text_function()
         });
 }
 
+//the idea here is to have text displayed and guessed at the same time. 
+// you don't want to have to separate these things. 
+//make a new training that is training2. 
+
+function guess_text2_function()
+{
+    $.ajax({
+            url: '../g2',
+            type: "POST",
+            data: {
+                words: text_adder2.words.join(" ").replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' '),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                console.log(response);
+                re = response.split(" ");
+                re.splice(0,1);
+                counter = 0;
+                re.forEach(function (r)
+                {
+                    if(r == "neuro")
+                    {
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "rgb(255, 128, 0)";
+                    }
+                    else if(r == "cards")
+                    {
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "red";
+                    }
+                    else if(r == "pulm")
+                    {
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "green";
+                    }
+                    else if(r == "gi")
+                    {
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "purple";
+                    }
+                    else if(r == "heme")
+                    {
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "rgb(255,105,180)";   
+                    }
+                    else if(r == "renal")
+                    {
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "blue";   
+                    }
+                    else
+                    {
+                        document.getElementById("word_label_" + counter.toString()).style.fill = "black";
+                    }
+                    counter = counter + 1;
+                });
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
+        });
+}
+
 function teach_function()
 {
     tt = ""
@@ -120,7 +177,7 @@ function teach_function()
         {
             tt = tt + " " + "yes";
         }
-        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "blue")
+        else if(document.getElementById("word_label_" + counter.toString()).style.fill == "blue")
         {
             tt = tt + " " +  "no";
         }
@@ -142,9 +199,69 @@ function teach_function()
         });
 }
 
+//fixed the guess2 but not teach2
+//need to fix the teach2 and guess2 views so that it uses a new files
+
+function teach2_function()
+{
+    tt = ""
+    counter=0;
+    text_adder2.words.forEach(function (r)
+    {
+        if (document.getElementById("word_label_" + counter.toString()).style.fill == "red")
+        {
+            tt = tt + " " + "cards";
+        }
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "blue")
+        {
+            tt = tt + " " +  "renal";
+        }
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "purple")
+        {
+            tt = tt + " " +  "gi";
+        }
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "green")
+        {
+            tt = tt + " " +  "pulm";
+        }
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "rgb(255, 128, 0)")
+        {
+            tt = tt + " " +  "neuro";
+        }
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "rgb(255,105,180)")
+        {
+            tt = tt + " " +  "heme";
+        }
+        else
+        {
+            tt = tt + " " + "none"
+        }
+        counter = counter + 1;
+    });
+    $.ajax({
+            url: '../t2/',
+            type: "POST",
+            data: {
+                teach_words: text_adder.words.join(" "),
+                teach_targets: tt,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                //alert("it worked");
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
+        });
+}
+
 function add_text_function()
 {
     text_adder.add_text(document.getElementById("target").value, ["text"]);
+}
+
+function add_text2_function()
+{
+    text_adder2.add_text(document.getElementById("target").value, ["text"]);
 }
 </script>
 <div style="display:none">
@@ -161,6 +278,16 @@ function add_text_function()
         <div id="selectingText"> </div>
         <br>
         <input type="submit" id="btn_train" name="btn_train" value="train" onclick="teach_function()">
+        </div>
+        
+        <br>
+        <br>
+        <input type="submit" id="btn_display2" name="btn_display2" value="display2" onclick="add_text2_function()">
+        <input type="submit" id="btn_guess2" name="btn_guess2" value="guess2" onclick="guess_text2_function()">
+        <br>
+        <div id="selectingText2"> </div>
+        <br>
+        <input type="submit" id="btn_train2" name="btn_train2" value="train2" onclick="teach2_function()">
         </div>
         </p>
     </div>

@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Atorvastatin, marketed under the trade name Lipitor among others,[1] is a member of the drug class known as statins, which are used primarily as a lipid-lowering agent and for prevention of events associated with cardiovascular disease. Like all statins, atorvastatin works by inhibiting HMG-CoA reductase, an enzyme found in liver tissue that plays a key role in production of cholesterol in the body.

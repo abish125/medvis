@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Mitoxantrone (INN, BAN, USAN; also known as Mitozantrone in Australia; trade name Novantrone) is an anthracenedione antineoplastic agent.

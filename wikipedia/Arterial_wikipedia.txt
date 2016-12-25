@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Arteries (from Greek ἀρτηρία (artēria), meaning "windpipe, artery")[1] are blood vessels that carry blood away from the heart. While most arteries carry oxygenated blood, there are two exceptions to this, the pulmonary and the umbilical arteries. The effective arterial blood volume is that extracellular fluid which fills the arterial system.

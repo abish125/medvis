@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+An appendectomy (sometimes called appendisectomy or appendicectomy) is the surgical removal of the vermiform appendix. This procedure is normally performed as an emergency procedure, when the patient is suffering from acute appendicitis. However, a 12-hour delay had no effect on outcomes, in a large retrospective study.[1]

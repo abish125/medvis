@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Podiatry (/poʊˈdaɪətri/) or podiatric medicine (/poʊdiˈætrᵻk/ or /poʊˈdaɪətrᵻk/) is a branch of medicine devoted to the study, diagnosis, and medical and surgical treatment of disorders of the foot, ankle and lower extremity. The term podiatry came into use in the early 20th century in the United States and is now used worldwide, including countries such as the United Kingdom and Australia.[1]

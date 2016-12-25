@@ -1,0 +1,434 @@
+<html>
+    <head>
+        <style>
+.chart {
+
+}
+
+.main text {
+    font: 10px sans-serif;	
+}
+
+.axis line, .axis path {
+    shape-rendering: crispEdges;
+    stroke: black;
+    fill: none;
+}
+#selectingText1
+{
+    width: 400px;
+    height: 300px;
+}
+circle {
+    fill: steelblue;
+}
+
+</style>
+<script type="text/javascript" src="{{STATIC_URL}}d3.js"></script>
+<script src="{{STATIC_URL}}jquery.js"></script>
+<script src="{{STATIC_URL}}three.min2.js"></script>
+<script src="{{STATIC_URL}}d3.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}Text_Adder2.js"></script>
+
+<script src="{{STATIC_URL}}protector.js"></script>
+<script src="{{STATIC_URL}}CanvasRenderer.js"></script>
+
+<script src="{{STATIC_URL}}stats.min.js"></script>
+<script>
+    var text_adder = new Text_Adder();
+    var text_adder2 = new Text_Adder();
+    var text_adder3 = new Text_Adder();
+</script>
+
+</head>
+    
+<body>
+<script type="text/javascript">
+	function return_target() {
+      $.ajax({
+          url: '../train/',
+          type: "POST",
+          data: {
+              target: document.getElementById("target").value,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          }, 
+          success: function(response) {
+              document.getElementById("answer").value = response;
+          },
+          //complete: function(response) {document.getElementById("answer").value = response;},
+          error: function(xhr, textStatus, thrownError) {}
+      });
+  }
+  
+  function search_function()
+{
+    $.ajax({
+            url: '../search/',
+            type: "POST",
+            data: {
+                search_box: document.getElementById("search_textbox").value,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                document.getElementById("add_main_topic").value = document.getElementById("search_textbox").value;
+                document.getElementById("add_text").value = response;
+                add_text_function();
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {}
+        });
+}
+
+//it should only move the words that are medical to the bottom text adder
+
+function guess_function()
+{
+    clean_text = document.getElementById("target").value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
+    text_adder.add_text(clean_text, ["medical"],"1");
+    
+    $.ajax({
+            url: '../guess',
+            type: "POST",
+            data: {
+                words: text_adder.words.join(" ").replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' '),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                console.log(response);
+                re = response.split(" ");
+                re.splice(0,1);
+                counter = 0;
+                medical_words = ""
+                re.forEach(function (r)
+                {
+                    if(r == "yes")
+                    {
+                        document.getElementById("word_label1_" + counter.toString()).style.fill = "red";
+                        if(medical_words != "")
+                        {
+                            medical_words = medical_words + " " + document.getElementById("word_label1_" + counter.toString()).innerHTML;
+                        }
+                        else
+                        {
+                            medical_words =document.getElementById("word_label1_" + counter.toString()).innerHTML;
+                        }
+                    }
+                    else
+                    {
+                        document.getElementById("word_label1_" + counter.toString()).style.fill = "blue";
+                    }
+                    counter = counter + 1;
+                });
+                guess_medical_words(medical_words)
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
+        });
+}
+
+function guess_medical_words(medical_words)
+{
+    if(medical_words != "")
+        {
+            text_adder2.add_text(medical_words, ["system"], "2");
+            guess_system();
+            text_adder3.add_text(medical_words, ["type"], "3");
+            guess_type();
+        }
+}
+
+function guess_system()
+{
+    $.ajax({
+            url: '../g2',
+            type: "POST",
+            data: {
+                words: text_adder2.words.join(" ").replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' '),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                console.log(response);
+                re = response.split(" ");
+                re.splice(0,1);
+                counter = 0; 
+                re.forEach(function (r)
+                {
+                    if(r == "neuro")
+                    {
+                        document.getElementById("word_label2_" + counter.toString()).style.fill = "rgb(255, 128, 0)";
+                    }
+                    else if(r == "cards")
+                    {
+                        document.getElementById("word_label2_" + counter.toString()).style.fill = "red";
+                    }
+                    else if(r == "pulm")
+                    {
+                        document.getElementById("word_label2_" + counter.toString()).style.fill = "blue";
+                    }
+                    else if(r == "gi")
+                    {
+                        document.getElementById("word_label2_" + counter.toString()).style.fill = "brown";
+                    }
+                    else if(r == "heme")
+                    {
+                        document.getElementById("word_label2_" + counter.toString()).style.fill = "rgb(255, 105, 180)";   
+                    }
+                    else if(r == "renal")
+                    {
+                        document.getElementById("word_label2_" + counter.toString()).style.fill = "green";   
+                    }
+                    else if(r == "id")
+                    {
+                        document.getElementById("word_label2_" + counter.toString()).style.fill = "purple";   
+                    }
+                    else if(r == "endo")
+                    {
+                        document.getElementById("word_label2_" + counter.toString()).style.fill = "rgb(13, 252, 244)";
+                    }
+                    else
+                    {
+                        document.getElementById("word_label2_" + counter.toString()).style.fill = "black";
+                    }
+                    counter = counter + 1;
+                });
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
+        });
+}
+
+function guess_type()
+{
+    $.ajax({
+            url: '../gt3',
+            type: "POST",
+            data: {
+                words: text_adder2.words.join(" ").replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' '),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                console.log(response);
+                re = response.split(" ");
+                re.splice(0,1);
+                counter = 0; 
+                re.forEach(function (r)
+                {
+                    if(r == "specialty")
+                    {
+                        document.getElementById("word_label3_" + counter.toString()).style.fill = "purple";
+                    }
+                    else if(r == "condition")
+                    {
+                        document.getElementById("word_label3_" + counter.toString()).style.fill = "red";
+                    }
+                    else if(r == "finding")
+                    {
+                        document.getElementById("word_label3_" + counter.toString()).style.fill = "rgb(255, 128, 0)";
+                    }
+                    else if(r == "treatment")
+                    {
+                        document.getElementById("word_label3_" + counter.toString()).style.fill = "blue";
+                    }
+                    else if(r == "bodypart")
+                    {
+                        document.getElementById("word_label3_" + counter.toString()).style.fill = "green";   
+                    }
+                    else
+                    {
+                        document.getElementById("word_label3_" + counter.toString()).style.fill = "black";
+                    }
+                    counter = counter + 1;
+                });
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
+        });
+}
+
+// you will have to fix the word_label# so it knows which text box it is training (right now it will not work)
+
+function teach_function()
+{
+    tt = "";
+    tt2 = "";
+    tt3 = "";
+    counter=0;
+    counter2=0;
+    counter3=0;
+    text_adder.words.forEach(function (r)
+    {
+        if (document.getElementById("word_label1_" + counter.toString()).style.fill == "red")
+        {
+            tt = tt + " " + "yes";
+        }
+        else if(document.getElementById("word_label1_" + counter.toString()).style.fill == "blue")
+        {
+            tt = tt + " " +  "no";
+        }
+        counter = counter + 1;
+    });
+    text_adder2.words.forEach(function (r)
+    {
+        if (document.getElementById("word_label2_" + counter2.toString()).style.fill == "red")
+        {
+            tt2 = tt2 + " " + "cards";
+        }
+        else if(document.getElementById("word_label2_" + counter2.toString()).style.fill == "blue")
+        {
+            tt2 = tt2 + " " +  "pulm";
+        }
+        else if(document.getElementById("word_label2_" + counter2.toString()).style.fill == "rgb(255, 128, 0)")
+        {
+            tt2 = tt2 + " " +  "neuro";
+        }
+        else if(document.getElementById("word_label2_" + counter2.toString()).style.fill == "brown")
+        {
+            tt2 = tt2 + " " +  "gi";
+        }
+        else if(document.getElementById("word_label2_" + counter2.toString()).style.fill == "rgb(255, 105, 180)")
+        {
+            tt2 = tt2 + " " +  "heme";
+        }
+        else if(document.getElementById("word_label2_" + counter2.toString()).style.fill == "rgb(13, 252, 244)")
+        {
+            tt2 = tt2 + " " +  "endo";
+        }
+        else if(document.getElementById("word_label2_" + counter2.toString()).style.fill == "purple")
+        {
+            tt2 = tt2 + " " +  "id";
+        }
+        else if(document.getElementById("word_label2_" + counter2.toString()).style.fill == "green")
+        {
+            tt2 = tt2 + " " +  "renal";
+        }
+        counter2 = counter2 + 1;
+    });
+    text_adder3.words.forEach(function (r)
+    {
+        if (document.getElementById("word_label3_" + counter3.toString()).style.fill == "purple")
+        {
+            tt3 = tt3 + " " + "specialty";
+        }
+        else if(document.getElementById("word_label3_" + counter3.toString()).style.fill == "red")
+        {
+            tt3 = tt3 + " " +  "condition";
+        }
+        else if(document.getElementById("word_label3_" + counter3.toString()).style.fill == "rgb(255, 128, 0)")
+        {
+            tt3 = tt3 + " " +  "finding";
+        }
+        else if(document.getElementById("word_label3_" + counter3.toString()).style.fill == "blue")
+        {
+            tt3 = tt3 + " " +  "treatment";
+        }
+        else if(document.getElementById("word_label3_" + counter3.toString()).style.fill == "green")
+        {
+            tt3 = tt3 + " " +  "bodypart";
+        }
+        counter3 = counter3 + 1;
+    });
+    $.ajax({
+            url: '../teach/',
+            type: "POST",
+            data: {
+                teach_words: text_adder.words.join(" "),
+                teach_targets: tt,
+                teach_words2: text_adder2.words.join(" "),
+                teach_targets2: tt2,
+                teach_words3: text_adder3.words.join(" "),
+                teach_targets3: tt3,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                //alert("it worked");
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
+        });
+}
+
+//fixed the guess2 but not teach2
+//need to fix the teach2 and guess2 views so that it uses a new files
+
+function teach2_function()
+{
+    tt = ""
+    counter=0;
+    text_adder2.words.forEach(function (r)
+    {
+        if (document.getElementById("word_label_" + counter.toString()).style.fill == "red")
+        {
+            tt = tt + " " + "cards";
+        }
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "blue")
+        {
+            tt = tt + " " +  "renal";
+        }
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "purple")
+        {
+            tt = tt + " " +  "gi";
+        }
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "green")
+        {
+            tt = tt + " " +  "pulm";
+        }
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "rgb(255, 128, 0)")
+        {
+            tt = tt + " " +  "neuro";
+        }
+        else if (document.getElementById("word_label_" + counter.toString()).style.fill == "rgb(255,105,180)")
+        {
+            tt = tt + " " +  "heme";
+        }
+        else
+        {
+            tt = tt + " " + "none"
+        }
+        counter = counter + 1;
+    });
+    $.ajax({
+            url: '../t2/',
+            type: "POST",
+            data: {
+                teach_words: text_adder.words.join(" "),
+                teach_targets: tt,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                //alert("it worked");
+            },
+            complete: function() {},
+            error: function(xhr, textStatus, thrownError) {console.log(thrownError);}
+        });
+}
+
+</script>
+<div style="display:none">
+<input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token" />
+</div>
+<section class="container">
+    <div class="training">
+      <h1>enter information</h1>
+        <textarea type="textarea" cols="60" rows="30" id="target"></textarea>
+        <br>
+        <input type="submit" id="btn_guess" name="btn_guess" value="guess" onclick="guess_function()">
+        <br>
+        <div id="selectingText1"> </div>
+        <br>
+        <input type="submit" id="btn_train" name="btn_train" value="train" onclick="teach_function()">
+        </div>
+        <p>
+        <br>
+        <br>
+        <div id="selectingText2"> </div>
+        </p>
+        
+        <p>
+        <div id="selectingText3"> </div>
+        </p>
+    </div>
+  </section>
+    </body>
+</html>
+
+

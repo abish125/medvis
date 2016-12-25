@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+The temporomandibular joint is the joint of the jaw, sometimes referred to as the TMJ. It is a bilateral synovial articulation between the upper temporal bone and the lower mandible; it is from these bones that its name is derived.

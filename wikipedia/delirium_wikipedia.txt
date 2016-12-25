@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Delirium, or acute confusional state, is an organically caused decline from a previously attained baseline level of cognitive function. It is typified by fluctuating course, attentional deficits and generalized severe disorganization of behavior. It typically involves other cognitive deficits, changes in arousal (hyperactive, hypoactive, or mixed), perceptual deficits, altered sleep-wake cycle, and psychotic features such as hallucinations and delusions.

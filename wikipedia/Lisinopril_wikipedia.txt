@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Lisinopril is a drug of the angiotensin-converting enzyme (ACE) inhibitor class used primarily in treatment of high blood pressure, heart failure, and after heart attacks. It is also used for preventing kidney and eye complications in people with diabetes. Its indications, contraindications, and side effects are as those for all ACE inhibitors.

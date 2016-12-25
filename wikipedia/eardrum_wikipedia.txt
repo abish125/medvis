@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+In the anatomy of humans and various other tetrapods, the eardrum, also called the tympanic membrane or myringa, is a thin, cone-shaped membrane that separates the external ear from the middle ear. Its function is to transmit sound from the air to the ossicles inside the middle ear, and then to the oval window in the fluid-filled cochlea. Hence, it ultimately converts and amplifies vibration in air to vibration in fluid. The malleus bone bridges the gap between the eardrum and the other ossicles.[1]

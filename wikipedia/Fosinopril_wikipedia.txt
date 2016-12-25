@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Fosinopril is an angiotensin converting enzyme (ACE) inhibitor[1] used for the treatment of hypertension and some types of chronic heart failure. Fosinopril is the only phosphinate-containing ACE inhibitor marketed, by Bristol-Myers Squibb under the trade name Monopril.

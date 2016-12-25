@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Sigmoid means resembling the lower-case Greek letter sigma (ς) or the Latin letter S. Specific uses include:

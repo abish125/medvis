@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+The larynx /ˈlærɪŋks/ (plural larynges; from the Greek λάρυγξ lárynx),[1] commonly called the voice box, is an organ in the neck of tetrapods involved in breathing, sound production, and protecting the trachea against food aspiration. It manipulates pitch and volume. The larynx houses the vocal folds (vocal cords), which are essential for phonation. The vocal folds are situated just below where the tract of the pharynx splits into the trachea and the esophagus.

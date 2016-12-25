@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Thrombocytopenia refer to a disorder in which there is a relative decrease of thrombocytes, commonly known as platelets, present in the blood.[1]

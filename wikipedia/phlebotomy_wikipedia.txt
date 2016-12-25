@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Phlebotomy (from the Greek words phlebo-, meaning "pertaining to a blood vessel", and -tomia, meaning "cutting of") is the process of making an incision in a vein with a needle. The procedure itself is known as a venipuncture. A person who performs phlebotomy is called a "phlebotomist", although doctors, nurses, medical laboratory scientists and others do portions of phlebotomy procedures in many countries.[1]

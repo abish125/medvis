@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Trandolapril is an ACE inhibitor used to treat high blood pressure, it may also be used to treat other conditions. It is marketed by Abbott Laboratories under the brand name Mavik.

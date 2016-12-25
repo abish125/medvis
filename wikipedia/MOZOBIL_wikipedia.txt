@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Plerixafor (INN and USAN, trade name Mozobil) is an immunostimulant used to mobilize hematopoietic stem cells in cancer patients into the bloodstream. The stem cells are then extracted from the blood and transplanted back to the patient. The drug was developed by AnorMED which was subsequently bought by Genzyme.

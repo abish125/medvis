@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Moexipril hydrochloride is a potent orally active nonsulfhydryl angiotensin converting enzyme inhibitor (ACE inhibitor)[1] which is used for the treatment of hypertension and congestive heart failure. Moexipril can be administered alone or with other antihypertensives or diuretics.[2] It works by inhibiting the conversion of angiotensin I to angiotensin II.[3] Moexipril is available from Schwarz Pharma under the trade name Univasc.[3][4]

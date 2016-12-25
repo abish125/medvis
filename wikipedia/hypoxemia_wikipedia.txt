@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Hypoxemia (or hypoxaemia in British English) is an abnormally low level of oxygen in the blood.[1][2] More specifically, it is oxygen deficiency in arterial blood.[3] Hypoxemia has many causes, often respiratory disorders, and can cause tissue hypoxia as the blood is not supplying enough oxygen to the body.

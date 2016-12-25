@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+A laminectomy is a surgical procedure that removes a portion of the vertebral bone called the lamina. The back muscles are pushed aside rather than cut and the parts of the vertebra adjacent to the lamina are left intact. Recovery typically occurs within a few days.[1]

@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Angioedema, also known as angiooedema, Quincke's edema, and angioneurotic edema, is the rapid swelling (edema) of the dermis, subcutaneous tissue,[1] mucosa and submucosal tissues. It is very similar to urticaria, but urticaria, commonly known as hives, occurs in the upper dermis.[1]

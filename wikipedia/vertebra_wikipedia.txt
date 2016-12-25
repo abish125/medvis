@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+In the vertebrate spinal column, each vertebra is an irregular bone with a complex structure composed of bone and some hyaline cartilage, the proportions of which vary according to the segment of the backbone and the species of vertebrate.

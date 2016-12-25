@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Leukocytosis is white cells (the leukocyte count) above the normal range in the blood.[1][2] It is frequently a sign of an inflammatory response,[3] most commonly the result of infection, but may also occur following certain parasitic infections or bone tumors. It may also occur after strenuous exercise, convulsions such as epilepsy, emotional stress, pregnancy and labour, anesthesia, and epinephrine administration.[1]

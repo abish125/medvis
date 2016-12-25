@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+A bronchus, also known as a main or primary bronchus, is an airway in the respiratory tract that conducts air into the lungs. There is a right bronchus and a left bronchus and these bronchi branch into smaller secondary and tertiary bronchi which branch into smaller tubes, known as bronchioles.[1] No gas exchange takes place in the bronchi.

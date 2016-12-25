@@ -1,7 +1,9 @@
 var Text_Adder = function() {}
 
-var add_text = function(stuff_text, main_topic, m) {
+var add_text = function(stuff_text, main_topic, m, textbox_number="1") {
 	this.manager = m;
+	this.textbox = "#selectingText"
+	this.textbox_number = textbox_number
 
     var init_width = 1200
     var margin = {
@@ -20,7 +22,7 @@ var add_text = function(stuff_text, main_topic, m) {
     stuff_text = stuff_text.replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' ');
     this.words = stuff_text.split(' ');
 
-    text_box = d3.select("#selectingText").append("svg")
+    text_box = d3.select(this.textbox).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.bottom)
         .attr("id", "selectingTextSvg");
@@ -66,7 +68,7 @@ var refresh = function() {
 }
 
 var clear = function (){
-	d3.select("#selectingText").select("svg").remove();
+	d3.select(this.textbox).select("svg").remove();
 }
 
 function getNextClass(current_class) {}
@@ -110,7 +112,7 @@ function getNextColor(current_color) {
         return "blue";
     } else if (current_color == "blue") { //which leaves blue  rgb(0, 0, 255)
         return "rgb(255, 128, 0)";
-    } else if (current_color == "rgb(255, 128, 0)") { //
+    } else if (current_color == "rgb(255, 128, 0)") { //pink?
         return "purple";
     } else if (current_color == "purple") { // purple rgb(128, 0, 128)
         return "rgb(255,105,180)";

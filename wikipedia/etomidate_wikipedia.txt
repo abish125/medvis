@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Etomidate (USAN, INN, BAN) (marketed as Amidate) is a short-acting intravenous anaesthetic agent used for the induction of general anaesthesia and sedation[1] for short procedures such as reduction of dislocated joints, tracheal intubation, and cardioversion. It was developed at Janssen Pharmaceutica in 1964 and was introduced as an intravenous agent in 1972 in Europe and in 1983 in the United States.[2]

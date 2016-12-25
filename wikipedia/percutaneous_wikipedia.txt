@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+In surgery, a percutaneous procedure [1] is any medical procedure where access to inner organs or other tissue is done via needle-puncture of the skin, rather than by using an "open" approach where inner organs or tissue are exposed (typically with the use of a scalpel).

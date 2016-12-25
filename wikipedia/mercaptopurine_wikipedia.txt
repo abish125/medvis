@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Mercaptopurine (6-MP), sold under the brand name Purinethol among others, is a medication used for cancer and autoimmune diseases.[1] Specifically it is used to treat acute lymphocytic leukemia (ALL), chronic myeloid leukemia (CML), Crohn's disease, and ulcerative colitis.[1][2] For ALL it is generally used with methotrexate. It is taken by mouth.[1]

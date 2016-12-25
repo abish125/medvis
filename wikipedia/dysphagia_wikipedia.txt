@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Dysphagia is the medical term for the symptom of difficulty in swallowing.[1][2] Although classified under "symptoms and signs" in ICD-10,[3] the term is sometimes used as a condition in its own right.[4][5][6] Sufferers are sometimes unaware of their dysphagia.[7][8]

@@ -168,8 +168,96 @@ def guess(request):
 	else:
 		results = "error"
 	return HttpResponse(results)
+	
+def g2(request):
+	import string
+	c = {}
+	c.update(csrf(request))
+	guess_words = ""
+	results = ""
+	if request.POST:
+		guess_words = request.POST["words"]#.decode('utf-8', 'ignore')
+		guess_words = guess_words.split(" ")
+		gw_cleaned = []
+		for gw in guess_words:
+			gw = ''.join(e for e in gw if e.isalnum())
+			if gw != "":
+				gw_cleaned = gw_cleaned + [''.join(e for e in gw if e.isalnum())]
+		c = Classifier("gettingstarted/medclass_targets.txt", "gettingstarted/medclass_words.txt","wikipedia", "gettingstarted/med_conf.txt", ["neuro","cards","pulm","gi","heme","renal","id","endo", "none"])
+		c.already_started()
+		print gw_cleaned
+		for w in gw_cleaned:
+			results = results + " " + c.classify(w)
+	else:
+		results = "error"
+	return HttpResponse(results)
+	
+def gt3(request):
+	import string
+	c = {}
+	c.update(csrf(request))
+	guess_words = ""
+	results = ""
+	if request.POST:
+		guess_words = request.POST["words"]#.decode('utf-8', 'ignore')
+		guess_words = guess_words.split(" ")
+		gw_cleaned = []
+		for gw in guess_words:
+			gw = ''.join(e for e in gw if e.isalnum())
+			if gw != "":
+				gw_cleaned = gw_cleaned + [''.join(e for e in gw if e.isalnum())]
+		c = Classifier("gettingstarted/medtype_targets.txt", "gettingstarted/medtype_words.txt","wikipedia", "gettingstarted/med_conf.txt", ["specialty","condition","treatment","finding","bodypart"])
+		c.already_started()
+		print gw_cleaned
+		for w in gw_cleaned:
+			results = results + " " + c.classify(w)
+	else:
+		results = "error"
+	return HttpResponse(results)
 
 def teach(request):
+	c = {}
+	c.update(csrf(request))
+	teach_words = ""
+	teach_targets = ""
+	teach_words2 = ""
+	teach_targets2 = ""
+	teach_words3 = ""
+	teach_targets3 = ""
+	results=""
+	if request.POST:
+		teach_words = request.POST["teach_words"]
+		teach_words = teach_words.split(" ")
+		teach_targets = request.POST["teach_targets"]
+		teach_targets = teach_targets.split(" ")[1:]
+		teach_words2 = request.POST["teach_words2"]
+		teach_words2 = teach_words2.split(" ")
+		teach_targets2 = request.POST["teach_targets2"]
+		teach_targets2 = teach_targets2.split(" ")[1:]
+		teach_words3 = request.POST["teach_words3"]
+		teach_words3 = teach_words3.split(" ")
+		teach_targets3 = request.POST["teach_targets3"]
+		teach_targets3 = teach_targets3.split(" ")[1:]
+		print teach_words
+		print teach_targets
+		print teach_words2
+		print teach_targets2
+		print teach_words3
+		print teach_targets3
+		c = Classifier("gettingstarted/med_targets.txt", "gettingstarted/med_words.txt","wikipedia", "gettingstarted/med_conf.txt", ["yes","no"])
+		c.already_started()
+		c.change_terms(teach_words, teach_targets)
+		d = Classifier("gettingstarted/medclass_targets.txt", "gettingstarted/medclass_words.txt","wikipedia", "gettingstarted/med_conf.txt", ["neuro","cards","pulm","gi","heme","renal","id","endo", "none"])
+		d.already_started()
+		d.change_terms(teach_words2, teach_targets2)
+		e = Classifier("gettingstarted/medtype_targets.txt", "gettingstarted/medtype_words.txt","wikipedia", "gettingstarted/med_conf.txt", ["specialty","condition","treatment","finding","bodypart"])
+		e.already_started()
+		e.change_terms(teach_words3, teach_targets3)
+	else:
+		results = "error"
+	return HttpResponse("success")
+	
+def t2(request):
 	c = {}
 	c.update(csrf(request))
 	teach_words = ""
@@ -180,7 +268,7 @@ def teach(request):
 		teach_words = teach_words.split(" ")
 		teach_targets = request.POST["teach_targets"]
 		teach_targets = teach_targets.split(" ")[1:]
-		c = Classifier("gettingstarted/med_targets.txt", "gettingstarted/med_words.txt","wikipedia", "gettingstarted/med_conf.txt", ["yes","no"])
+		c = Classifier("gettingstarted/medclass_targets.txt", "gettingstarted/medclass_words.txt","wikipedia", "gettingstarted/med_conf.txt", ["neuro","cards","pulm","gi","heme","renal","id","endo", "none"])
 		c.already_started()
 		c.change_terms(teach_words, teach_targets)
 	else:
@@ -682,6 +770,9 @@ def ekg2(request):
 	
 def training(request):
 	return render(request, 'organs/training.html')
+	
+def training2(request):
+	return render(request, 'organs/training2.html')
 
 def train(request):
 	c = {}
@@ -736,3 +827,6 @@ def s(request):
 	
 def create_organ(request):
 	return render(request, 'organs/create_organ.html')
+	
+def health_data(request):
+	return render(request, 'organs/health_data.html')

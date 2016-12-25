@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+A craniotomy is a surgical operation in which a bone flap is temporarily removed from the skull to access the brain. Craniotomies are often critical operations, performed on patients who are suffering from brain lesions or traumatic brain injury (TBI), and can also allow doctors to surgically implant deep brain stimulators for the treatment of Parkinson's disease, epilepsy, and cerebellar tremor.

@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Amlodipine, sold under the brand name Norvasc among others, is a medication used to treat high blood pressure and coronary artery disease.[1] While calcium channel blockers are not typically recommended in heart failure, amlodipine may be used if other medications are not sufficient for high blood pressure or heart related chest pain.[2] Amlodipine is taken by mouth and has an effect for at least a day.[1]

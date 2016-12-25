@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Pharyngitis is inflammation of the back of the throat, known as the pharynx.[1] It typically results in a sore throat and fever.[1] Other symptoms may include a runny nose, cough, headache, a hoarse voice.[2] Symptoms usually last three to five days. Complications can include sinusitis and acute otitis media.[1] Pharyngitis is typically a type of respiratory tract infection.[3]

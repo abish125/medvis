@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Osteomyelitis (OM) is infection and inflammation of the bone and bone marrow.[1] It can be usefully subclassified on the basis of the causative organism (pyogenic bacteria or mycobacteria) and the route, duration and anatomic location of the infection. Osteomyelitis usually begins as an acute infection, but it may evolve into a chronic condition.[2] The word is from Greek words ὀστέον osteon, meaning bone, μυελό- myelo- meaning marrow, and -ῖτις -itis meaning inflammation.

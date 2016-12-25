@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Metoprolol, marketed under the tradename Lopressor among others, is a selective β1 receptor blocker medication.[3] It is used to treat high blood pressure, chest pain due to poor blood flow to the heart, and a number of conditions involving an abnormally fast heart rate. It is also used to prevent further heart problems after myocardial infarction and to prevent headaches in those with migraines.[3]

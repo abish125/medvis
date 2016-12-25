@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Cholecystectomy (/ˌkɒləsɪsˈtɛktəmi/; plural: cholecystectomies) is the surgical removal of the gallbladder. It is a common treatment of symptomatic gallstones and other gallbladder conditions. Surgical options include the standard procedure, called laparoscopic cholecystectomy, and an older, more invasive procedure, called open cholecystectomy. The surgery can lead to postcholecystectomy syndrome.
