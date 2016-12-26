@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Methylprednisolone, sold under the brand names Depo-Medrol and Solu-Medrol among others, is a corticosteroid medication used to suppress the immune system and decrease inflammation. Conditions it is used in include skin diseases, rheumatic disorders, allergies, asthma, croup, COPD, certain cancers, multiple sclerosis, and as add on therapy for tuberculosis. It is given by mouth or injection into a vein, or muscle.[1]

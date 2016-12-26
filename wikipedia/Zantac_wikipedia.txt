@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Ranitidine, sold under the trade name Zantac among others, is a medication that decreases stomach acid production.[1] It is commonly used in treatment of peptic ulcer disease, gastroesophageal reflux disease, and Zollinger–Ellison syndrome.[1] There is also tentative evidence of benefit for hives.[2] It can be taken by mouth, by injection into a muscle, or into a vein.[1]

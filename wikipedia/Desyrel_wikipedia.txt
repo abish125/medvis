@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Trazodone (sold under many brand names worldwide[1]) is an antidepressant of the serotonin antagonist and reuptake inhibitor (SARI) class. It is a phenylpiperazine compound. Trazodone also has anti-anxiety (anxiolytic) and sleep-inducing (hypnotic) effects.[5] Its side-effect profile and potential toxicity are considerably different from those of the original antidepressants (i.e., the monoamine oxidase inhibitors (MAOIs) and tricyclic antidepressants (TCAs)).[6]

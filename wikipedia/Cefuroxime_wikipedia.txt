@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Cefuroxime is an enteral second-generation cephalosporin antibiotic. It was discovered by the Glaxo, now GlaxoSmithKline and first marketed in 1978 as Zinacef. It received approval from the U.S. Food and Drug Administration in October 1983.[1]

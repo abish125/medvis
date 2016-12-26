@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Nebivolol is a β1 receptor blocker with nitric oxide-potentiating vasodilatory effect used in treatment of hypertension and, in Europe, also for left ventricular failure.[1] It is highly cardioselective under certain circumstances.[1]

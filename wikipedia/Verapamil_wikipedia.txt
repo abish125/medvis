@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Verapamil, sold under various trade names,[1] is a medication used for the treatment of high blood pressure, chest pain from not enough blood flow to the heart, and supraventricular tachycardia.[2] It may also be used for the prevention of migraines and cluster headaches.[3][4] It is given by mouth or by injection into a vein.[2]

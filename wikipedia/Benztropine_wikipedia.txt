@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Benzatropine (INN), also known as benztropine (USAN, BAN), is an anticholinergic marketed under the trade name Cogentin which is used in the treatment of Parkinson's disease, Parkinsonism, and dystonia.

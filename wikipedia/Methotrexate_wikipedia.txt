@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Methotrexate (MTX), formerly known as amethopterin, is a chemotherapy agent and immune system suppressant.[1] It is used to treat cancer, autoimmune diseases, ectopic pregnancy, and for medical abortions. Types of cancers it is used for include breast cancer, leukemia, lung cancer, lymphoma, and osteosarcoma. Types of autoimmune diseases it is used for include psoriasis, rheumatoid arthritis, and Crohn's disease. It can be given by mouth or by injection.[1]

@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Zolpidem (originally marketed as Ambien and available worldwide under many brand names)[1] is a sedative primarily used for the treatment of insomnia. It works quickly, usually within 15 minutes, and has a short half-life of two to three hours. Zolpidem has not adequately demonstrated effectiveness in maintaining sleep, unless delivered in a controlled-release (CR) form. However, it is effective in initiating sleep.[2] Its hypnotic effects are similar to those of the benzodiazepine class of drugs.

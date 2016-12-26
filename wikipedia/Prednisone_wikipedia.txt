@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Prednisone is a synthetic corticosteroid drug that is particularly effective as an immunosuppressant drug. It is used to treat certain inflammatory diseases (such as moderate allergic reactions), some autoimmune diseases, and (at higher doses) some types of cancer, but it has significant adverse effects.

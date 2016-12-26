@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Insulin lispro (marketed by Eli Lilly and Company as Humalog) is a fast acting insulin analog. It was first approved for use in the United States in 1996, making it the first insulin analog to enter the market.[1]

@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Buspirone (/ˈbjuːspᵻroʊn/ BEW-spi-rohn), trade name Buspar, is an anxiolytic psychotropic drug of the azapirone chemical class.[3] It is primarily used to treat generalized anxiety disorder (GAD). Unlike most drugs predominantly used to treat anxiety, buspirone's pharmacology is not related to benzodiazepines or barbiturates, and so does not carry the risk of physical dependence and withdrawal symptoms for which those drug classes are known.

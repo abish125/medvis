@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Fluoxetine, also known by trade names Prozac and Sarafem among others, is an antidepressant of the selective serotonin reuptake inhibitor (SSRI) class.[1] It is used for the treatment of major depressive disorder, obsessive–compulsive disorder (OCD), bulimia nervosa, panic disorder, and premenstrual dysphoric disorder. It may decrease the risk of suicide in those over the age of 65. Fluoxetine has also been used to treat premature ejaculation. It is taken by mouth.[1]

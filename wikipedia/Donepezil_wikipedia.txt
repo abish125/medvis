@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Donepezil, marketed under the trade name Aricept, is a medication used in the palliative treatment of Alzheimer's disease.[1][2] Donepezil is used to improve cognition and behavior of people with Alzheimer's, but does not slow the progression of or cure the disease.[3]

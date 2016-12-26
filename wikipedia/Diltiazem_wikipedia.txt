@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Diltiazem (INN) (/dɪlˈtaɪəzɛm/) is a nondihydropyridines (non-DHP) calcium channel blocker used in the treatment of hypertension, angina pectoris, and some types of arrhythmia. It relaxes the smooth muscles in the walls of arteries, which opens (dilates) the arteries, allows blood to flow more easily, and lowers blood pressure. Additionally, it lowers blood pressure by acting on the heart itself to reduce the rate, strength, and conduction speed of each beat.

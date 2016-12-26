@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Cefdinir is a third-generation oral cephalosporin antibiotic sold under the brand names Cefzon and Omnicef.

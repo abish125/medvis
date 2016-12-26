@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Fenofibrate, marketed as Tricor and under several other brand names, is a drug of the fibrate class. It is mainly used to reduce cholesterol levels in people at risk of cardiovascular disease. Like other fibrates, it reduces both low-density lipoprotein (LDL) and very low density lipoprotein (VLDL) levels, as well as increasing high-density lipoprotein (HDL) levels and reducing triglyceride levels.[1] It is used alone or along with statins in the treatment of hypercholesterolemia and hypertriglyceridemia.

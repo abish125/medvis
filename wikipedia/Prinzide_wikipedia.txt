@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+An ACE inhibitor and thiazide combination is a drug combination used to treat hypertension. They are given by oral administration.

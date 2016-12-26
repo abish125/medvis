@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Methylphenidate, sold under various trade names, Ritalin being one of the most commonly known, is a central nervous system (CNS) stimulant of the phenethylamine[3] and piperidine classes that is used in the treatment of attention deficit hyperactivity disorder (ADHD) and narcolepsy. The original patent was owned by CIBA, now Novartis Corporation. It was first licensed by the US Food and Drug Administration (FDA) in 1955 for treating what was then known as hyperactivity.

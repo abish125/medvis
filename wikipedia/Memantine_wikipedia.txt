@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Memantine is the first in a novel class of Alzheimer's disease medications acting on the glutamatergic system by blocking NMDA receptors. It was first synthesized by Eli Lilly and Company in 1968 as a potential agent to treat diabetes; the NMDA activity was discovered in the 1980s.

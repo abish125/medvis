@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Glibenclamide (AAN, BAN, INN), also known as glyburide (USAN), is an antidiabetic drug in a class of medications known as sulfonylureas, closely related to sulfonamide antibiotics. It was developed in 1966 in a cooperative study between Boehringer Mannheim (now part of Roche) and Hoechst (now part of Sanofi-Aventis).[1]

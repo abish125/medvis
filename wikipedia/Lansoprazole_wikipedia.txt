@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Lansoprazole, sold under the brand name Prevacid among others, is a medication which inhibits the stomach's production of acid. There is not evidence that its effectiveness is different than that of other PPIs.[1] Lansoprazole, given through a nasogatric tube, effectively controls pH inside the stomach and is an alternative to intravenous pantoprazole in people who are unable to swallow solid-dose formulations.[2]

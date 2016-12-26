@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Valaciclovir, also spelled valacyclovir, is an antiviral drug used in the management of herpes simplex, herpes zoster (shingles), and herpes B.

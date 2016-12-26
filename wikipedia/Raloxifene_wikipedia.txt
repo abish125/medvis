@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Raloxifene (marketed as Evista by Eli Lilly and Company) is an oral selective estrogen receptor modulator (SERM) that has estrogenic actions on bone and anti-estrogenic actions on the uterus and breast.[2] It is used in the prevention of osteoporosis in postmenopausal women and to reduce the risk of invasive breast cancer in postmenopausal women with osteoporosis and in postmenopausal women at high risk for invasive breast cancer.[3]

@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Amoxicillin/clavulanic acid, also known as co-amoxiclav, is an antibiotic useful for the treatment of a number of bacterial infections. It is a combination consisting of amoxicillin, a β-lactam antibiotic, and potassium clavulanate, a β-lactamase inhibitor. It is specifically used for otitis media, strep throat, pneumonia, cellulitis, urinary tract infections, animal bites, and tuberculosis.[3] It used by mouth or by injection into a vein.[1]

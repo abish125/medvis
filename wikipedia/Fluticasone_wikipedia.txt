@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Fluticasone is a synthetic glucocorticoid.[1] Both the furoate and propanoate esters, fluticasone furoate and fluticasone propionate, are used as topical anti-inflammatories[2] and inhaled corticosteroids.

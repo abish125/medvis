@@ -137,7 +137,6 @@ macule
 macule
 patch
 Rosuvastatin
-lisinopril
 bosentan
 mitral valve
 mitral regurgitation
@@ -5361,7 +5360,6 @@ WBC
 Nexium
 Humira
 Crestor
-Advair
 Enbrel
 Remicade
 Cymbalta
@@ -5401,7 +5399,6 @@ Alimta
 Victoza
 Avonex
 Nasonex
-Cialis
 Gilenya
 Stelara
 Flovent
@@ -5562,7 +5559,6 @@ Hydrocodone
 Vicodin
 Amoxicillin
 Amoxil
-Lisinopril
 Prinivil
 Esomeprazole
 Nexium
@@ -5692,7 +5688,7 @@ Pravachol
 Fluoxetine
 Prozac
 Insulin
-Detem
+Detemir
 Fluconazole
 Diflucan
 Levofloxacin
@@ -5752,8 +5748,7 @@ Diltiazem
 Cardizem
 Insulin
 Lantus
-Lisinopril
-Prinizide
+Prinzide
 Bupropion
 Wellbutrin
 Cetirizine
@@ -5858,7 +5853,6 @@ Aldactone
 Vardenafil
 Levitra
 Clobetasol
-Clovate
 Benzonatate
 Tessalon
 Divalproex
@@ -5889,8 +5883,6 @@ Nitroglycerine
 NitroStat
 Oxybutynin
 Ditropan
-Tadalifil
-Cialis
 Triamcinolone
 Kenalog
 Rivastigmine
@@ -5948,9 +5940,28 @@ Aleve
 Tizanidine
 Zanaflex
 Amphetamine
-Dextro-amphetamine
 Adderall
 Amoxicillin
 Augmentin
 Ezetimibe
 Vytorin
+Divalproex
+Depakote
+desmopressin
+testosterone
+insulin
+detemir
+aspart
+lispro
+novolog
+levemir
+reglan
+metoclopramide
+ondansetron
+compazine
+prochlorperazine
+aprepitant
+emend
+phenergan
+promethazine
+diclegis

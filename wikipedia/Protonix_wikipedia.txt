@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Pantoprazole, sold under the brand name Protonix among others, is used for short-term treatment of erosive esophagitis associated with gastroesophageal reflux disease (GERD), maintenance of healing of erosive esophagitis, and pathological hypersecretory conditions including Zollinger–Ellison syndrome.[1]

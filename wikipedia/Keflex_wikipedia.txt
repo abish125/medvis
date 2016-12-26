@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Cefalexin, also spelled cephalexin, is an antibiotic that can treat a number of bacterial infections. It kills gram-positive and some gram-negative bacteria by disrupting the growth of the bacterial cell wall. Cefalexin is a beta-lactam antibiotic within the class of first-generation cephalosporins.[3] It works similarly to other agents within this class, including intravenous cefazolin, but can be taken by mouth.[4]

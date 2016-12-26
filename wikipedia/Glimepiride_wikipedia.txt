@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Glimepiride (original trade name Amaryl) is an orally available medium-to-long-acting sulfonylurea antidiabetic drug. It is sometimes classified as either the first third-generation sulfonylurea,[1] or as second-generation.[2]

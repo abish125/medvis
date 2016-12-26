@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Ramipril, sold under the brand name Altace among others, is an angiotensin-converting enzyme (ACE) inhibitor, used to treat high blood pressure (hypertension) and congestive heart failure. By inhibiting an enzyme, ACE inhibitors relax the muscles around small arteries (arterioles). The arterioles expand and allow blood to flow through more easily. This reduces blood pressure.

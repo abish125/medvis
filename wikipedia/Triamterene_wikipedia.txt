@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Triamterene (trade name Dyrenium) is a potassium-sparing diuretic used in combination with thiazide diuretics for the treatment of hypertension and edema. In combination with hydrochlorothiazide, it is marketed under the names Maxzide and Dyazide.

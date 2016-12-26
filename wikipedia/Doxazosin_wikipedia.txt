@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Doxazosin mesylate, a quinazoline compound sold by Pfizer under the brand names Cardura and Carduran, is an α1-selective alpha blocker used to treat high blood pressure and urinary retention associated with benign prostatic hyperplasia (BPH).

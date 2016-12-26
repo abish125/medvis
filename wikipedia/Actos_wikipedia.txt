@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Pioglitazone (brand name Actos) is a prescription drug of the thiazolidinedione (TZD) class with hypoglycemic (antihyperglycemic, antidiabetic) action to treat diabetes. While pioglitazone does decrease blood sugar levels, studies on the main cardiovascular outcomes have not yielded statistically significant results.[1]

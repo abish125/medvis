@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Carvedilol, sold under the brand name Coreg among others, is a beta blocker used for treating mild to severe congestive heart failure (CHF), left ventricular dysfunction (LVD) following heart attack in people who are otherwise stable, and for treating high blood pressure.[1]

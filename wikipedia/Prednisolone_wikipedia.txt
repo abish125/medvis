@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Prednisolone is a steroid medication used to treat certain types of allergies, inflammatory conditions, autoimmune disorders, and cancers.[1][2] Some of these conditions include adrenocortical insufficiency, high blood calcium, rheumatoid arthritis, dermatitis, eye inflammation, asthma, and multiple sclerosis.[2] It is use by mouth, injection into a vein, as a skin cream, and as eye drops.[3]

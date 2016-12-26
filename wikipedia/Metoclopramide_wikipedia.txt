@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Metoclopramide is a medication used mostly for stomach and esophageal problems.[2] It is commonly used to treat and prevent nausea and vomiting, to help with emptying of the stomach in people with delayed stomach emptying, and to help with gastroesophageal reflux disease.[3] It is also used to treat migraine headaches.[4]

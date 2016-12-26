@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Meloxicam is a nonsteroidal anti-inflammatory drug (NSAID) with analgesic and fever reducer effects. It is a derivative of oxicam, closely related to piroxicam, and falls in the enolic acid group of NSAIDs.[2] It was developed by Boehringer-Ingelheim. Meloxicam starts to relieve pain about 30–60 minutes after administration.[3]

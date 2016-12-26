@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Rivastigmine (sold under the trade name Exelon) is a parasympathomimetic or cholinergic agent for the treatment of mild to moderate dementia of the Alzheimer's type and dementia due to Parkinson's disease. The drug can be administered orally or via a transdermal patch; the latter form reduces the prevalence of side effects,[1] which typically include nausea and vomiting.[2] The drug is eliminated through the urine, and appears to have relatively few drug-drug interactions.[2]

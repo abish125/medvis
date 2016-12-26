@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Tiotropium bromide (INN) is a long-acting, 24-hour, anticholinergic bronchodilator used in the management of chronic obstructive pulmonary disease (COPD). Tiotropium bromide capsules for inhalation are co-promoted by Boehringer-Ingelheim and Pfizer under the trade name Spiriva. It is also manufactured and marketed by Cipla under trade name Tiova.

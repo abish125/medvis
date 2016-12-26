@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Insulin detemir is a long-acting human insulin analogue for maintaining the basal level of insulin. Novo Nordisk markets it under the trade name Levemir. It is an insulin analogue in which a fatty acid (myristic acid) is bound to the lysine amino acid at position B29. It is quickly absorbed after which it binds to albumin in the blood through its fatty acid at position B29. It then slowly dissociates from this complex.

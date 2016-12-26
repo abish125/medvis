@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Aprepitant (brand name: Emend (the brand name used in all English-speaking countries)) is an antiemetic chemical compound that belongs to a class of drugs called substance P antagonists (SPA). It mediates its effect by blocking the neurokinin 1 (NK1) receptor.

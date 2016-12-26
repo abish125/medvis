@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Losartan/hydrochlorothiazide is a combination drug used as an antihypertensive, consisting of losartan (an angiotensin II receptor antagonist) and hydrochlorothiazide (a diuretic).

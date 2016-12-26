@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Clindamycin is an antibiotic useful for the treatment of a number of bacterial infections.[1] This includes middle ear infections, bone or joint infections, pelvic inflammatory disease, strep throat, pneumonia, and endocarditis among others.[1] It can be useful against some cases of methicillin-resistant Staphylococcus aureus (MRSA).[2] It may also be used for acne and in addition to quinine for malaria. It is available by mouth, intravenously, and as a cream to be applied to the skin or in the vagina.[1][3]

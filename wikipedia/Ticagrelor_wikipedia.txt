@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Ticagrelor (trade name Brilinta, Brilique, and Possia) is a platelet aggregation inhibitor produced by AstraZeneca.

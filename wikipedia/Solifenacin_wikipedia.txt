@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Solifenacin (INN, trade name Vesicare) is a medicine of the antimuscarinic class and was developed for treating contraction of overactive bladder[1] with associated problems such as increased urination frequency and urge incontinence.[2] It is manufactured and marketed by Astellas, GlaxoSmithKline[3] and Teva Pharmaceutical Industries.[citation needed]

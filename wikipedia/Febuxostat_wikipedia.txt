@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Febuxostat (INN; trade names Adenuric in Europe and New Zealand, Uloric in the US, Goturic in Latin America, Feburic in Japan) is a drug that inhibits xanthine oxidase, thus reducing production of uric acid in the body. It is used in the treatment of chronic gout and hyperuricemia.

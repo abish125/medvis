@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Oseltamivir, marketed under the trade name Tamiflu, is an antiviral medication used to treat influenza A and influenza B (flu), and to prevent flu after exposure.[2] The medication is taken by mouth.[3]

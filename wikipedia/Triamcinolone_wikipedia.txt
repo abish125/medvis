@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Triamcinolone is a long-acting synthetic corticosteroid given orally, by injection, by inhalation, or as a topical ointment or cream.

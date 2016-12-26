@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Alendronic acid (INN) or alendronate sodium (USAN) — sold as Fosamax by Merck — is a bisphosphonate drug used for osteoporosis, osteogenesis imperfecta, and several other bone diseases. It is marketed alone as well as in combination with vitamin D (2,800 IU and 5,600 IU, under the name Fosamax+D). Merck's U.S. patent on alendronate expired in 2008 and the drug is now available as a generic. This is the most widely prescribed bisphosphonate medicine in the United States .

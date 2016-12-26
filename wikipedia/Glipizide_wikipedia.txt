@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Glipizide is an oral rapid- and short-acting anti-diabetic medication from the sulfonylurea class. It is classified as a second-generation sulfonylurea, which means that it undergoes enterohepatic circulation. Second-generation sulfonylureas are both more potent and have shorter half-lives than the first-generation sulfonylureas.

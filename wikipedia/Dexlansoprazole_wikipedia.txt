@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Dexlansoprazole (INN, trade names Kapidex, Dexilant) is a proton pump inhibitor (PPI) that is marketed by Takeda Pharmaceuticals for the treatment of erosive esophagitis and gastro-oesophageal reflux disease. It is similar in effectiveness to other PPIs.[2]
