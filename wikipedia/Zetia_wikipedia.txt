@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Ezetimibe is a drug that lowers plasma cholesterol levels. It acts by decreasing cholesterol absorption in the small intestine. It may be used alone (marketed as Zetia or Ezetrol), when other cholesterol-lowering medications are not tolerated, or together with statins (e.g., ezetimibe/simvastatin, marketed as Vytorin or Inegy) when statins alone do not control cholesterol.

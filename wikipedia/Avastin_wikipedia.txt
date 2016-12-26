@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Bevacizumab, sold under the trade name Avastin, is an angiogenesis inhibitor, a drug that slows the growth of new blood vessels.

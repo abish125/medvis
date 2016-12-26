@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Levosalbutamol, also known as levalbuterol, is a short-acting β2 adrenergic receptor agonist used in the treatment of asthma and chronic obstructive pulmonary disease (COPD). Evidence does not show that levosalbutamol works better than salbutamol, thus there may not be sufficient justification for prescribing it.[1]

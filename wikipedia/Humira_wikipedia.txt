@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Adalimumab, sold under the trade names Humira among others, is a medication used to treat rheumatoid arthritis, psoriatic arthritis, ankylosing spondylitis, Crohn's disease, ulcerative colitis, chronic psoriasis, hidradenitis suppurativa, and juvenile idiopathic arthritis. In rheumatoid arthritis, adalimumab has a response rate similar to methotrexate, and in combination, it nearly doubles the response rate of methotrexate alone.[1]

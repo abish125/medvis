@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Pneumococcal conjugate vaccine (PCV) is a pneumococcal vaccine and a conjugate vaccine used to protect infants, young children, and adults against disease caused by the bacterium Streptococcus pneumoniae (the pneumococcus). There are currently three types of PCV available on the global market, which go by the brand names: Prevnar (called Prevenar in some countries), Synflorix and Prevnar 13.

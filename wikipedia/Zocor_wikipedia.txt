@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Simvastatin, marketed under the trade name Zocor among others, is a lipid-lowering medication.[1] It is used along with exercise, diet, and weight loss to decrease elevated lipid (fat) levels. It is also used to decrease the risk of heart problems in those at high risk. It is taken by mouth.[1]

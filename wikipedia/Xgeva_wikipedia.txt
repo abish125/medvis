@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Denosumab (trade names Prolia and Xgeva) is a human monoclonal antibody[1] for the treatment of osteoporosis,[1] treatment-induced bone loss, metastases to bone,[1] and giant cell tumor of bone.[2]

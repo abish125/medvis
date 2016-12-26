@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Colesevelam is a bile acid sequestrant administered orally. It was developed by GelTex Pharmaceuticals and later acquired by Genzyme. It is marketed in the US by Daiichi Sankyo under the brand name Welchol and elsewhere by Genzyme as Cholestagel. In Canada it is marketed by Valeant as Lodalis.

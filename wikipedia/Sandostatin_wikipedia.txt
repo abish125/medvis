@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Octreotide (brand name Sandostatin,[1] Novartis Pharmaceuticals) is an octapeptide that mimics natural somatostatin pharmacologically, though it is a more potent inhibitor of growth hormone, glucagon, and insulin than the natural hormone. It was first synthesized in 1979 by the chemist Wilfried Bauer.

@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Abatacept (marketed as Orencia) is a drug used to treat autoimmune diseases like rheumatoid arthritis, by interfering with the immune activity of T cells. It is a modified antibody.

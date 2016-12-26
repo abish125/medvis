@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Sitagliptin/metformin (trade name Janumet) is an anti-diabetic drug, being a combination drug of sitagliptin (a dipeptidyl peptidase-4 inhibitor) and metformin.

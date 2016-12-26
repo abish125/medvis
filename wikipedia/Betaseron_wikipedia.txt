@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Interferon beta-1b is a cytokine in the interferon family used to treat the relapsing-remitting and secondary-progressive forms of multiple sclerosis (MS). It is approved for use after the first MS event. It is administered by sub-cutaneous injection and has been advertised as a way to slow the advance of the affliction as well as reduce the frequency of attacks. Closely related is interferon beta 1a, also indicated for MS, and with a very similar drug profile.

@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Brimonidine/timolol (INNs, trade name Combigan) are combination eye drops indicated for the treatment of glaucoma. It is a combination of brimonidine (an α2 adrenergic agonist) and timolol (a β adrenergic blocker), in concentrations of 0.2% and 0.5% respectively. Both substances work by decreasing the synthesis of aqueous humor.

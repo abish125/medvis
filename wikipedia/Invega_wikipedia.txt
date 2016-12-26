@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Paliperidone (trade name Invega), also known as 9-hydroxyrisperidone, is a dopamine antagonist and 5-HT2A antagonist of the atypical antipsychotic class of medications. It is marketed by Janssen Pharmaceutica. Invega is an extended release formulation of paliperidone that uses the OROS extended release system to allow for once-daily dosing.

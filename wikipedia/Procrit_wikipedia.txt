@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Epoetin alfa (rINN) /ɛˈpoʊ.ᵻtᵻn/ is human erythropoietin produced in cell culture using recombinant DNA technology.[1] Authorised by the European Medicines Agency on 28 August 2007, it stimulates erythropoiesis (increases red blood cell levels) and is used to treat anemia, commonly associated with chronic renal failure and cancer chemotherapy.

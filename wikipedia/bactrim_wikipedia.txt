@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Trimethoprim/sulfamethoxazole (TMP/SMX), also known as co-trimoxazole among other names, is an antibiotic used to treat a variety of bacterial infections.[1] It consists of one part trimethoprim to five parts sulfamethoxazole.[2] It is used for urinary tract infections, MRSA skin infections, travelers' diarrhea, respiratory tract infections, and cholera, among others.[1][2] It may be used both to treat and prevent pneumocystis pneumonia in people with HIV/AIDS. It can be given by mouth or intravenously.[1]

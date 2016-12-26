@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Ustekinumab[2] (INN, experimental name CNTO 1275, proprietary commercial name Stelara,[3] Centocor) is a human monoclonal antibody. It is manufactured in the Netherlands. It is directed against interleukin 12 and interleukin 23, naturally occurring proteins that regulate the immune system and immune-mediated inflammatory disorders.[4]

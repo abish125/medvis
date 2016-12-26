@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Darbepoetin alfa (rINN) /dɑːrbəˈpɔɪtᵻn/ is a synthetic form of erythropoietin. It stimulates erythropoiesis (increases red blood cell levels) and is used to treat anemia, commonly associated with chronic renal failure and cancer chemotherapy. Darbepoetin is marketed by Amgen under the trade name Aranesp.

@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Ranibizumab (trade name Lucentis among others) is a monoclonal antibody fragment (Fab) created from the same parent mouse antibody as bevacizumab. It is an anti-angiogenic that has been approved to treat the "wet" type of age-related macular degeneration (AMD, also ARMD), a common form of age-related vision loss.

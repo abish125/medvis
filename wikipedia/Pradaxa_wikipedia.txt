@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Dabigatran (Pradaxa, Prazaxa) is an anticoagulant medication that can be taken by mouth. It is being studied for various uses and in some cases is an alternative to warfarin, since it does not have to be monitored by blood tests, but offers similar results in terms of efficacy.

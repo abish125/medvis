@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Valsartan (trade name Diovan) is an angiotensin II receptor antagonist (commonly called an ARB, or angiotensin receptor blocker), that is selective for the type I (AT1) angiotensin receptor. Valsartan is mainly used for treatment of high blood pressure, congestive heart failure, and to increase the chances of living longer after a heart attack.

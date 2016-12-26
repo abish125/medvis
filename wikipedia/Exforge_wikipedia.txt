@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Amlodipine/valsartan is of an oral blood pressure lowering combination drug which combines two medications in a film-coated tablet. It contains amlodipine, a dihydropyridine-type calcium channel blocker, and valsartan, an angiotensin II receptor antagonist (ARB or A2RA); typically formulated as the benzenesulfonate salt. Meta-analysis has shown this combination to be well tolerated and effective for the reduction of blood pressure.[1]

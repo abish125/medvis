@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Budesonide/formoterol is a combination formulation containing budesonide and formoterol used in the management of asthma and chronic obstructive pulmonary disease (COPD). It contains two active ingredients delivered via a single inhaler:

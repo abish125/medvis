@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Interferon beta-1a (also interferon beta 1-alpha) is a cytokine in the interferon family used to treat multiple sclerosis (MS).[1] It is produced by mammalian cells, while interferon beta-1b is produced in modified E. coli.[2] Some claims have been made that Interferons produce about an 18–38% reduction in the rate of MS relapses.[3]

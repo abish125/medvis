@@ -171,3 +171,9 @@ finding
 finding
 finding
 condition
+finding
+bodypart
+bodypart
+finding
+bodypart
+treatment

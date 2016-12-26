@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Saxagliptin (rINN), previously identified as BMS-477118, is an oral hypoglycemic (anti-diabetic drug) of the dipeptidyl peptidase-4 (DPP-4) inhibitor class of drugs.[1] Early development was solely by Bristol-Myers Squibb; in 2007 AstraZeneca joined with Bristol-Myers Squibb to co-develop the final compound and collaborate on the marketing of the drug. In June 2008, it was announced that Onglyza would be the trade name under which saxagliptin will be marketed.[2]

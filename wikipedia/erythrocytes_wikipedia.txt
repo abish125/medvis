@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Red blood cells (RBCs), also called erythrocytes, are the most common type of blood cell and the vertebrate organism's principal means of delivering oxygen (O2) to the body tissues—via blood flow through the circulatory system.[1] RBCs take up oxygen in the lungs or gills and release it into tissues while squeezing through the body's capillaries.

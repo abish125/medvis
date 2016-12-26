@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Insulin aspart is a fast-acting insulin analog marketed by Novo Nordisk as NovoLog/NovoRapid. It is a manufactured form of human insulin; where a single amino acid has been exchanged. This change helps the fast-acting insulin analog be absorbed quickly into the bloodstream. As a result, it starts working in minutes, which allows one to take insulin and eat right away. Fast-acting insulin analogs are considered to act similarly to the way insulin is released in people without diabetes mellitus.

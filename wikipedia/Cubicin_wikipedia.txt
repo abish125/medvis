@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Daptomycin is a lipopeptide antibiotic used in the treatment of systemic and life-threatening infections caused by Gram-positive organisms. It is a naturally occurring compound found in the soil saprotroph Streptomyces roseosporus. Its distinct mechanism of action makes it useful in treating infections caused by multiple drug-resistant bacteria. It is marketed in the United States under the trade name Cubicin by Cubist Pharmaceuticals.

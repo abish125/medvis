@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Olmesartan medoxomil is an angiotensin II receptor antagonist which has been used for the treatment of high blood pressure. It was developed by Sankyo in 1995, and is sold under the trade name Benicar Olmecip(Cipla)Olsar (Unichem Laboratories). An ester prodrug, it is completely and rapidly hydrolyzed to the active acid form, olmesartan (RNH-6270).[1]

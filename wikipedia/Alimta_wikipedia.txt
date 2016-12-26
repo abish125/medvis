@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Pemetrexed (brand name Alimta) is a chemotherapy drug manufactured and marketed by Eli Lilly and Company. Its indications are the treatment of pleural mesothelioma and non-small cell lung cancer.

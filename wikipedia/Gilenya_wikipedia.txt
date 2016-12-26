@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Fingolimod (INN, trade name Gilenya, Novartis) is an immunomodulating drug, mostly used for treating multiple sclerosis (MS).[1] It has reduced the rate of relapses in relapsing-remitting multiple sclerosis by approximately one-half over a two-year period.[2] Fingolimod is a sphingosine-1-phosphate receptor modulator, which sequesters lymphocytes in lymph nodes, preventing them from contributing to an autoimmune reaction.

@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Everolimus (INN) (/ˌɛvəˈroʊləməs/) (earlier code name RAD001) is the 40-O-(2-hydroxyethyl) derivative of sirolimus and works similarly to sirolimus as an inhibitor of mammalian target of rapamycin (mTOR).

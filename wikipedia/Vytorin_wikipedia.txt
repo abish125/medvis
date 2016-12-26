@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Ezetimibe/simvastatin /ɛˈzɛtᵻmɪb ˌsɪmvəˈstætᵻn/ is a drug combination used for the treatment of dyslipidemia. It is a combination of ezetimibe (known as Zetia in the United States and Ezetrol elsewhere) and the statin drug simvastatin (known as Zocor in the U.S.). The combination preparation is marketed by Merck & Co. under the trade names Vytorin in the US and Inegy in Europe.

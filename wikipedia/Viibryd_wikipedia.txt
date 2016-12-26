@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Vilazodone (United States trade name Viibryd VEYE-brid) is a serotonergic antidepressant developed by Clinical Data for the treatment of major depressive disorder. The chemical compound was originally developed by Merck KGaA (Germany).[2] Vilazodone was approved by the FDA for use in the United States to treat major depressive disorder in 2011.[3][4][5] Its activity can be thought of as a combination of an SSRI and buspirone in some ways.

@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Pegfilgrastim is a PEGylated form of the recombinant human granulocyte colony-stimulating factor (GCSF) analog filgrastim. It serves to stimulate the level of white blood cells (neutrophils).[2]

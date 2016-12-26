@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Tolterodine (trade names Detrol, Detrusitol) is an antimuscarinic drug that is used for symptomatic treatment of urinary incontinence.[1]

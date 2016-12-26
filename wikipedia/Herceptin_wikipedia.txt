@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Trastuzumab, sold under the brand name Herceptin among others, is a monoclonal antibody used to treat breast cancer. Specifically it is used for breast cancer that is HER2 receptor positive. It may be used by itself or together with other chemotherapy medication.[3] Trastuzumab is given by slow injection into a vein and injection just under the skin.[3][4]

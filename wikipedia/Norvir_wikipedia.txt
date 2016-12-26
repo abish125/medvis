@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Ritonavir, sold under the trade name Norvir, is an antiretroviral medication used along with other medications to treat HIV/AIDS[1] This combination treatment is known as highly active antiretroviral therapy (HAART). Often a low dose is used with other protease inhibitors.[1] It may also be used in combination with other medications for hepatitis C.[2] It is taken by mouth. The capsules of the medication do not work the same as the tablets.[1]

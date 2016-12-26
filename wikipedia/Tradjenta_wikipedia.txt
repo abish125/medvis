@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Linagliptin (INN,[2] previously known as BI-1356, marketed under trade names Tradjenta (U.S.) and Trajenta (worldwide)) is a dipeptidyl peptidase-4 inhibitor developed by Boehringer Ingelheim for treatment of diabetes mellitus type 2.

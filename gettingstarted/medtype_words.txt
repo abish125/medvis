@@ -171,3 +171,9 @@ arrhythmia
 thrombocytopenia
 INR
 pheochromocytoma
+metastatic
+platelets
+erythrocytes
+metastases
+WBC
+advair

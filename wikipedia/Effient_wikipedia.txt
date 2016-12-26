@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Prasugrel (trade name Effient in the US and India, and Efient in the EU) is a pharmaceutical drug that acts as a platelet inhibitor and is used to prevent thrombosis (blood clotting). It was developed by Daiichi Sankyo Co. and produced by Ube and currently marketed in the United States in cooperation with Eli Lilly and Company.

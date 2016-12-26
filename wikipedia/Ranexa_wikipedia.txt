@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Ranolazine, sold under the trade name Ranexa by Gilead Sciences, is a drug to treat angina that was first approved in 2006.

@@ -82,3 +82,10 @@ thrombocytopenia
 INR
 diabetes
 pheochromocytoma
+metastatic
+platelets
+erythrocytes
+cancer
+metastases
+WBC
+advair

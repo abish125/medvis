@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Erlotinib hydrochloride (trade name Tarceva) is a drug used to treat non-small cell lung cancer (NSCLC), pancreatic cancer and several other types of cancer. It is a receptor tyrosine kinase inhibitor, which acts on the epidermal growth factor receptor (EGFR).

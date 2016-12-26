@@ -1,0 +1,2 @@
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Telmisartan (INN) /tɛlmɪˈsɑːrtən/ is an angiotensin II receptor antagonist (angiotensin receptor blocker, ARB) used in the management of hypertension. It was discovered by Boehringer Ingelheim and launched in 1999 as Micardis.[1]
