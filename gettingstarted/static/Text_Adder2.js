@@ -1,6 +1,6 @@
 var Text_Adder = function() {}
 
-var add_text = function(stuff_text, main_topics, textbox_number) {
+var add_text = function(stuff_text, main_topic, textbox_number) {
 	this.textbox = "#selectingText" + textbox_number;
 	this.textbox_number = textbox_number;
 
