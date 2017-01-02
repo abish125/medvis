@@ -1,6 +1,6 @@
 var Text_Adder = function() {}
 
-var add_text = function(stuff_text, main_topic, textbox_number) {
+var add_text = function(stuff_text, main_topics, textbox_number) {
 	this.textbox = "#selectingText" + textbox_number;
 	this.textbox_number = textbox_number;
 
@@ -18,6 +18,7 @@ var add_text = function(stuff_text, main_topic, textbox_number) {
     var word_number_width = init_width / split_amount;
 
     this.main_topic = main_topic
+    this.mtt_counter = 0;
     stuff_text = stuff_text.replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' ');
     this.words = stuff_text.split(' ');
 
@@ -29,7 +30,7 @@ var add_text = function(stuff_text, main_topic, textbox_number) {
     this.group2 = text_box.append("g");
 
     this.mtt = this.group1.selectAll("text");
-    this.mtt.data(this.main_topic).enter().append("text")
+    this.mtt.data([this.main_topic[0]]).enter().append("text")
         .attr("x", 0)
         .attr("y", 15)
         .text(function(d) {
@@ -39,6 +40,15 @@ var add_text = function(stuff_text, main_topic, textbox_number) {
         .on("click", function(d) {
             //console.log(this.style.fill);
             this.style.fill = getNextColor(this.style.fill);
+            if (this.mtt_counter == this.main_topic.length-1)
+            {
+                this.mtt_counter = 0;
+            }  
+            else
+            {
+                this.mtt_counter = this.mtt_counter + 1;
+            }
+            this.text = this.main_topic[this.mtt_counter];
         });
         
     document.getElementById("selectingText"+this.textbox_number).style.height = ((Math.floor(this.words.length / word_number_width) + 3) * 15)+20
@@ -116,7 +126,7 @@ function getNextColor(current_color) {
     } else if (current_color == "purple") { // purple rgb(128, 0, 128)
         return "rgb(255, 105, 180)";    // orange
     } else if (current_color == "rgb(255, 105, 180)") {
-        return "rgb(13, 252,244)";
+        return "rgb(13, 252, 244)";
     } else if (current_color =="rgb(13, 252, 244)") {
         return "brown";
     } else {

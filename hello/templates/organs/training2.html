@@ -82,7 +82,7 @@ circle {
 //it should only move the words that are medical to the bottom text adder
 
 function guess_function()
-{
+        {
     clean_text = document.getElementById("target").value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
     text_adder.add_text(clean_text, ["medical"],"1");
     
@@ -130,7 +130,7 @@ function guess_medical_words(medical_words)
 {
     if(medical_words != "")
         {
-            text_adder2.add_text(medical_words, ["system"], "2");
+            text_adder2.add_text(medical_words, ["system",], "2");
             guess_system();
             text_adder3.add_text(medical_words, ["type"], "3");
             guess_type();

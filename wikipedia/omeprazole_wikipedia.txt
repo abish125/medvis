@@ -1,1 +1,2 @@
-Omeprazole (INN) /oʊˈmɛprəzoʊl/ (Prilosec and generics such as losepine) is a proton pump inhibitor used in the treatment of dyspepsia, peptic ulcer disease, gastroesophageal reflux disease, laryngopharyngeal reflux, and Zollinger–Ellison syndrome.
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Omeprazole, sold under the brand names Prilosec and Losec among others, is a medication used in the treatment of gastroesophageal reflux disease, peptic ulcer disease, and Zollinger–Ellison syndrome.[1] It is also used to prevent upper gastrointestinal bleeding in people who are at high risk.[1] It can be taken by mouth or injected into a vein.[1][4]

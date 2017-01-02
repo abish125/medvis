@@ -228,3 +228,6 @@ treatment
 treatment
 treatment
 treatment
+bodypart
+finding
+condition

@@ -228,3 +228,6 @@ emend
 phenergan
 promethazine
 diclegis
+cervical
+alert
+gerd
