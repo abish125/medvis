@@ -1,1 +1,0 @@
-Transmit is an FTP client for Mac OS X. Developed by Panic, Transmit is shareware – after a seven-day trial period, the product can only be used for seven-minute sessions until it has been purchased.

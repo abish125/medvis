@@ -1,1 +1,0 @@
-In computer programming, await is a feature found in C# 5.0, and also in an experimental extension for Scala,[1] that allows an asynchronous, non-blocking method call to be performed in a similar way to an ordinary method call.

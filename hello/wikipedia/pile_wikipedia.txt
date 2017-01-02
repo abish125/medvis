@@ -1,1 +1,0 @@
-Pile is an alternative word for heap, e.g., a pile or heap of trash.

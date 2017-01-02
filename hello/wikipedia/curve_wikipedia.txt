@@ -1,1 +1,0 @@
-In mathematics, a curve (also called a curved line in older texts) is, generally speaking, an object similar to a line but which is not required to be straight. This entails that a line is a special case of curve, namely a curve with null curvature.[a] Often curves in two-dimensional (plane curves) or three-dimensional (space curves) Euclidean space are of interest.

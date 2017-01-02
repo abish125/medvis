@@ -1,1 +1,0 @@
-Human positions refer to the different positions that the human body can take.

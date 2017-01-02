@@ -1,1 +1,0 @@
-In linear algebra, the permanent of a square matrix is a function of the matrix similar to the determinant. The permanent, as well as the determinant, is a polynomial in the entries of the matrix.[1] Both permanent and determinant are special cases of a more general function of a matrix called the immanant.

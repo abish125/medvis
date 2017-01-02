@@ -1,1 +1,0 @@
-In mathematics and logic, the phrase "there is one and only one" is used to indicate that exactly one object with a certain property exists. In mathematical logic, this sort of quantification is known as uniqueness quantification or unique existential quantification.

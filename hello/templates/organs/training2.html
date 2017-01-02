@@ -130,7 +130,7 @@ function guess_medical_words(medical_words)
 {
     if(medical_words != "")
         {
-            text_adder2.add_text(medical_words, ["system",], "2");
+            text_adder2.add_text(medical_words, ["system","cards", "renal", "pulm"], "2");
             guess_system();
             text_adder3.add_text(medical_words, ["type"], "3");
             guess_type();

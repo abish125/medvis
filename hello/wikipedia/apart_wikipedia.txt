@@ -1,1 +1,0 @@
-In constructive mathematics, an apartness relation is a constructive form of inequality, and is often taken to be more basic than equality. It is often written as # to distinguish from the negation of equality (the denial inequality) ≠, which is weaker.

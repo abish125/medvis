@@ -1,1 +1,0 @@
-A temperature is a comparative objective measure of hot and cold. It is measured, typically by a thermometer, through the bulk behavior of a thermometric material, detection of heat radiation, or by particle velocity or kinetic energy. It may be calibrated in any of various temperature scales, Celsius, Fahrenheit, Kelvin, etc.

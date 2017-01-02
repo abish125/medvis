@@ -1,1 +1,0 @@
-In set theory, when dealing with sets of infinite size, the term almost or nearly is used to mean all the elements except for finitely many.

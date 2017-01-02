@@ -1,1 +1,0 @@
-In mathematics and computer science, Apply is a function that applies functions to arguments. It is central to programming languages derived from lambda calculus, such as LISP and Scheme, and also in functional languages. In particular, it has a role in the study of the denotational semantics of computer programs, because it is a continuous function on complete partial orders.

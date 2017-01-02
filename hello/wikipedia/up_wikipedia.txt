@@ -1,1 +1,0 @@
-Up is the Y-axis relative direction opposed to down.

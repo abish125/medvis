@@ -1,1 +1,0 @@
-In mathematics, especially in the area of abstract algebra which studies infinite groups, the adverb virtually is used to modify a property so that it need only hold for a subgroup of finite index. Given a property P, the group G is said to be virtually P if there is a finite index subgroup H≤G such that H has property P.

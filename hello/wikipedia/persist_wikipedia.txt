@@ -1,1 +1,0 @@
-Persist is a Java-based ORM/DAO tool. It provides only the minimal amount of functionalities necessary to map objects or maps from database queries and to statement parameters.

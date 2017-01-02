@@ -1,1 +1,0 @@
-A mirror is an object that reflects light in such a way that, for incident light in some range of wavelengths, the reflected light preserves many or most of the detailed physical characteristics of the original light. This is different from other light-reflecting objects that do not preserve much of the original wave signal other than color and diffuse reflected light.
