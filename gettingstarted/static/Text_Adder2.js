@@ -40,7 +40,7 @@ var add_text = function(stuff_text, main_topic, textbox_number) {
         .on("click", function(d) {
             //console.log(this.style.fill);
             this.style.fill = getNextColor(this.style.fill);
-            if (this.mtt_counter == this.main_topic.length-1)
+            if (this.mtt_counter == main_topic.length-1)
             {
                 this.mtt_counter = 0;
             }  
@@ -48,7 +48,7 @@ var add_text = function(stuff_text, main_topic, textbox_number) {
             {
                 this.mtt_counter = this.mtt_counter + 1;
             }
-            this.text = this.main_topic[this.mtt_counter];
+            this.text = main_topic[this.mtt_counter];
         });
         
     document.getElementById("selectingText"+this.textbox_number).style.height = ((Math.floor(this.words.length / word_number_width) + 3) * 15)+20
